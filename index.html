@@ -1,80 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Taka Grow</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samin Tees</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f8f8f8;
+}
+
+/* HEADER */
+header {
+  background: #000;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 22px;
+  letter-spacing: 2px;
+}
+
+/* GRID */
+.container {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* PRODUCT CARD */
+.product {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+}
+
+.product img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+}
+
+.product h3 {
+  margin: 10px 0;
+}
+
+.product p {
+  font-weight: bold;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  background: black;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: #333;
+}
+
+/* CART */
+.cart {
+  background: white;
+  margin: 30px;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  align-items: center;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.qty button {
+  padding: 5px 10px;
+}
+
+/* ORDER FORM */
+.form {
+  background: white;
+  margin: 30px;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+.total {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>
 </head>
-<body class="bg-green-50 text-gray-800">
 
-  <!-- Navbar -->
-  <nav class="bg-green-400 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-      <h1 class="text-xl font-bold text-white">Taka Grow</h1>
-      <div class="space-x-4 text-white">
-        <a href="#home" class="hover:underline">Home</a>
-        <a href="#about" class="hover:underline">About</a>
-        <a href="#services" class="hover:underline">Services</a>
-        <a href="#contact" class="hover:underline">Contact</a>
+<body>
+
+<header>
+  <h1>SAMIN TEES</h1>
+  <div>🛒 Cart: <span id="cartCount">0</span></div>
+</header>
+
+<div class="container">
+
+<div class="product">
+  <img src="tshirt1.png">
+  <h3>Black Minimal Tee</h3>
+  <p>৳499</p>
+  <button onclick="addToCart('Black Minimal Tee',499)">Add to Cart</button>
+</div>
+
+<div class="product">
+  <img src="tshirt2.png">
+  <h3>Bangla Quote Tee</h3>
+  <p>৳599</p>
+  <button onclick="addToCart('Bangla Quote Tee',599)">Add to Cart</button>
+</div>
+
+</div>
+
+<!-- CART -->
+<div class="cart">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <div class="total">Total: ৳<span id="total">0</span></div>
+</div>
+
+<!-- ORDER FORM -->
+<div class="form">
+  <h2>Order Details</h2>
+
+  <input id="name" placeholder="Your Name">
+  <input id="phone" placeholder="Phone Number">
+  <input id="address" placeholder="Address">
+
+  <select id="payment">
+    <option>bKash</option>
+    <option>Nagad</option>
+    <option>Cash on Delivery</option>
+  </select>
+
+  <button onclick="placeOrder()">Place Order</button>
+</div>
+
+<script>
+let cart = [];
+
+function addToCart(name, price) {
+  let item = cart.find(i => i.name === name);
+
+  if (item) {
+    item.qty++;
+  } else {
+    cart.push({name, price, qty: 1});
+  }
+
+  renderCart();
+}
+
+function renderCart() {
+  let container = document.getElementById("cartItems");
+  container.innerHTML = "";
+
+  let total = 0;
+  let count = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+    count += item.qty;
+
+    container.innerHTML += `
+      <div class="cart-item">
+        <div>
+          ${item.name} (৳${item.price})
+        </div>
+
+        <div class="qty">
+          <button onclick="changeQty(${index}, -1)">-</button>
+          ${item.qty}
+          <button onclick="changeQty(${index}, 1)">+</button>
+        </div>
+
+        <button onclick="removeItem(${index})">❌</button>
       </div>
-    </div>
-  </nav>
+    `;
+  });
 
-  <!-- Hero -->
-  <section id="home" class="text-center py-20">
-    <h2 class="text-4xl font-bold text-green-600">Grow Your Money Smartly</h2>
-    <p class="mt-4 text-lg">Secure, Fast & Reliable Currency Exchange Platform</p>
-    <button class="mt-6 px-6 py-3 bg-green-500 text-white rounded-xl shadow hover:bg-green-600">Get Started</button>
-  </section>
+  document.getElementById("total").innerText = total;
+  document.getElementById("cartCount").innerText = count;
+}
 
-  <!-- About -->
-  <section id="about" class="py-16 bg-white">
-    <div class="max-w-5xl mx-auto text-center px-4">
-      <h3 class="text-3xl font-semibold text-green-500">About Taka Grow</h3>
-      <p class="mt-4 text-gray-600">
-        Taka Grow is a modern platform where users can exchange currency securely and efficiently. 
-        We provide fast transactions with reliable support, ensuring your funds are handled safely.
-      </p>
-    </div>
-  </section>
+function changeQty(index, change) {
+  cart[index].qty += change;
 
-  <!-- Services -->
-  <section id="services" class="py-16">
-    <div class="max-w-6xl mx-auto px-4">
-      <h3 class="text-3xl text-center font-semibold text-green-500">Our Services</h3>
-      <div class="grid md:grid-cols-3 gap-6 mt-10">
-        <div class="bg-white p-6 rounded-2xl shadow">
-          <h4 class="text-xl font-bold text-green-600">Currency Exchange</h4>
-          <p class="mt-2 text-gray-600">Exchange money easily with competitive rates.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl shadow">
-          <h4 class="text-xl font-bold text-green-600">Secure Payments</h4>
-          <p class="mt-2 text-gray-600">Your transactions are protected with top security.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl shadow">
-          <h4 class="text-xl font-bold text-green-600">24/7 Support</h4>
-          <p class="mt-2 text-gray-600">We are always here to assist you anytime.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  if (cart[index].qty <= 0) {
+    cart.splice(index, 1);
+  }
 
-  <!-- Contact -->
-  <section id="contact" class="py-16 bg-white">
-    <div class="max-w-xl mx-auto px-4 text-center">
-      <h3 class="text-3xl font-semibold text-green-500">Contact Us</h3>
-      <input type="text" placeholder="Your Name" class="w-full mt-6 p-3 border rounded-xl">
-      <input type="email" placeholder="Your Email" class="w-full mt-4 p-3 border rounded-xl">
-      <textarea placeholder="Message" class="w-full mt-4 p-3 border rounded-xl"></textarea>
-      <button class="mt-6 px-6 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600">Send Message</button>
-    </div>
-  </section>
+  renderCart();
+}
 
-  <!-- Footer -->
-  <footer class="bg-green-400 text-white text-center py-4">
-    <p>© 2026 Taka Grow. All rights reserved.</p>
-  </footer>
+function removeItem(index) {
+  cart.splice(index, 1);
+  renderCart();
+}
+
+function placeOrder() {
+  if(cart.length === 0){
+    alert("Cart is empty!");
+    return;
+  }
+
+  const order = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    address: document.getElementById("address").value,
+    payment: document.getElementById("payment").value,
+    cart: cart
+  };
+
+  console.log(order);
+
+  alert("Order placed successfully!");
+}
+</script>
 
 </body>
 </html>
