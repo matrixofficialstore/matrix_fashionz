@@ -1,346 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matrix Fashion</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T-Shirt Store</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+    body {
+      background: #f4f4f4;
+      color: #222;
+    }
 
-body{
-  font-family:Segoe UI,sans-serif;
-  background:#f5f5f5;
-}
+    header {
+      background: black;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
 
-/* HEADER */
-header{
-  background:#000;
-  color:white;
-  padding:15px 25px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+    header h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
 
-header h1{
-  letter-spacing:2px;
-}
+    header p {
+      font-size: 18px;
+      color: #ccc;
+    }
 
-/* PRODUCTS */
-.container{
-  padding:25px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
+    .products {
+      max-width: 1200px;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      padding: 0 20px;
+    }
 
-.product{
-  background:white;
-  border-radius:15px;
-  padding:15px;
-  text-align:center;
-  transition:0.2s;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
+    .card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
 
-.product:hover{
-  transform:translateY(-5px);
-}
+    .card:hover {
+      transform: translateY(-5px);
+    }
 
-.product img{
-  width:100%;
-  height:240px;
-  object-fit:contain;
-}
+    .card img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+    }
 
-.product h3{
-  margin:10px 0;
-}
+    .card-content {
+      padding: 20px;
+    }
 
-.product p{
-  font-weight:bold;
-  font-size:18px;
-}
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
 
-button{
-  border:none;
-  background:black;
-  color:white;
-  padding:10px 15px;
-  margin-top:10px;
-  border-radius:8px;
-  cursor:pointer;
-}
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
 
-button:hover{
-  background:#333;
-}
+    .order-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: black;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
 
-/* CART */
-.cart,
-.form{
-  background:white;
-  margin:25px;
-  padding:20px;
-  border-radius:15px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
+    .order-btn:hover {
+      background: #333;
+    }
 
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:10px 0;
-  border-bottom:1px solid #ddd;
-  padding-bottom:10px;
-}
+    .order-section {
+      max-width: 700px;
+      margin: 60px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
 
-.qty{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+    .order-section h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-.qty button{
-  padding:5px 10px;
-}
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
 
-.total{
-  margin-top:15px;
-  font-size:20px;
-  font-weight:bold;
-}
+    input, select, textarea {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
 
-/* FORM */
-input,
-select{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border:1px solid #ccc;
-  border-radius:8px;
-}
+    .payment-info {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 12px;
+      line-height: 1.8;
+    }
 
-/* MOBILE */
-@media(max-width:600px){
-  header{
-    flex-direction:column;
-    gap:10px;
-  }
-
-  .cart-item{
-    flex-direction:column;
-    gap:10px;
-  }
-}
-</style>
+    footer {
+      margin-top: 60px;
+      background: black;
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-  <h1>Matrix Fashion</h1>
-  <div>🛒 Cart: <span id="cartCount">0</span></div>
-</header>
+  <header>
+    <h1>My T-Shirt Store</h1>
+    <p>Premium Quality Fashion T-Shirts</p>
+  </header>
 
-<!-- PRODUCTS -->
-<div class="container">
+  <section class="products">
 
-  <div class="product">
-    <img src="tshirt1.png" alt="">
-    <h3>Black Matrix T-Shirt</h3>
-    <p>৳499</p>
-    <button onclick="addToCart('Black Matrix T-Shirt',499)">
-      Add to Cart
-    </button>
-  </div>
-
-  <div class="product">
-    <img src="tshirt2.png" alt="">
-    <h3>Bangla Quote T-Shirt</h3>
-    <p>৳599</p>
-    <button onclick="addToCart('Bangla Quote T-Shirt',599)">
-      Add to Cart
-    </button>
-  </div>
-
-  <div class="product">
-    <img src="tshirt3.png" alt="">
-    <h3>American Vintage Tee</h3>
-    <p>৳650</p>
-    <button onclick="addToCart('American Vintage Tee',650)">
-      Add to Cart
-    </button>
-  </div>
-
-  <div class="product">
-    <img src="tshirt4.png" alt="">
-    <h3>Dank Meme Tee</h3>
-    <p>৳550</p>
-    <button onclick="addToCart('Dank Meme Tee',550)">
-      Add to Cart
-    </button>
-  </div>
-
-</div>
-
-<!-- CART -->
-<div class="cart">
-  <h2>Your Cart</h2>
-
-  <div id="cartItems"></div>
-
-  <div class="total">
-    Total: ৳<span id="total">0</span>
-  </div>
-</div>
-
-<!-- ORDER -->
-<div class="form">
-
-  <h2>Order Details</h2>
-
-  <input type="text" id="name" placeholder="Your Name">
-
-  <input type="text" id="phone" placeholder="Phone Number">
-
-  <input type="email" id="email" placeholder="Email Address">
-
-  <input type="text" id="address" placeholder="Address">
-
-  <select id="payment">
-    <option>bKash</option>
-    <option>Nagad</option>
-    <option>Cash on Delivery</option>
-  </select>
-
-  <button onclick="placeOrder()">
-    Checkout
-  </button>
-
-</div>
-
-<script>
-
-let cart = [];
-
-function addToCart(name,price){
-
-  const item = cart.find(i => i.name === name);
-
-  if(item){
-    item.qty++;
-  }else{
-    cart.push({
-      name,
-      price,
-      qty:1
-    });
-  }
-
-  renderCart();
-}
-
-function renderCart(){
-
-  const container = document.getElementById("cartItems");
-
-  container.innerHTML = "";
-
-  let total = 0;
-  let count = 0;
-
-  cart.forEach((item,index)=>{
-
-    total += item.price * item.qty;
-    count += item.qty;
-
-    container.innerHTML += `
-      <div class="cart-item">
-
-        <div>
-          <strong>${item.name}</strong><br>
-          ৳${item.price}
-        </div>
-
-        <div class="qty">
-
-          <button onclick="changeQty(${index},-1)">
-            -
-          </button>
-
-          ${item.qty}
-
-          <button onclick="changeQty(${index},1)">
-            +
-          </button>
-
-        </div>
-
-        <button onclick="removeItem(${index})">
-          ❌
-        </button>
-
+    <div class="card">
+      <img src="tshirt1.png" alt="Tshirt 1">
+      <div class="card-content">
+        <h3>Classic Tee</h3>
+        <p class="price">৳850</p>
+        <button class="order-btn">Order Now</button>
       </div>
-    `;
-  });
+    </div>
 
-  document.getElementById("total").innerText = total;
-  document.getElementById("cartCount").innerText = count;
-}
+    <div class="card">
+      <img src="tshirt2.png" alt="Tshirt 2">
+      <div class="card-content">
+        <h3>Streetwear Tee</h3>
+        <p class="price">৳950</p>
+        <button class="order-btn">Order Now</button>
+      </div>
+    </div>
 
-function changeQty(index,change){
+    <div class="card">
+      <img src="tshirt3.png" alt="Tshirt 3">
+      <div class="card-content">
+        <h3>Oversized Tee</h3>
+        <p class="price">৳1100</p>
+        <button class="order-btn">Order Now</button>
+      </div>
+    </div>
 
-  cart[index].qty += change;
+    <div class="card">
+      <img src="tshirt4.png" alt="Tshirt 4">
+      <div class="card-content">
+        <h3>Minimal Tee</h3>
+        <p class="price">৳780</p>
+        <button class="order-btn">Order Now</button>
+      </div>
+    </div>
 
-  if(cart[index].qty <= 0){
-    cart.splice(index,1);
-  }
+    <div class="card">
+      <img src="tshirt5.png" alt="Tshirt 5">
+      <div class="card-content">
+        <h3>Vintage Tee</h3>
+        <p class="price">৳920</p>
+        <button class="order-btn">Order Now</button>
+      </div>
+    </div>
 
-  renderCart();
-}
+    <div class="card">
+      <img src="tshirt6.png" alt="Tshirt 6">
+      <div class="card-content">
+        <h3>Graphic Tee</h3>
+        <p class="price">৳1200</p>
+        <button class="order-btn">Order Now</button>
+      </div>
+    </div>
 
-function removeItem(index){
+    <div class="card">
+      <img src="tshirt7.png" alt="Tshirt 7">
+      <div class="card-content">
+        <h3>Premium Cotton Tee</h3>
+        <p class="price">৳1350</p>
+        <button class="order-btn">Order Now</button>
+      </div>
+    </div>
 
-  cart.splice(index,1);
+  </section>
 
-  renderCart();
-}
+  <section class="order-section">
+    <h2>Place Your Order</h2>
 
-function placeOrder(){
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="text" placeholder="Phone Number" required>
+      <textarea rows="4" placeholder="Delivery Address" required></textarea>
 
-  if(cart.length === 0){
-    alert("Cart is empty!");
-    return;
-  }
+      <select required>
+        <option value="">Select Payment Method</option>
+        <option>bKash</option>
+        <option>Nagad</option>
+        <option>Cash on Delivery</option>
+      </select>
 
-  const order = {
-    name:document.getElementById("name").value,
-    phone:document.getElementById("phone").value,
-    email:document.getElementById("email").value,
-    address:document.getElementById("address").value,
-    payment:document.getElementById("payment").value,
-    cart:cart
-  };
+      <div class="payment-info">
+        <strong>bKash Number:</strong> 01844175037 <br>
+        <strong>Nagad Number:</strong> 01844175037 <br>
+        <strong>Cash on Delivery:</strong> Available Across Bangladesh
+      </div>
 
-  console.log(order);
+      <button type="submit" class="order-btn">Confirm Order</button>
+    </form>
+  </section>
 
-  /*
-    PAYMENT GATEWAY REDIRECT
-    Replace this with your real backend URL
-  */
-
-  window.location.href =
-  "https://your-payment-gateway.com/pay";
-
-}
-
-</script>
+  <footer>
+    <p>© 2026 My T-Shirt Store - All Rights Reserved</p>
+  </footer>
 
 </body>
 </html>
