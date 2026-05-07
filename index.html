@@ -3,133 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>matrix unpublished storw</title>
+<title>Matrix Fashion</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f8f8f8;
+body{
+  font-family:Segoe UI,sans-serif;
+  background:#f5f5f5;
 }
 
 /* HEADER */
-header {
-  background: #000;
-  color: white;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+header{
+  background:#000;
+  color:white;
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-header h1 {
-  font-size: 22px;
-  letter-spacing: 2px;
+header h1{
+  letter-spacing:2px;
 }
 
-/* GRID */
-.container {
-  padding: 30px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+/* PRODUCTS */
+.container{
+  padding:25px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
 }
 
-/* PRODUCT CARD */
-.product {
-  background: white;
-  border-radius: 12px;
-  padding: 15px;
-  text-align: center;
-  transition: 0.2s;
+.product{
+  background:white;
+  border-radius:15px;
+  padding:15px;
+  text-align:center;
+  transition:0.2s;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
-.product:hover {
-  transform: translateY(-5px);
+.product:hover{
+  transform:translateY(-5px);
 }
 
-.product img {
-  width: 100%;
-  height: 220px;
-  object-fit: contain;
+.product img{
+  width:100%;
+  height:240px;
+  object-fit:contain;
 }
 
-.product h3 {
-  margin: 10px 0;
+.product h3{
+  margin:10px 0;
 }
 
-.product p {
-  font-weight: bold;
+.product p{
+  font-weight:bold;
+  font-size:18px;
 }
 
-button {
-  margin-top: 10px;
-  padding: 10px;
-  border: none;
-  background: black;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
+button{
+  border:none;
+  background:black;
+  color:white;
+  padding:10px 15px;
+  margin-top:10px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-button:hover {
-  background: #333;
+button:hover{
+  background:#333;
 }
 
 /* CART */
-.cart {
-  background: white;
-  margin: 30px;
-  padding: 20px;
-  border-radius: 12px;
+.cart,
+.form{
+  background:white;
+  margin:25px;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
-  align-items: center;
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:10px 0;
+  border-bottom:1px solid #ddd;
+  padding-bottom:10px;
 }
 
-.qty {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.qty{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-.qty button {
-  padding: 5px 10px;
+.qty button{
+  padding:5px 10px;
 }
 
-/* ORDER FORM */
-.form {
-  background: white;
-  margin: 30px;
-  padding: 20px;
-  border-radius: 12px;
+.total{
+  margin-top:15px;
+  font-size:20px;
+  font-weight:bold;
 }
 
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-}
-
-.total {
-  font-size: 18px;
-  margin-top: 10px;
+/* FORM */
+input,
+select{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:1px solid #ccc;
+  border-radius:8px;
 }
 
 /* MOBILE */
 @media(max-width:600px){
-  header {
-    flex-direction: column;
-    gap: 10px;
+  header{
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .cart-item{
+    flex-direction:column;
+    gap:10px;
   }
 }
 </style>
@@ -142,73 +148,70 @@ input, select {
   <div>🛒 Cart: <span id="cartCount">0</span></div>
 </header>
 
+<!-- PRODUCTS -->
 <div class="container">
 
-<div class="product">
-  <img src="tshirt1.png">
-  <h3>Black Matrix T-Shirt</h3>
-  <p>৳499</p>
-  <button onclick="addToCart('Black Minimal Tee',499)">Add to Cart</button>
+  <div class="product">
+    <img src="tshirt1.png" alt="">
+    <h3>Black Matrix T-Shirt</h3>
+    <p>৳499</p>
+    <button onclick="addToCart('Black Matrix T-Shirt',499)">
+      Add to Cart
+    </button>
+  </div>
+
+  <div class="product">
+    <img src="tshirt2.png" alt="">
+    <h3>Bangla Quote T-Shirt</h3>
+    <p>৳599</p>
+    <button onclick="addToCart('Bangla Quote T-Shirt',599)">
+      Add to Cart
+    </button>
+  </div>
+
+  <div class="product">
+    <img src="tshirt3.png" alt="">
+    <h3>American Vintage Tee</h3>
+    <p>৳650</p>
+    <button onclick="addToCart('American Vintage Tee',650)">
+      Add to Cart
+    </button>
+  </div>
+
+  <div class="product">
+    <img src="tshirt4.png" alt="">
+    <h3>Dank Meme Tee</h3>
+    <p>৳550</p>
+    <button onclick="addToCart('Dank Meme Tee',550)">
+      Add to Cart
+    </button>
+  </div>
+
 </div>
 
-<div class="product">
-  <img src="tshirt2.png">
-  <h3>Bangla Quote T-Shirt</h3>
-  <p>৳599</p>
-  <button onclick="addToCart('Bangla Quote Tee',599)">Add to Cart</button>
-</div>
-
-
-<div class="product">
-  <img src="tshirt3.png">
-  <h3>American old style T-Shirt</h3>
-  <p>৳599</p>
-  <button onclick="addToCart('Bangla Quote Tee',599)">Add to Cart</button>
-</div>
-
-<div class="product">
-  <img src="tshirt4.png">
-  <h3>Dank memer T-Shirt</h3>
-  <p>৳599</p>
-  <button onclick="addToCart('Bangla Quote Tee',599)">Add to Cart</button>
-</div>
-  
-<div class="product">
-  <img src="tshirt5.png">
-  <h3>Pookie roblox T-Shirt</h3>
-  <p>৳599</p>
-  <button onclick="addToCart('Bangla Quote Tee',599)">Add to Cart</button>
-</div>
-  
-  
-<div class="product">
-  <img src="tshirt6.png">
-  <h3>Bd map T-Shirt</h3>
-  <p>৳599</p>
-  <button onclick="addToCart('Bangla Quote Tee',599)">Add to Cart</button>
-</div>
-  
-<div class="product">
-  <img src="tshirt7.png">
-  <h3>Ronaldo T-Shirt</h3>
-  <p>৳599</p>
-  <button onclick="addToCart('Bangla Quote Tee',599)">Add to Cart</button>
-</div>
-  
 <!-- CART -->
 <div class="cart">
   <h2>Your Cart</h2>
+
   <div id="cartItems"></div>
-  <div class="total">Total: ৳<span id="total">0</span></div>
+
+  <div class="total">
+    Total: ৳<span id="total">0</span>
+  </div>
 </div>
 
-<!-- ORDER FORM -->
+<!-- ORDER -->
 <div class="form">
+
   <h2>Order Details</h2>
 
-  <input id="name" placeholder="Your Name">
-  <input id="phone" placeholder="Phone Number">
-  <input id="address" placeholder="Address">
+  <input type="text" id="name" placeholder="Your Name">
+
+  <input type="text" id="phone" placeholder="Phone Number">
+
+  <input type="email" id="email" placeholder="Email Address">
+
+  <input type="text" id="address" placeholder="Address">
 
   <select id="payment">
     <option>bKash</option>
@@ -216,48 +219,73 @@ input, select {
     <option>Cash on Delivery</option>
   </select>
 
-  <button onclick="placeOrder()">Place Order</button>
+  <button onclick="placeOrder()">
+    Checkout
+  </button>
+
 </div>
 
 <script>
+
 let cart = [];
 
-function addToCart(name, price) {
-  let item = cart.find(i => i.name === name);
+function addToCart(name,price){
 
-  if (item) {
+  const item = cart.find(i => i.name === name);
+
+  if(item){
     item.qty++;
-  } else {
-    cart.push({name, price, qty: 1});
+  }else{
+    cart.push({
+      name,
+      price,
+      qty:1
+    });
   }
 
   renderCart();
 }
 
-function renderCart() {
-  let container = document.getElementById("cartItems");
+function renderCart(){
+
+  const container = document.getElementById("cartItems");
+
   container.innerHTML = "";
 
   let total = 0;
   let count = 0;
 
-  cart.forEach((item, index) => {
+  cart.forEach((item,index)=>{
+
     total += item.price * item.qty;
     count += item.qty;
 
     container.innerHTML += `
       <div class="cart-item">
+
         <div>
-          ${item.name} (৳${item.price})
+          <strong>${item.name}</strong><br>
+          ৳${item.price}
         </div>
 
         <div class="qty">
-          <button onclick="changeQty(${index}, -1)">-</button>
+
+          <button onclick="changeQty(${index},-1)">
+            -
+          </button>
+
           ${item.qty}
-          <button onclick="changeQty(${index}, 1)">+</button>
+
+          <button onclick="changeQty(${index},1)">
+            +
+          </button>
+
         </div>
 
-        <button onclick="removeItem(${index})">❌</button>
+        <button onclick="removeItem(${index})">
+          ❌
+        </button>
+
       </div>
     `;
   });
@@ -266,39 +294,52 @@ function renderCart() {
   document.getElementById("cartCount").innerText = count;
 }
 
-function changeQty(index, change) {
+function changeQty(index,change){
+
   cart[index].qty += change;
 
-  if (cart[index].qty <= 0) {
-    cart.splice(index, 1);
+  if(cart[index].qty <= 0){
+    cart.splice(index,1);
   }
 
   renderCart();
 }
 
-function removeItem(index) {
-  cart.splice(index, 1);
+function removeItem(index){
+
+  cart.splice(index,1);
+
   renderCart();
 }
 
-function placeOrder() {
+function placeOrder(){
+
   if(cart.length === 0){
     alert("Cart is empty!");
     return;
   }
 
   const order = {
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    address: document.getElementById("address").value,
-    payment: document.getElementById("payment").value,
-    cart: cart
+    name:document.getElementById("name").value,
+    phone:document.getElementById("phone").value,
+    email:document.getElementById("email").value,
+    address:document.getElementById("address").value,
+    payment:document.getElementById("payment").value,
+    cart:cart
   };
 
   console.log(order);
 
-  alert("Order placed successfully!");
+  /*
+    PAYMENT GATEWAY REDIRECT
+    Replace this with your real backend URL
+  */
+
+  window.location.href =
+  "https://your-payment-gateway.com/pay";
+
 }
+
 </script>
 
 </body>
