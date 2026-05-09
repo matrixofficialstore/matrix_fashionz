@@ -2,241 +2,351 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>T-Shirt Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Matrix Official Hub</title>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
     }
 
-    body {
-      background: #f4f4f4;
-      color: #222;
+    body{
+      background:#0d0d0d;
+      color:white;
     }
 
-    header {
-      background: black;
-      color: white;
-      text-align: center;
-      padding: 60px 20px;
+    header{
+      background:#5a0000;
+      padding:20px;
+      text-align:center;
+      border-bottom:2px solid white;
     }
 
-    header h1 {
-      font-size: 48px;
-      margin-bottom: 10px;
+    header h1{
+      font-size:35px;
+      color:white;
     }
 
-    header p {
-      font-size: 18px;
-      color: #ccc;
+    .container{
+      width:90%;
+      margin:auto;
+      padding:40px 0;
     }
 
-    .products {
-      max-width: 1200px;
-      margin: 40px auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      padding: 0 20px;
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
     }
 
-    .card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: 0.3s;
+    .card{
+      background:#181818;
+      border:2px solid #7a0000;
+      border-radius:15px;
+      overflow:hidden;
+      transition:0.3s;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
+    .card:hover{
+      transform:scale(1.03);
+      border-color:white;
     }
 
-    .card img {
-      width: 100%;
-      height: 320px;
-      object-fit: cover;
+    .card img{
+      width:100%;
+      height:320px;
+      object-fit:cover;
     }
 
-    .card-content {
-      padding: 20px;
+    .card-content{
+      padding:20px;
+      text-align:center;
     }
 
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 22px;
+    .card-content h2{
+      margin-bottom:10px;
     }
 
-    .price {
-      font-size: 20px;
-      font-weight: bold;
-      margin: 10px 0;
+    .price{
+      color:#ff4d4d;
+      font-size:22px;
+      margin-bottom:15px;
     }
 
-    .order-btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      background: black;
-      color: white;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s;
+    button{
+      background:#7a0000;
+      color:white;
+      border:none;
+      padding:12px 20px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:16px;
+      transition:0.3s;
     }
 
-    .order-btn:hover {
-      background: #333;
+    button:hover{
+      background:white;
+      color:#7a0000;
     }
 
-    .order-section {
-      max-width: 700px;
-      margin: 60px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    .cart{
+      margin-top:50px;
+      background:#181818;
+      border:2px solid #7a0000;
+      border-radius:15px;
+      padding:25px;
     }
 
-    .order-section h2 {
-      margin-bottom: 20px;
-      text-align: center;
+    .cart h2{
+      margin-bottom:20px;
     }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    .cart-item{
+      display:flex;
+      justify-content:space-between;
+      padding:10px 0;
+      border-bottom:1px solid #333;
     }
 
-    input, select, textarea {
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
+    .total{
+      margin-top:20px;
+      font-size:24px;
+      color:#ff4d4d;
     }
 
-    .payment-info {
-      background: #f9f9f9;
-      padding: 15px;
-      border-radius: 12px;
-      line-height: 1.8;
+    form{
+      margin-top:30px;
+      display:flex;
+      flex-direction:column;
+      gap:15px;
     }
 
-    footer {
-      margin-top: 60px;
-      background: black;
-      color: #aaa;
-      text-align: center;
-      padding: 20px;
+    input,
+    textarea,
+    select{
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      background:#2a2a2a;
+      color:white;
+      font-size:16px;
+    }
+
+    .payment-box{
+      background:#2a2a2a;
+      padding:15px;
+      border-radius:10px;
+      border:1px solid #7a0000;
+    }
+
+    footer{
+      margin-top:50px;
+      text-align:center;
+      padding:20px;
+      border-top:2px solid #7a0000;
     }
   </style>
 </head>
+
 <body>
 
-  <header>
-    <h1>My T-Shirt Store</h1>
-    <p>Premium Quality Fashion T-Shirts</p>
-  </header>
+<header>
+  <h1>Matrix Official Hub</h1>
+</header>
 
-  <section class="products">
+<div class="container">
 
-    <div class="card">
-      <img src="tshirt1.png" alt="Tshirt 1">
-      <div class="card-content">
-        <h3>Classic Tee</h3>
-        <p class="price">৳850</p>
-        <button class="order-btn">Order Now</button>
-      </div>
+  <div class="products" id="products"></div>
+
+  <div class="cart">
+
+    <h2>Shopping Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <div class="total" id="totalPrice">
+      Total: 0৳
     </div>
 
-    <div class="card">
-      <img src="tshirt2.png" alt="Tshirt 2">
-      <div class="card-content">
-        <h3>Streetwear Tee</h3>
-        <p class="price">৳950</p>
-        <button class="order-btn">Order Now</button>
-      </div>
-    </div>
+    <form id="orderForm">
 
-    <div class="card">
-      <img src="tshirt3.png" alt="Tshirt 3">
-      <div class="card-content">
-        <h3>Oversized Tee</h3>
-        <p class="price">৳1100</p>
-        <button class="order-btn">Order Now</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="tshirt4.png" alt="Tshirt 4">
-      <div class="card-content">
-        <h3>Minimal Tee</h3>
-        <p class="price">৳780</p>
-        <button class="order-btn">Order Now</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="tshirt5.png" alt="Tshirt 5">
-      <div class="card-content">
-        <h3>Vintage Tee</h3>
-        <p class="price">৳920</p>
-        <button class="order-btn">Order Now</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="tshirt6.png" alt="Tshirt 6">
-      <div class="card-content">
-        <h3>Graphic Tee</h3>
-        <p class="price">৳1200</p>
-        <button class="order-btn">Order Now</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="tshirt7.png" alt="Tshirt 7">
-      <div class="card-content">
-        <h3>Premium Cotton Tee</h3>
-        <p class="price">৳1350</p>
-        <button class="order-btn">Order Now</button>
-      </div>
-    </div>
-
-  </section>
-
-  <section class="order-section">
-    <h2>Place Your Order</h2>
-
-    <form>
       <input type="text" placeholder="Your Name" required>
-      <input type="text" placeholder="Phone Number" required>
-      <textarea rows="4" placeholder="Delivery Address" required></textarea>
 
-      <select required>
-        <option value="">Select Payment Method</option>
+      <input type="text" placeholder="Phone Number" required>
+
+      <textarea placeholder="Delivery Address" required></textarea>
+
+      <select>
+        <option>Cash On Delivery</option>
         <option>bKash</option>
-        <option>Nagad</option>
-        <option>Cash on Delivery</option>
       </select>
 
-      <div class="payment-info">
-        <strong>bKash Number:</strong> 01844175037 <br>
-        <strong>Nagad Number:</strong> 01844175037 <br>
-        <strong>Cash on Delivery:</strong> Available Across Bangladesh
+      <div class="payment-box">
+        bKash Number: <strong>01844175037</strong>
       </div>
 
-      <button type="submit" class="order-btn">Confirm Order</button>
-    </form>
-  </section>
+      <button type="submit">
+        Place Order
+      </button>
 
-  <footer>
-    <p>© 2026 My T-Shirt Store - All Rights Reserved</p>
-  </footer>
+    </form>
+
+  </div>
+
+</div>
+
+<footer>
+  © 2026 Matrix Official Hub
+</footer>
+
+<script>
+
+const products = [
+  {
+    name:"T-Shirt 1",
+    image:"tshirt1.png",
+    price:499
+  },
+
+  {
+    name:"T-Shirt 2",
+    image:"tshirt2.png",
+    price:499
+  },
+
+  {
+    name:"T-Shirt 3",
+    image:"tshirt3.png",
+    price:499
+  },
+
+  {
+    name:"T-Shirt 4",
+    image:"tshirt4.png",
+    price:499
+  },
+
+  {
+    name:"T-Shirt 5",
+    image:"tshirt5.png",
+    price:499
+  },
+
+  {
+    name:"T-Shirt 6",
+    image:"tshirt6.png",
+    price:499
+  },
+
+  {
+    name:"T-Shirt 7",
+    image:"tshirt7.png",
+    price:499
+  }
+];
+
+const productsContainer = document.getElementById("products");
+const cartItems = document.getElementById("cartItems");
+const totalPrice = document.getElementById("totalPrice");
+
+let cart = [];
+
+function renderProducts(){
+
+  products.forEach((product,index)=>{
+
+    const card = document.createElement("div");
+
+    card.classList.add("card");
+
+    card.innerHTML = `
+      <img src="${product.image}">
+
+      <div class="card-content">
+
+        <h2>${product.name}</h2>
+
+        <div class="price">
+          ${product.price}৳
+        </div>
+
+        <button onclick="addToCart(${index})">
+          Add To Cart
+        </button>
+
+      </div>
+    `;
+
+    productsContainer.appendChild(card);
+
+  });
+
+}
+
+function addToCart(index){
+
+  cart.push(products[index]);
+
+  updateCart();
+
+}
+
+function updateCart(){
+
+  cartItems.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item)=>{
+
+    total += item.price;
+
+    const div = document.createElement("div");
+
+    div.classList.add("cart-item");
+
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <span>${item.price}৳</span>
+    `;
+
+    cartItems.appendChild(div);
+
+  });
+
+  totalPrice.innerText = `Total: ${total}৳`;
+
+}
+
+document.getElementById("orderForm").addEventListener("submit",(e)=>{
+
+  e.preventDefault();
+
+  if(cart.length === 0){
+
+    alert("Your cart is empty.");
+
+    return;
+
+  }
+
+  alert("Order placed successfully!");
+
+  cart = [];
+
+  updateCart();
+
+  document.getElementById("orderForm").reset();
+
+});
+
+renderProducts();
+
+</script>
 
 </body>
 </html>
