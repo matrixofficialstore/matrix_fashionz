@@ -173,24 +173,19 @@
       Total: 0৳
     </div>
 
-    <form id="orderForm">
+    <form action="https://formsubmit.co/matrixofficialhub@gmail.com" method="POST">
 
-      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="text" name="name" placeholder="Your Name" required>
 
-      <input type="email" id="email" placeholder="Your Email" required>
+      <input type="email" name="email" placeholder="Your Email" required>
 
-      <input type="text" id="phone" placeholder="Phone Number" required>
+      <input type="text" name="phone" placeholder="Phone Number" required>
 
-      <textarea id="address" placeholder="Delivery Address" required></textarea>
+      <textarea name="address" placeholder="Delivery Address" required></textarea>
 
-      <select id="paymentMethod">
-        <option value="Cash On Delivery">
-          Cash On Delivery
-        </option>
-
-        <option value="bKash">
-          bKash
-        </option>
+      <select name="payment">
+        <option>Cash On Delivery</option>
+        <option>bKash</option>
       </select>
 
       <div class="payment-box">
@@ -261,8 +256,6 @@ const products = [
 ];
 
 const productsContainer = document.getElementById("products");
-const cartItems = document.getElementById("cartItems");
-const totalPrice = document.getElementById("totalPrice");
 
 let cart = [];
 
@@ -300,100 +293,9 @@ function renderProducts(){
 
 function addToCart(index){
 
-  cart.push(products[index]);
-
-  updateCart();
+  alert(products[index].name + " added to cart!");
 
 }
-
-function updateCart(){
-
-  cartItems.innerHTML = "";
-
-  let total = 0;
-
-  cart.forEach((item)=>{
-
-    total += item.price;
-
-    const div = document.createElement("div");
-
-    div.classList.add("cart-item");
-
-    div.innerHTML = `
-      <span>${item.name}</span>
-      <span>${item.price}৳</span>
-    `;
-
-    cartItems.appendChild(div);
-
-  });
-
-  totalPrice.innerText = `Total: ${total}৳`;
-
-}
-
-document.getElementById("orderForm").addEventListener("submit", async (e)=>{
-
-  e.preventDefault();
-
-  if(cart.length === 0){
-
-    alert("Your cart is empty.");
-
-    return;
-
-  }
-
-  const orderData = {
-
-    name: document.getElementById("name").value,
-
-    email: document.getElementById("email").value,
-
-    phone: document.getElementById("phone").value,
-
-    address: document.getElementById("address").value,
-
-    paymentMethod: document.getElementById("paymentMethod").value,
-
-    cart: cart
-
-  };
-
-  try {
-
-    const response = await fetch("/api/order", {
-
-  method: "POST",
-
-  headers: {
-    "Content-Type": "application/json"
-  },
-
-  body: JSON.stringify(orderData)
-
-  });
-
-    const data = await response.json();
-
-    alert(data.message);
-
-    cart = [];
-
-    updateCart();
-
-    document.getElementById("orderForm").reset();
-
-  } catch(error){
-
-    console.log(error);
-
-    alert("Server is not running.");
-
-  }
-
-});
 
 renderProducts();
 
