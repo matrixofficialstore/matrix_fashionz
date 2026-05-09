@@ -7,6 +7,7 @@
   <title>Matrix Official Hub</title>
 
   <style>
+
     *{
       margin:0;
       padding:0;
@@ -28,7 +29,6 @@
 
     header h1{
       font-size:35px;
-      color:white;
     }
 
     .container{
@@ -149,6 +149,7 @@
       padding:20px;
       border-top:2px solid #7a0000;
     }
+
   </style>
 </head>
 
@@ -174,19 +175,27 @@
 
     <form id="orderForm">
 
-      <input type="text" placeholder="Your Name" required>
+      <input type="text" id="name" placeholder="Your Name" required>
 
-      <input type="text" placeholder="Phone Number" required>
+      <input type="email" id="email" placeholder="Your Email" required>
 
-      <textarea placeholder="Delivery Address" required></textarea>
+      <input type="text" id="phone" placeholder="Phone Number" required>
 
-      <select>
-        <option>Cash On Delivery</option>
-        <option>bKash</option>
+      <textarea id="address" placeholder="Delivery Address" required></textarea>
+
+      <select id="paymentMethod">
+        <option value="Cash On Delivery">
+          Cash On Delivery
+        </option>
+
+        <option value="bKash">
+          bKash
+        </option>
       </select>
 
       <div class="payment-box">
-        bKash Number: <strong>01844175037</strong>
+        bKash Number:
+        <strong>01844175037</strong>
       </div>
 
       <button type="submit">
@@ -206,6 +215,7 @@
 <script>
 
 const products = [
+
   {
     name:"T-Shirt 1",
     image:"tshirt1.png",
@@ -247,6 +257,7 @@ const products = [
     image:"tshirt7.png",
     price:499
   }
+
 ];
 
 const productsContainer = document.getElementById("products");
@@ -264,7 +275,7 @@ function renderProducts(){
     card.classList.add("card");
 
     card.innerHTML = `
-      <img src="${product.image}">
+      <img src="${product.image}" alt="${product.name}">
 
       <div class="card-content">
 
@@ -322,7 +333,7 @@ function updateCart(){
 
 }
 
-document.getElementById("orderForm").addEventListener("submit",(e)=>{
+document.getElementById("orderForm").addEventListener("submit", async (e)=>{
 
   e.preventDefault();
 
@@ -334,13 +345,53 @@ document.getElementById("orderForm").addEventListener("submit",(e)=>{
 
   }
 
-  alert("Order placed successfully!");
+  const orderData = {
 
-  cart = [];
+    name: document.getElementById("name").value,
 
-  updateCart();
+    email: document.getElementById("email").value,
 
-  document.getElementById("orderForm").reset();
+    phone: document.getElementById("phone").value,
+
+    address: document.getElementById("address").value,
+
+    paymentMethod: document.getElementById("paymentMethod").value,
+
+    cart: cart
+
+  };
+
+  try {
+
+    const response = await fetch("http://localhost:3000/order",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify(orderData)
+
+    });
+
+    const data = await response.json();
+
+    alert(data.message);
+
+    cart = [];
+
+    updateCart();
+
+    document.getElementById("orderForm").reset();
+
+  } catch(error){
+
+    console.log(error);
+
+    alert("Server is not running.");
+
+  }
 
 });
 
