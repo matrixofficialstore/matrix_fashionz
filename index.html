@@ -105,6 +105,10 @@
       margin-bottom:20px;
     }
 
+    .cart-items{
+      margin-top:20px;
+    }
+
     .cart-item{
       display:flex;
       justify-content:space-between;
@@ -167,7 +171,7 @@
 
     <h2>Shopping Cart</h2>
 
-    <div id="cartItems"></div>
+    <div class="cart-items" id="cartItems"></div>
 
     <div class="total" id="totalPrice">
       Total: 0৳
@@ -175,17 +179,26 @@
 
     <form action="https://formsubmit.co/matrixofficialhub@gmail.com" method="POST">
 
-      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="hidden" name="T-Shirt Order" id="tshirtsInput">
 
-      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="hidden" name="_subject" value="New T-Shirt Order">
 
-      <input type="text" name="phone" placeholder="Phone Number" required>
+      <input type="hidden" name="_captcha" value="false">
 
-      <textarea name="address" placeholder="Delivery Address" required></textarea>
+      <input type="text" name="Customer Name" placeholder="Your Name" required>
 
-      <select name="payment">
+      <input type="email" name="Customer Email" placeholder="Your Email" required>
+
+      <input type="text" name="Phone Number" placeholder="Phone Number" required>
+
+      <textarea name="Address" placeholder="Delivery Address" required></textarea>
+
+      <select name="Payment Method">
+
         <option>Cash On Delivery</option>
+
         <option>bKash</option>
+
       </select>
 
       <div class="payment-box">
@@ -257,6 +270,10 @@ const products = [
 
 const productsContainer = document.getElementById("products");
 
+const cartItems = document.getElementById("cartItems");
+
+const totalPrice = document.getElementById("totalPrice");
+
 let cart = [];
 
 function renderProducts(){
@@ -293,7 +310,42 @@ function renderProducts(){
 
 function addToCart(index){
 
-  alert(products[index].name + " added to cart!");
+  cart.push(products[index]);
+
+  updateCart();
+
+}
+
+function updateCart(){
+
+  cartItems.innerHTML = "";
+
+  let total = 0;
+
+  const tshirtNames = [];
+
+  cart.forEach((item)=>{
+
+    total += item.price;
+
+    tshirtNames.push(item.name);
+
+    const div = document.createElement("div");
+
+    div.classList.add("cart-item");
+
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <span>${item.price}৳</span>
+    `;
+
+    cartItems.appendChild(div);
+
+  });
+
+  totalPrice.innerText = `Total: ${total}৳`;
+
+  document.getElementById("tshirtsInput").value = tshirtNames.join(", ");
 
 }
 
