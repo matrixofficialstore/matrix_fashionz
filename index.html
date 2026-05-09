@@ -363,17 +363,17 @@ document.getElementById("orderForm").addEventListener("submit", async (e)=>{
 
   try {
 
-    const response = await fetch("http://localhost:3000/order",{
+    const response = await fetch("/api/order", {
 
-      method:"POST",
+  method: "POST",
 
-      headers:{
-        "Content-Type":"application/json"
-      },
+  headers: {
+    "Content-Type": "application/json"
+  },
 
-      body:JSON.stringify(orderData)
+  body: JSON.stringify(orderData)
 
-    });
+  });
 
     const data = await response.json();
 
