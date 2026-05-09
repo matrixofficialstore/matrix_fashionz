@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+}
+
+body{
+  background:black;
+  color:white;
+}
+
+.container{
+  width:90%;
+  margin:auto;
+  padding:40px 0;
+  text-align:center;
+}
+
+.product-box{
+  background:#111;
+  border:2px solid white;
+  border-radius:20px;
+  padding:30px;
+  max-width:700px;
+  margin:auto;
+}
+
+img{
+  width:100%;
+  max-width:500px;
+  height:500px;
+  object-fit:contain;
+  background:black;
+}
+
+h1{
+  margin-top:20px;
+}
+
+.price{
+  font-size:28px;
+  margin-top:10px;
+}
+
+select{
+  margin-top:25px;
+  padding:14px;
+  width:220px;
+  border:none;
+  border-radius:10px;
+  background:#222;
+  color:white;
+  font-size:16px;
+}
+
+button{
+  margin-top:25px;
+  background:white;
+  color:black;
+  padding:14px 25px;
+  border:none;
+  border-radius:10px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#ccc;
+}
+
+.back{
+  display:inline-block;
+  margin-top:20px;
+  color:white;
+  text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="product-box">
+
+    <img id="productImage">
+
+    <h1 id="productName"></h1>
+
+    <div class="price" id="productPrice"></div>
+
+    <select id="size">
+
+      <option>S</option>
+      <option>M</option>
+      <option>L</option>
+      <option>XL</option>
+
+    </select>
+
+    <br>
+
+    <button onclick="addToCart()">
+      Order Now
+    </button>
+
+    <br>
+
+    <a href="index.html" class="back">
+      ← Back To Shop
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+
+const product =
+JSON.parse(localStorage.getItem("selectedProduct"));
+
+document.getElementById("productImage")
+.src = product.image;
+
+document.getElementById("productName")
+.innerText = product.name;
+
+document.getElementById("productPrice")
+.innerText = product.price + "৳";
+
+function addToCart(){
+
+  const size =
+  document.getElementById("size").value;
+
+  let cart =
+  JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.push({
+
+    name:product.name,
+    image:product.image,
+    price:product.price,
+    size:size
+
+  });
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  alert("Added To Cart!");
+
+  window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>
