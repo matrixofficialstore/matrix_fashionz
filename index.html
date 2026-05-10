@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -19,31 +18,32 @@
 }
 
 body{
-  background:#000;
-  color:white;
+  background:white;
+  color:black;
 }
 
 /* HEADER */
 
 header{
-  background:#111;
+  background:black;
+  color:white;
   padding:20px;
-  border-bottom:2px solid white;
   position:sticky;
   top:0;
   z-index:1000;
 }
 
 .top-header{
+  width:90%;
+  margin:auto;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  width:90%;
-  margin:auto;
 }
 
-header h1{
+.logo{
   font-size:32px;
+  font-weight:bold;
   letter-spacing:2px;
 }
 
@@ -52,35 +52,97 @@ header h1{
   color:black;
   padding:12px 20px;
   border-radius:12px;
-  font-weight:bold;
   cursor:pointer;
-  transition:0.3s;
+  font-weight:bold;
+  border:2px solid white;
 }
 
 .cart-btn:hover{
-  background:#ccc;
+  background:#ddd;
+}
+
+/* HERO */
+
+.hero{
+  width:90%;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+
+.hero img{
+  width:100%;
+  border-radius:20px;
+  border:3px solid black;
+}
+
+.features{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.feature-box{
+  border:2px solid black;
+  padding:20px;
+  border-radius:15px;
+  background:#f5f5f5;
+  font-size:18px;
+  font-weight:bold;
+}
+
+/* CATEGORY */
+
+.category-section{
+  width:90%;
+  margin:auto;
+  margin-top:50px;
+}
+
+.category-title{
+  font-size:35px;
+  margin-bottom:20px;
+}
+
+.categories{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.category-btn{
+  padding:15px 25px;
+  border:none;
+  background:black;
+  color:white;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.category-btn:hover{
+  background:#333;
 }
 
 /* PRODUCTS */
 
-.container{
-  width:90%;
-  margin:auto;
-  padding:40px 0;
-}
-
 .products{
+  width:90%;
+  margin:40px auto;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:25px;
 }
 
 .card{
-  background:#111;
-  border:2px solid white;
-  border-radius:15px;
+  border:2px solid black;
+  border-radius:20px;
   overflow:hidden;
   transition:0.3s;
+  background:white;
 }
 
 .card:hover{
@@ -89,14 +151,13 @@ header h1{
 
 .card img{
   width:100%;
-  height:450px;
+  height:350px;
   object-fit:contain;
-  background:black;
+  background:#f5f5f5;
 }
 
 .card-content{
   padding:20px;
-  text-align:center;
 }
 
 .card-content h2{
@@ -104,25 +165,37 @@ header h1{
 }
 
 .price{
-  color:white;
-  font-size:22px;
+  font-size:24px;
+  font-weight:bold;
   margin-bottom:15px;
 }
 
-button{
-  background:white;
-  color:black;
-  border:none;
-  padding:12px 20px;
+.size-box{
+  margin-bottom:15px;
+}
+
+select{
+  width:100%;
+  padding:12px;
   border-radius:10px;
-  cursor:pointer;
+  border:2px solid black;
   font-size:16px;
-  transition:0.3s;
+}
+
+.buy-btn{
+  width:100%;
+  padding:14px;
+  background:black;
+  color:white;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:17px;
   font-weight:bold;
 }
 
-button:hover{
-  background:#ccc;
+.buy-btn:hover{
+  background:#333;
 }
 
 /* CART */
@@ -133,8 +206,8 @@ button:hover{
   right:-420px;
   width:400px;
   height:100vh;
-  background:#111;
-  border-left:2px solid white;
+  background:white;
+  border-left:3px solid black;
   padding:20px;
   transition:0.4s;
   z-index:2000;
@@ -155,18 +228,31 @@ button:hover{
 .close-btn{
   background:red;
   color:white;
+  border:none;
+  padding:10px 15px;
+  border-radius:10px;
+  cursor:pointer;
 }
 
 .cart-item{
-  display:flex;
-  justify-content:space-between;
-  padding:12px 0;
-  border-bottom:1px solid #333;
+  border-bottom:1px solid #ccc;
+  padding:15px 0;
+}
+
+.remove-btn{
+  margin-top:10px;
+  background:red;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
 .total{
   margin-top:20px;
   font-size:24px;
+  font-weight:bold;
 }
 
 /* FORM */
@@ -179,28 +265,45 @@ form{
 }
 
 input,
-textarea,
-select{
-  padding:12px;
-  border:none;
+textarea{
+  padding:14px;
+  border:2px solid black;
   border-radius:10px;
-  background:#222;
-  color:white;
   font-size:16px;
 }
 
-.payment-box{
-  background:#222;
+.order-btn{
+  background:black;
+  color:white;
+  border:none;
   padding:15px;
-  border-radius:10px;
-  border:1px solid white;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.payment-box{
+  background:#f5f5f5;
+  border:2px solid black;
+  padding:15px;
+  border-radius:12px;
 }
 
 footer{
-  margin-top:50px;
+  margin-top:60px;
+  background:black;
+  color:white;
   text-align:center;
-  padding:20px;
-  border-top:2px solid white;
+  padding:25px;
+}
+
+@media(max-width:800px){
+
+  .hero{
+    grid-template-columns:1fr;
+  }
+
 }
 
 @media(max-width:500px){
@@ -209,14 +312,13 @@ footer{
     width:100%;
   }
 
-  header h1{
-    font-size:22px;
+  .logo{
+    font-size:24px;
   }
 
 }
 
 </style>
-
 </head>
 
 <body>
@@ -225,7 +327,9 @@ footer{
 
   <div class="top-header">
 
-    <h1>Matrix Official Hub</h1>
+    <div class="logo">
+      Matrix Fashion
+    </div>
 
     <div class="cart-btn" onclick="toggleCart()">
       🛒 Cart (<span id="cartCount">0</span>)
@@ -235,11 +339,63 @@ footer{
 
 </header>
 
-<div class="container">
+<!-- HERO -->
 
-  <div class="products" id="products"></div>
+<section class="hero">
 
-</div>
+  <img src="review.png" alt="Reviews">
+
+  <div class="features">
+
+    <div class="feature-box">
+      ✅ Cash On Delivery Available
+    </div>
+
+    <div class="feature-box">
+      🔥 Premium Quality Products
+    </div>
+
+    <div class="feature-box">
+      🚚 Fast Delivery All Over Bangladesh
+    </div>
+
+    <div class="feature-box">
+      💯 Trusted Clothing Brand
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CATEGORY -->
+
+<section class="category-section">
+
+  <div class="category-title">
+    Choose Category
+  </div>
+
+  <div class="categories">
+
+    <button class="category-btn" onclick="showCategory('tshirt')">
+      T-Shirts
+    </button>
+
+    <button class="category-btn" onclick="showCategory('shirt')">
+      Shirts
+    </button>
+
+    <button class="category-btn" onclick="showCategory('panjabi')">
+      Panjabi
+    </button>
+
+  </div>
+
+</section>
+
+<!-- PRODUCTS -->
+
+<div class="products" id="products"></div>
 
 <!-- CART -->
 
@@ -263,34 +419,23 @@ footer{
 
   <form action="https://formsubmit.co/matrixofficialhub@gmail.com" method="POST">
 
-    <input type="hidden" name="T-Shirt Order" id="tshirtsInput">
-
-    <input type="hidden" name="_subject" value="New T-Shirt Order">
+    <input type="hidden" name="Products" id="productsInput">
 
     <input type="hidden" name="_captcha" value="false">
 
-    <input type="text" name="Customer Name" placeholder="Your Name" required>
+    <input type="text" name="Name" placeholder="Your Name" required>
 
-    <input type="email" name="Customer Email" placeholder="Your Email" required>
+    <input type="email" name="Email" placeholder="Your Email" required>
 
-    <input type="text" name="Phone Number" placeholder="Phone Number" required>
+    <input type="text" name="Phone" placeholder="Phone Number" required>
 
     <textarea name="Address" placeholder="Delivery Address" required></textarea>
 
-    <select name="Payment Method">
-
-      <option>Cash On Delivery</option>
-
-      <option>bKash</option>
-
-    </select>
-
     <div class="payment-box">
-      bKash Number:
-      <strong>01844175037</strong>
+      bKash Number: <strong>01844175037</strong>
     </div>
 
-    <button type="submit">
+    <button class="order-btn" type="submit">
       Place Order
     </button>
 
@@ -299,73 +444,84 @@ footer{
 </div>
 
 <footer>
-  © 2026 Matrix Official Hub
+  © 2026 Matrix Fashion
 </footer>
 
 <script>
 
 /* PRODUCTS */
 
-const products = [
+const allProducts = {
 
-  {
-    name:"Matrix T-Shirt",
-    image:"tshirt1.png",
-    price:499
-  },
+  tshirt:[
 
-  {
-    name:"Poem T-Shirt",
-    image:"tshirt2.png",
-    price:499
-  },
+    {
+      name:"Matrix T-Shirt",
+      image:"tshirt1.png",
+      price:499
+    },
 
-  {
-    name:"Ferrari T-Shirt",
-    image:"tshirt3.png",
-    price:499
-  },
+    {
+      name:"Poem T-Shirt",
+      image:"tshirt2.png",
+      price:499
+    },
 
-  {
-    name:"Naksha T-Shirt",
-    image:"tshirt4.png",
-    price:499
-  },
+    {
+      name:"Ferrari T-Shirt",
+      image:"tshirt3.png",
+      price:499
+    },
 
-  {
-    name:"T-Shirt",
-    image:"tshirt5.png",
-    price:499
-  },
+    {
+      name:"Naksha T-Shirt",
+      image:"tshirt4.png",
+      price:499
+    }
 
-  {
-    name:"Money designed T-Shirt",
-    image:"tshirt6.png",
-    price:499
-  },
+  ],
 
+  shirt:[
 
-];
+    {
+      name:"Black Shirt",
+      image:"shirt1.png",
+      price:799
+    },
+
+    {
+      name:"White Shirt",
+      image:"shirt2.png",
+      price:799
+    }
+
+  ],
+
+  panjabi:[
+
+    {
+      name:"Premium Panjabi",
+      image:"panjabi1.png",
+      price:999
+    }
+
+  ]
+
+};
 
 const productsContainer =
 document.getElementById("products");
 
-const cartItems =
-document.getElementById("cartItems");
-
-const totalPrice =
-document.getElementById("totalPrice");
-
-/* LOCAL STORAGE CART */
-
 let cart =
 JSON.parse(localStorage.getItem("cart")) || [];
 
-/* RENDER PRODUCTS */
+/* SHOW CATEGORY */
 
-function renderProducts(){
+function showCategory(category){
 
-  products.forEach((product,index)=>{
+  productsContainer.innerHTML = "";
+
+  allProducts[category].forEach((product,index)=>{
 
     const card =
     document.createElement("div");
@@ -374,7 +530,7 @@ function renderProducts(){
 
     card.innerHTML = `
 
-      <img src="${product.image}" alt="${product.name}">
+      <img src="${product.image}">
 
       <div class="card-content">
 
@@ -384,8 +540,24 @@ function renderProducts(){
           ${product.price}৳
         </div>
 
-        <button onclick="goToProduct(${index})">
-          View Product
+        <div class="size-box">
+
+          <select id="size-${category}-${index}">
+
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+
+          </select>
+
+        </div>
+
+        <button class="buy-btn"
+        onclick="addToCart('${category}',${index})">
+
+          Buy Now
+
         </button>
 
       </div>
@@ -398,20 +570,51 @@ function renderProducts(){
 
 }
 
-/* GO PRODUCT PAGE */
+/* ADD TO CART */
 
-function goToProduct(index){
+function addToCart(category,index){
+
+  const product =
+  allProducts[category][index];
+
+  const size =
+  document.getElementById(
+    `size-${category}-${index}`
+  ).value;
+
+  cart.push({
+    name:product.name,
+    price:product.price,
+    size:size
+  });
 
   localStorage.setItem(
-    "selectedProduct",
-    JSON.stringify(products[index])
+    "cart",
+    JSON.stringify(cart)
   );
 
-  window.location.href = "product.html";
+  updateCart();
+
+  toggleCart();
 
 }
 
-/* CART TOGGLE */
+/* REMOVE ITEM */
+
+function removeItem(index){
+
+  cart.splice(index,1);
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  updateCart();
+
+}
+
+/* TOGGLE CART */
 
 function toggleCart(){
 
@@ -426,20 +629,23 @@ function toggleCart(){
 
 function updateCart(){
 
+  const cartItems =
+  document.getElementById("cartItems");
+
   cartItems.innerHTML = "";
 
   let total = 0;
 
-  let tshirtNames = [];
+  let productNames = [];
 
   document.getElementById("cartCount")
   .innerText = cart.length;
 
-  cart.forEach((item)=>{
+  cart.forEach((item,index)=>{
 
     total += item.price;
 
-    tshirtNames.push(
+    productNames.push(
       `${item.name} (${item.size})`
     );
 
@@ -450,13 +656,18 @@ function updateCart(){
 
     div.innerHTML = `
 
-      <span>
-        ${item.name} (${item.size})
-      </span>
+      <h3>${item.name}</h3>
 
-      <span>
-        ${item.price}৳
-      </span>
+      <p>Size: ${item.size}</p>
+
+      <p>${item.price}৳</p>
+
+      <button class="remove-btn"
+      onclick="removeItem(${index})">
+
+        Remove
+
+      </button>
 
     `;
 
@@ -464,15 +675,17 @@ function updateCart(){
 
   });
 
-  totalPrice.innerText =
-  `Total: ${total}৳`;
+  document.getElementById("totalPrice")
+  .innerText = `Total: ${total}৳`;
 
-  document.getElementById("tshirtsInput")
-  .value = tshirtNames.join(", ");
+  document.getElementById("productsInput")
+  .value = productNames.join(", ");
 
 }
 
-renderProducts();
+/* DEFAULT */
+
+showCategory("tshirt");
 
 updateCart();
 
