@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Matrix Fashion</title>
-
-<link rel="icon" type="image/png" href="logo.png">
 
 <style>
 
@@ -18,7 +16,7 @@
 }
 
 body{
-  background:white;
+  background:#f5f5f5;
   color:black;
 }
 
@@ -42,7 +40,7 @@ header{
 }
 
 .logo{
-  font-size:32px;
+  font-size:30px;
   font-weight:bold;
   letter-spacing:2px;
 }
@@ -54,18 +52,13 @@ header{
   border-radius:12px;
   cursor:pointer;
   font-weight:bold;
-  border:2px solid white;
-}
-
-.cart-btn:hover{
-  background:#ddd;
 }
 
 /* HERO */
 
 .hero{
   width:90%;
-  margin:40px auto;
+  margin:50px auto;
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:40px;
@@ -74,23 +67,86 @@ header{
 
 .hero img{
   width:100%;
-  border-radius:20px;
-  border:3px solid black;
+  border-radius:25px;
+  object-fit:cover;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
+
+/* FEATURES */
 
 .features{
   display:flex;
   flex-direction:column;
-  gap:20px;
+  gap:25px;
 }
 
 .feature-box{
-  border:2px solid black;
-  padding:20px;
-  border-radius:15px;
-  background:#f5f5f5;
-  font-size:18px;
-  font-weight:bold;
+  position:relative;
+  background:linear-gradient(135deg,#000,#1a1a1a);
+  color:white;
+  padding:25px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:0.35s;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.feature-box::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.12),
+    transparent
+  );
+  transition:0.7s;
+}
+
+.feature-box:hover::before{
+  left:100%;
+}
+
+.feature-box:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 18px 35px rgba(0,0,0,0.35);
+}
+
+.feature-content{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  position:relative;
+  z-index:2;
+}
+
+.icon-circle{
+  width:65px;
+  height:65px;
+  min-width:65px;
+  border-radius:50%;
+  background:white;
+  color:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:30px;
+}
+
+.feature-text h3{
+  font-size:24px;
+  margin-bottom:6px;
+}
+
+.feature-text p{
+  color:#ccc;
+  font-size:15px;
+  line-height:1.5;
 }
 
 /* CATEGORY */
@@ -98,12 +154,13 @@ header{
 .category-section{
   width:90%;
   margin:auto;
-  margin-top:50px;
+  margin-top:60px;
 }
 
 .category-title{
-  font-size:35px;
-  margin-bottom:20px;
+  font-size:38px;
+  margin-bottom:25px;
+  font-weight:bold;
 }
 
 .categories{
@@ -113,51 +170,53 @@ header{
 }
 
 .category-btn{
-  padding:15px 25px;
-  border:none;
   background:black;
   color:white;
-  border-radius:12px;
-  cursor:pointer;
+  border:none;
+  padding:16px 28px;
+  border-radius:14px;
   font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
   font-weight:bold;
 }
 
 .category-btn:hover{
-  background:#333;
+  transform:translateY(-3px);
+  background:#222;
 }
 
 /* PRODUCTS */
 
 .products{
   width:90%;
-  margin:40px auto;
+  margin:50px auto;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:25px;
+  gap:30px;
 }
 
 .card{
-  border:2px solid black;
-  border-radius:20px;
-  overflow:hidden;
-  transition:0.3s;
   background:white;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  transition:0.35s;
 }
 
 .card:hover{
-  transform:scale(1.03);
+  transform:translateY(-8px);
 }
 
 .card img{
   width:100%;
-  height:350px;
+  height:340px;
   object-fit:contain;
-  background:#f5f5f5;
+  background:#f0f0f0;
 }
 
 .card-content{
-  padding:20px;
+  padding:25px;
 }
 
 .card-content h2{
@@ -165,37 +224,35 @@ header{
 }
 
 .price{
-  font-size:24px;
+  font-size:25px;
   font-weight:bold;
-  margin-bottom:15px;
-}
-
-.size-box{
   margin-bottom:15px;
 }
 
 select{
   width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:2px solid black;
+  padding:14px;
+  border-radius:12px;
+  border:2px solid #ddd;
+  margin-bottom:15px;
   font-size:16px;
 }
 
 .buy-btn{
   width:100%;
-  padding:14px;
+  padding:15px;
+  border:none;
   background:black;
   color:white;
-  border:none;
-  border-radius:12px;
+  border-radius:14px;
   cursor:pointer;
   font-size:17px;
   font-weight:bold;
+  transition:0.3s;
 }
 
 .buy-btn:hover{
-  background:#333;
+  background:#222;
 }
 
 /* CART */
@@ -207,8 +264,8 @@ select{
   width:400px;
   height:100vh;
   background:white;
-  border-left:3px solid black;
-  padding:20px;
+  padding:25px;
+  box-shadow:-5px 0 20px rgba(0,0,0,0.2);
   transition:0.4s;
   z-index:2000;
   overflow-y:auto;
@@ -235,17 +292,17 @@ select{
 }
 
 .cart-item{
-  border-bottom:1px solid #ccc;
+  border-bottom:1px solid #ddd;
   padding:15px 0;
 }
 
 .remove-btn{
-  margin-top:10px;
   background:red;
   color:white;
   border:none;
   padding:8px 12px;
-  border-radius:8px;
+  border-radius:10px;
+  margin-top:10px;
   cursor:pointer;
 }
 
@@ -254,8 +311,6 @@ select{
   font-size:24px;
   font-weight:bold;
 }
-
-/* FORM */
 
 form{
   margin-top:30px;
@@ -267,9 +322,16 @@ form{
 input,
 textarea{
   padding:14px;
-  border:2px solid black;
-  border-radius:10px;
+  border-radius:12px;
+  border:2px solid #ddd;
   font-size:16px;
+}
+
+.payment-box{
+  background:#f0f0f0;
+  padding:18px;
+  border-radius:15px;
+  font-weight:bold;
 }
 
 .order-btn{
@@ -277,28 +339,25 @@ textarea{
   color:white;
   border:none;
   padding:15px;
-  border-radius:12px;
+  border-radius:14px;
   cursor:pointer;
   font-size:18px;
   font-weight:bold;
 }
 
-.payment-box{
-  background:#f5f5f5;
-  border:2px solid black;
-  padding:15px;
-  border-radius:12px;
-}
+/* FOOTER */
 
 footer{
-  margin-top:60px;
   background:black;
   color:white;
   text-align:center;
   padding:25px;
+  margin-top:60px;
 }
 
-@media(max-width:800px){
+/* MOBILE */
+
+@media(max-width:850px){
 
   .hero{
     grid-template-columns:1fr;
@@ -313,7 +372,7 @@ footer{
   }
 
   .logo{
-    font-size:24px;
+    font-size:22px;
   }
 
 }
@@ -343,24 +402,76 @@ footer{
 
 <section class="hero">
 
-  <img src="review.png" alt="Reviews">
+  <img src="review.png" alt="review">
 
   <div class="features">
 
     <div class="feature-box">
-      ✅ Cash On Delivery Available
+
+      <div class="feature-content">
+
+        <div class="icon-circle">
+          ✅
+        </div>
+
+        <div class="feature-text">
+          <h3>Cash On Delivery</h3>
+          <p>Pay after receiving your product safely.</p>
+        </div>
+
+      </div>
+
     </div>
 
     <div class="feature-box">
-      🔥 Premium Quality Products
+
+      <div class="feature-content">
+
+        <div class="icon-circle">
+          🔥
+        </div>
+
+        <div class="feature-text">
+          <h3>Premium Quality</h3>
+          <p>Comfortable and stylish premium fabrics.</p>
+        </div>
+
+      </div>
+
     </div>
 
     <div class="feature-box">
-      🚚 Fast Delivery All Over Bangladesh
+
+      <div class="feature-content">
+
+        <div class="icon-circle">
+          🚚
+        </div>
+
+        <div class="feature-text">
+          <h3>Fast Delivery</h3>
+          <p>Quick delivery all over Bangladesh.</p>
+        </div>
+
+      </div>
+
     </div>
 
     <div class="feature-box">
-      💯 Trusted Clothing Brand
+
+      <div class="feature-content">
+
+        <div class="icon-circle">
+          💯
+        </div>
+
+        <div class="feature-text">
+          <h3>Trusted Brand</h3>
+          <p>Thousands of happy customers trust us.</p>
+        </div>
+
+      </div>
+
     </div>
 
   </div>
@@ -377,15 +488,18 @@ footer{
 
   <div class="categories">
 
-    <button class="category-btn" onclick="showCategory('tshirt')">
+    <button class="category-btn"
+    onclick="showCategory('tshirt')">
       T-Shirts
     </button>
 
-    <button class="category-btn" onclick="showCategory('shirt')">
+    <button class="category-btn"
+    onclick="showCategory('shirt')">
       Shirts
     </button>
 
-    <button class="category-btn" onclick="showCategory('panjabi')">
+    <button class="category-btn"
+    onclick="showCategory('panjabi')">
       Panjabi
     </button>
 
@@ -405,7 +519,8 @@ footer{
 
     <h2>Your Cart</h2>
 
-    <button class="close-btn" onclick="toggleCart()">
+    <button class="close-btn"
+    onclick="toggleCart()">
       ✕
     </button>
 
@@ -417,25 +532,30 @@ footer{
     Total: 0৳
   </div>
 
-  <form action="https://formsubmit.co/matrixofficialhub@gmail.com" method="POST">
+  <form>
 
-    <input type="hidden" name="Products" id="productsInput">
+    <input type="text"
+    placeholder="Your Name"
+    required>
 
-    <input type="hidden" name="_captcha" value="false">
+    <input type="email"
+    placeholder="Your Email"
+    required>
 
-    <input type="text" name="Name" placeholder="Your Name" required>
+    <input type="text"
+    placeholder="Phone Number"
+    required>
 
-    <input type="email" name="Email" placeholder="Your Email" required>
-
-    <input type="text" name="Phone" placeholder="Phone Number" required>
-
-    <textarea name="Address" placeholder="Delivery Address" required></textarea>
+    <textarea
+    placeholder="Delivery Address"
+    required></textarea>
 
     <div class="payment-box">
-      bKash Number: <strong>01844175037</strong>
+      bKash Number:
+      <strong>01844175037</strong>
     </div>
 
-    <button class="order-btn" type="submit">
+    <button class="order-btn">
       Place Order
     </button>
 
@@ -449,8 +569,6 @@ footer{
 
 <script>
 
-/* PRODUCTS */
-
 const allProducts = {
 
   tshirt:[
@@ -462,20 +580,8 @@ const allProducts = {
     },
 
     {
-      name:"Poem T-Shirt",
-      image:"tshirt2.png",
-      price:499
-    },
-
-    {
       name:"Ferrari T-Shirt",
-      image:"tshirt3.png",
-      price:499
-    },
-
-    {
-      name:"Naksha T-Shirt",
-      image:"tshirt4.png",
+      image:"tshirt2.png",
       price:499
     }
 
@@ -486,12 +592,6 @@ const allProducts = {
     {
       name:"Black Shirt",
       image:"shirt1.png",
-      price:799
-    },
-
-    {
-      name:"White Shirt",
-      image:"shirt2.png",
       price:799
     }
 
@@ -512,8 +612,7 @@ const allProducts = {
 const productsContainer =
 document.getElementById("products");
 
-let cart =
-JSON.parse(localStorage.getItem("cart")) || [];
+let cart = [];
 
 /* SHOW CATEGORY */
 
@@ -540,18 +639,14 @@ function showCategory(category){
           ${product.price}৳
         </div>
 
-        <div class="size-box">
+        <select id="size-${category}-${index}">
 
-          <select id="size-${category}-${index}">
+          <option>S</option>
+          <option>M</option>
+          <option>L</option>
+          <option>XL</option>
 
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-
-          </select>
-
-        </div>
+        </select>
 
         <button class="buy-btn"
         onclick="addToCart('${category}',${index})">
@@ -588,11 +683,6 @@ function addToCart(category,index){
     size:size
   });
 
-  localStorage.setItem(
-    "cart",
-    JSON.stringify(cart)
-  );
-
   updateCart();
 
   toggleCart();
@@ -605,23 +695,7 @@ function removeItem(index){
 
   cart.splice(index,1);
 
-  localStorage.setItem(
-    "cart",
-    JSON.stringify(cart)
-  );
-
   updateCart();
-
-}
-
-/* TOGGLE CART */
-
-function toggleCart(){
-
-  document
-  .getElementById("sideCart")
-  .classList
-  .toggle("active");
 
 }
 
@@ -636,18 +710,12 @@ function updateCart(){
 
   let total = 0;
 
-  let productNames = [];
-
   document.getElementById("cartCount")
   .innerText = cart.length;
 
   cart.forEach((item,index)=>{
 
     total += item.price;
-
-    productNames.push(
-      `${item.name} (${item.size})`
-    );
 
     const div =
     document.createElement("div");
@@ -678,16 +746,22 @@ function updateCart(){
   document.getElementById("totalPrice")
   .innerText = `Total: ${total}৳`;
 
-  document.getElementById("productsInput")
-  .value = productNames.join(", ");
+}
+
+/* CART TOGGLE */
+
+function toggleCart(){
+
+  document
+  .getElementById("sideCart")
+  .classList
+  .toggle("active");
 
 }
 
 /* DEFAULT */
 
 showCategory("tshirt");
-
-updateCart();
 
 </script>
 
