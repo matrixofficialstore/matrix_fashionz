@@ -6,6 +6,9 @@
 
 <title>Matrix Fashion</title>
 
+<!-- TAB LOGO (FAVICON FIX) -->
+<link rel="icon" type="image/png" href="logo.png">
+
 <style>
 
 *{
@@ -82,25 +85,6 @@ header{
   transition:0.3s ease;
 }
 
-/* Premium Quality */
-.feature:nth-child(1){
-  background:#ffffff;
-  border-left:5px solid #111;
-}
-
-/* Stock Available */
-.feature:nth-child(2){
-  background:#ffffff;
-  border-left:5px solid #555;
-}
-
-/* Email Order */
-.feature:nth-child(3){
-  background:#ffffff;
-  border-left:5px solid #888;
-}
-
-/* Hover effect */
 .feature:hover{
   transform:translateY(-3px);
   box-shadow:0 10px 25px rgba(0,0,0,0.12);
@@ -153,6 +137,7 @@ header{
   margin:5px 0;
 }
 
+/* AVAILABLE STYLE */
 .stock{
   color:green;
   font-weight:bold;
@@ -284,21 +269,21 @@ method="POST" onsubmit="fillOrder()">
 let cart=[];
 let current="tshirt";
 
-/* PRODUCTS */
+/* PRODUCTS (NO STOCK LIMIT NOW) */
 const data={
 tshirt:[
-{name:"T-Shirt 1",price:399,stock:5,img:"tshirt1.png"},
-{name:"T-Shirt 2",price:399,stock:5,img:"tshirt2.png"},
-{name:"T-Shirt 3",price:399,stock:5,img:"tshirt3.png"},
-{name:"T-Shirt 4",price:450,stock:5,img:"tshirt4.png"},
-{name:"T-Shirt 5",price:599,stock:5,img:"tshirt5.png"},
-{name:"T-Shirt 6",price:499,stock:5,img:"tshirt6.png"}
+{name:"T-Shirt 1",price:399,img:"tshirt1.png"},
+{name:"T-Shirt 2",price:399,img:"tshirt2.png"},
+{name:"T-Shirt 3",price:399,img:"tshirt3.png"},
+{name:"T-Shirt 4",price:450,img:"tshirt4.png"},
+{name:"T-Shirt 5",price:599,img:"tshirt5.png"},
+{name:"T-Shirt 6",price:499,img:"tshirt6.png"}
 ],
 shirt:[
-{name:"Shirt 1",price:799,stock:4,img:"shirt1.png"}
+{name:"Shirt 1",price:799,img:"shirt1.png"}
 ],
 panjabi:[
-{name:"Panjabi 1",price:999,stock:3,img:"panjabi1.png"}
+{name:"Panjabi 1",price:999,img:"panjabi1.png"}
 ]
 };
 
@@ -318,14 +303,11 @@ box.innerHTML+=`
 <div class="card-content">
 <h3>${p.name}</h3>
 <div class="price">${p.price}৳</div>
-<div class="stock">Stock: ${p.stock}</div>
 
-<button class="buy"
-onclick="add('${cat}',${i})"
-${p.stock<=0?"disabled":""}>
+<div class="stock">Available</div>
 
+<button class="buy" onclick="add('${cat}',${i})">
 Buy Now
-
 </button>
 
 </div>
@@ -336,23 +318,16 @@ Buy Now
 
 }
 
-/* ADD CART */
+/* ADD CART (NO STOCK LIMIT) */
 function add(cat,i){
 
 let p=data[cat][i];
 
-if(p.stock<=0){
-alert("Out of stock");
-return;
-}
-
-p.stock--;
 cart.push(p);
 
 document.getElementById("count").innerText=cart.length;
 
 updateCart();
-show(current);
 
 }
 
@@ -377,7 +352,7 @@ function toggleCart(){
 document.getElementById("cartBox").classList.toggle("active");
 }
 
-/* ORDER SYSTEM */
+/* ORDER */
 function fillOrder(){
 
 document.getElementById("orderId").value="MF-"+Date.now();
