@@ -68,11 +68,36 @@ header{
 
 /* FEATURES */
 .feature{
-  background:black;
-  color:white;
-  padding:15px;
+  padding:16px;
   margin-bottom:10px;
-  border-radius:12px;
+  border-radius:14px;
+  color:white;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Premium Quality */
+.feature:nth-child(1){
+  background:linear-gradient(135deg,#ff416c,#ff4b2b);
+}
+
+/* Stock Available */
+.feature:nth-child(2){
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
+}
+
+/* Email Order */
+.feature:nth-child(3){
+  background:linear-gradient(135deg,#7f00ff,#e100ff);
+}
+
+/* Extra optional styles */
+.feature:hover{
+  transform:translateY(-3px);
+  transition:0.3s;
 }
 
 /* CATEGORY */
