@@ -6,7 +6,6 @@
 
 <title>Matrix Fashion</title>
 
-<!-- TAB LOGO -->
 <link rel="icon" type="image/png" href="logo.png">
 
 <style>
@@ -185,6 +184,18 @@ input,textarea{
   border-radius:10px;
 }
 
+/* CART BUTTONS */
+.cart-item{
+  padding:10px;
+  border-bottom:1px solid #ddd;
+}
+
+.cart-item button{
+  margin:3px;
+  padding:4px 8px;
+  cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -193,11 +204,9 @@ input,textarea{
 <header>
 <div class="top-header">
 <div class="logo">Matrix Fashion</div>
-
 <div class="cart-btn" onclick="toggleCart()">
 🛒 Cart (<span id="count">0</span>)
 </div>
-
 </div>
 </header>
 
@@ -206,7 +215,7 @@ input,textarea{
 
 <div>
 <div class="feature">🚚 Fast Delivery</div>
-<div class="feature">💳 Cash on Delivery</div>
+<div class="feature">💳 Cash On Delivery</div>
 <div class="feature">📧 Email Order</div>
 </div>
 
@@ -237,7 +246,6 @@ input,textarea{
 
 <h2>Your Cart</h2>
 <div id="cartItems"></div>
-
 <div id="total"></div>
 
 <form action="https://formsubmit.co/matrixofficialhub@gmail.com"
@@ -254,7 +262,7 @@ method="POST" onsubmit="fillOrder()">
 <input type="text" name="Phone" placeholder="Phone" required>
 <textarea name="Address" placeholder="Address" required></textarea>
 
-<div><b>Cash on delivery</b></div>
+<div><b>bKash: 01844175037</b></div>
 
 <button class="order-btn">Place Order</button>
 
@@ -300,7 +308,6 @@ box.innerHTML+=`
 <div class="card-content">
 <h3>${p.name}</h3>
 <div class="price">${p.price}৳</div>
-
 <div class="stock">Available</div>
 
 <button class="buy" onclick="add('${cat}',${i})">
@@ -315,14 +322,44 @@ Buy Now
 
 }
 
-/* ADD TO CART */
+/* ADD TO CART (QUANTITY SYSTEM) */
 function add(cat,i){
 
 let p=data[cat][i];
-cart.push(p);
+
+let found = cart.find(item => item.name === p.name);
+
+if(found){
+found.qty++;
+}else{
+cart.push({...p, qty:1});
+}
 
 updateCart();
 
+}
+
+/* INCREASE */
+function increase(i){
+cart[i].qty++;
+updateCart();
+}
+
+/* DECREASE */
+function decrease(i){
+cart[i].qty--;
+
+if(cart[i].qty <= 0){
+cart.splice(i,1);
+}
+
+updateCart();
+}
+
+/* REMOVE */
+function removeItem(i){
+cart.splice(i,1);
+updateCart();
 }
 
 /* UPDATE CART */
@@ -331,39 +368,42 @@ function updateCart(){
 let html="";
 let total=0;
 
-cart.forEach((c,index)=>{
+cart.forEach((c,i)=>{
+
+total += c.price * c.qty;
+
 html+=`
-<p>
-${c.name} - ${c.price}৳
-<button onclick="removeItem(${index})">❌</button>
-</p>`;
-total+=c.price;
+<div class="cart-item">
+<b>${c.name}</b><br>
+
+${c.price}৳ × ${c.qty} = ${c.price*c.qty}৳<br>
+
+<button onclick="decrease(${i})">➖</button>
+<button onclick="increase(${i})">➕</button>
+<button onclick="removeItem(${i})">❌ Remove</button>
+</div>
+`;
+
 });
 
 document.getElementById("cartItems").innerHTML=html;
 document.getElementById("total").innerHTML="Total: "+total+"৳";
-document.getElementById("count").innerText=cart.length;
+document.getElementById("count").innerText=cart.reduce((a,b)=>a+b.qty,0);
 
 }
 
-/* REMOVE ITEM */
-function removeItem(index){
-cart.splice(index,1);
-updateCart();
-}
-
-/* TOGGLE CART */
+/* CART TOGGLE */
 function toggleCart(){
 document.getElementById("cartBox").classList.toggle("active");
 }
 
-/* ORDER FILL */
+/* ORDER */
 function fillOrder(){
 
 document.getElementById("orderId").value="MF-"+Date.now();
 
 document.getElementById("productList").value=
-cart.map(c=>c.name+" "+c.price+"৳").join(", ");
+cart.map(c=>`${c.name} x${c.qty} = ${c.price*c.qty}৳`).join(", ");
 
 }
 
