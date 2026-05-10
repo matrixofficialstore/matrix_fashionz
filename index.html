@@ -71,33 +71,39 @@ header{
   padding:16px;
   margin-bottom:10px;
   border-radius:14px;
-  color:white;
+  color:#222;
   font-weight:bold;
   display:flex;
   align-items:center;
   gap:10px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  background:#ffffff;
+  border:1px solid #e6e6e6;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  transition:0.3s ease;
 }
 
 /* Premium Quality */
 .feature:nth-child(1){
-  background:linear-gradient(135deg,#ff416c,#ff4b2b);
+  background:#ffffff;
+  border-left:5px solid #111;
 }
 
 /* Stock Available */
 .feature:nth-child(2){
-  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  background:#ffffff;
+  border-left:5px solid #555;
 }
 
 /* Email Order */
 .feature:nth-child(3){
-  background:linear-gradient(135deg,#7f00ff,#e100ff);
+  background:#ffffff;
+  border-left:5px solid #888;
 }
 
-/* Extra optional styles */
+/* Hover effect */
 .feature:hover{
   transform:translateY(-3px);
-  transition:0.3s;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
 }
 
 /* CATEGORY */
