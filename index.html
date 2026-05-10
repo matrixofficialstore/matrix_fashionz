@@ -6,7 +6,7 @@
 
 <title>Matrix Fashion</title>
 
-<!-- TAB LOGO (FAVICON FIX) -->
+<!-- TAB LOGO -->
 <link rel="icon" type="image/png" href="logo.png">
 
 <style>
@@ -79,15 +79,14 @@ header{
   display:flex;
   align-items:center;
   gap:10px;
-  background:#ffffff;
+  background:#fff;
   border:1px solid #e6e6e6;
   box-shadow:0 6px 18px rgba(0,0,0,0.08);
-  transition:0.3s ease;
+  transition:0.3s;
 }
 
 .feature:hover{
   transform:translateY(-3px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.12);
 }
 
 /* CATEGORY */
@@ -137,7 +136,6 @@ header{
   margin:5px 0;
 }
 
-/* AVAILABLE STYLE */
 .stock{
   color:green;
   font-weight:bold;
@@ -195,9 +193,11 @@ input,textarea{
 <header>
 <div class="top-header">
 <div class="logo">Matrix Fashion</div>
+
 <div class="cart-btn" onclick="toggleCart()">
 🛒 Cart (<span id="count">0</span>)
 </div>
+
 </div>
 </header>
 
@@ -224,11 +224,9 @@ input,textarea{
 
 <!-- CATEGORY -->
 <div class="category">
-
 <button onclick="show('tshirt')">T-Shirts</button>
 <button onclick="show('shirt')">Shirts</button>
 <button onclick="show('panjabi')">Panjabi</button>
-
 </div>
 
 <!-- PRODUCTS -->
@@ -269,15 +267,14 @@ method="POST" onsubmit="fillOrder()">
 let cart=[];
 let current="tshirt";
 
-/* PRODUCTS (NO STOCK LIMIT NOW) */
+/* PRODUCTS */
 const data={
 tshirt:[
-{name:"T-Shirt 1",price:399,img:"tshirt1.png"},
-{name:"T-Shirt 2",price:399,img:"tshirt2.png"},
-{name:"T-Shirt 3",price:399,img:"tshirt3.png"},
-{name:"T-Shirt 4",price:450,img:"tshirt4.png"},
+{name:"Matrix T-Shirt",price:399,img:"tshirt1.png"},
+{name:"Ferrari T-Shirt",price:399,img:"tshirt3.png"},
+{name:"Naksha T-Shirt",price:450,img:"tshirt4.png"},
 {name:"T-Shirt 5",price:599,img:"tshirt5.png"},
-{name:"T-Shirt 6",price:499,img:"tshirt6.png"}
+{name:"Money designed T-Shirt",price:499,img:"tshirt6.png"}
 ],
 shirt:[
 {name:"Shirt 1",price:799,img:"shirt1.png"}
@@ -318,41 +315,49 @@ Buy Now
 
 }
 
-/* ADD CART (NO STOCK LIMIT) */
+/* ADD TO CART */
 function add(cat,i){
 
 let p=data[cat][i];
-
 cart.push(p);
-
-document.getElementById("count").innerText=cart.length;
 
 updateCart();
 
 }
 
-/* CART UPDATE */
+/* UPDATE CART */
 function updateCart(){
 
 let html="";
 let total=0;
 
-cart.forEach(c=>{
-html+=`<p>${c.name} - ${c.price}৳</p>`;
+cart.forEach((c,index)=>{
+html+=`
+<p>
+${c.name} - ${c.price}৳
+<button onclick="removeItem(${index})">❌</button>
+</p>`;
 total+=c.price;
 });
 
 document.getElementById("cartItems").innerHTML=html;
 document.getElementById("total").innerHTML="Total: "+total+"৳";
+document.getElementById("count").innerText=cart.length;
 
 }
 
-/* CART TOGGLE */
+/* REMOVE ITEM */
+function removeItem(index){
+cart.splice(index,1);
+updateCart();
+}
+
+/* TOGGLE CART */
 function toggleCart(){
 document.getElementById("cartBox").classList.toggle("active");
 }
 
-/* ORDER */
+/* ORDER FILL */
 function fillOrder(){
 
 document.getElementById("orderId").value="MF-"+Date.now();
