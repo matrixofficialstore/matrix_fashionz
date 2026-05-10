@@ -12,16 +12,14 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Arial,sans-serif;
+  font-family:Arial;
 }
 
 body{
   background:#f5f5f5;
-  color:black;
 }
 
 /* HEADER */
-
 header{
   background:black;
   color:white;
@@ -40,341 +38,137 @@ header{
 }
 
 .logo{
-  font-size:30px;
+  font-size:28px;
   font-weight:bold;
-  letter-spacing:2px;
 }
 
 .cart-btn{
   background:white;
   color:black;
-  padding:12px 20px;
-  border-radius:12px;
+  padding:10px 15px;
+  border-radius:10px;
   cursor:pointer;
   font-weight:bold;
 }
 
 /* HERO */
-
 .hero{
   width:90%;
-  margin:50px auto;
+  margin:40px auto;
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:40px;
+  grid-template-columns:1fr 1.2fr 1fr;
+  gap:20px;
   align-items:center;
 }
 
-.hero img{
+.review-image img{
   width:100%;
-  border-radius:25px;
-  object-fit:cover;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  border-radius:20px;
 }
 
 /* FEATURES */
-
-.features{
-  display:flex;
-  flex-direction:column;
-  gap:25px;
-}
-
-.feature-box{
-  position:relative;
-  background:linear-gradient(135deg,#000,#1a1a1a);
+.feature{
+  background:black;
   color:white;
-  padding:25px;
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,0.1);
-  transition:0.35s;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
-}
-
-.feature-box::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:100%;
-  height:100%;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,0.12),
-    transparent
-  );
-  transition:0.7s;
-}
-
-.feature-box:hover::before{
-  left:100%;
-}
-
-.feature-box:hover{
-  transform:translateY(-6px) scale(1.02);
-  box-shadow:0 18px 35px rgba(0,0,0,0.35);
-}
-
-.feature-content{
-  display:flex;
-  align-items:center;
-  gap:18px;
-  position:relative;
-  z-index:2;
-}
-
-.icon-circle{
-  width:65px;
-  height:65px;
-  min-width:65px;
-  border-radius:50%;
-  background:white;
-  color:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:30px;
-}
-
-.feature-text h3{
-  font-size:24px;
-  margin-bottom:6px;
-}
-
-.feature-text p{
-  color:#ccc;
-  font-size:15px;
-  line-height:1.5;
+  padding:15px;
+  margin-bottom:10px;
+  border-radius:12px;
 }
 
 /* CATEGORY */
-
-.category-section{
+.category{
   width:90%;
-  margin:auto;
-  margin-top:60px;
+  margin:20px auto;
 }
 
-.category-title{
-  font-size:38px;
-  margin-bottom:25px;
-  font-weight:bold;
-}
-
-.categories{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-}
-
-.category-btn{
+.category button{
   background:black;
   color:white;
+  padding:12px 18px;
   border:none;
-  padding:16px 28px;
-  border-radius:14px;
-  font-size:16px;
+  margin:5px;
+  border-radius:10px;
   cursor:pointer;
-  transition:0.3s;
-  font-weight:bold;
-}
-
-.category-btn:hover{
-  transform:translateY(-3px);
-  background:#222;
 }
 
 /* PRODUCTS */
-
 .products{
   width:90%;
-  margin:50px auto;
+  margin:auto;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
 }
 
 .card{
   background:white;
-  border-radius:25px;
+  border-radius:15px;
   overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-  transition:0.35s;
-}
-
-.card:hover{
-  transform:translateY(-8px);
+  box-shadow:0 5px 20px rgba(0,0,0,0.1);
 }
 
 .card img{
   width:100%;
-  height:340px;
+  height:260px;
   object-fit:contain;
-  background:#f0f0f0;
 }
 
 .card-content{
-  padding:25px;
-}
-
-.card-content h2{
-  margin-bottom:10px;
+  padding:15px;
 }
 
 .price{
-  font-size:25px;
   font-weight:bold;
-  margin-bottom:15px;
+  margin:5px 0;
 }
 
-select{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  border:2px solid #ddd;
-  margin-bottom:15px;
-  font-size:16px;
+.stock{
+  color:green;
+  font-weight:bold;
 }
 
-.buy-btn{
+button.buy{
   width:100%;
-  padding:15px;
-  border:none;
+  padding:10px;
   background:black;
   color:white;
-  border-radius:14px;
+  border:none;
+  border-radius:10px;
   cursor:pointer;
-  font-size:17px;
-  font-weight:bold;
-  transition:0.3s;
-}
-
-.buy-btn:hover{
-  background:#222;
 }
 
 /* CART */
-
 .side-cart{
   position:fixed;
+  right:-400px;
   top:0;
-  right:-420px;
-  width:400px;
+  width:380px;
   height:100vh;
   background:white;
-  padding:25px;
-  box-shadow:-5px 0 20px rgba(0,0,0,0.2);
-  transition:0.4s;
-  z-index:2000;
-  overflow-y:auto;
+  padding:20px;
+  transition:0.3s;
+  overflow:auto;
 }
 
 .side-cart.active{
   right:0;
 }
 
-.cart-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.close-btn{
-  background:red;
-  color:white;
-  border:none;
-  padding:10px 15px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.cart-item{
-  border-bottom:1px solid #ddd;
-  padding:15px 0;
-}
-
-.remove-btn{
-  background:red;
-  color:white;
-  border:none;
-  padding:8px 12px;
-  border-radius:10px;
+input,textarea{
+  width:100%;
+  padding:10px;
   margin-top:10px;
-  cursor:pointer;
-}
-
-.total{
-  margin-top:20px;
-  font-size:24px;
-  font-weight:bold;
-}
-
-form{
-  margin-top:30px;
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-}
-
-input,
-textarea{
-  padding:14px;
-  border-radius:12px;
-  border:2px solid #ddd;
-  font-size:16px;
-}
-
-.payment-box{
-  background:#f0f0f0;
-  padding:18px;
-  border-radius:15px;
-  font-weight:bold;
+  border:1px solid #ddd;
 }
 
 .order-btn{
+  width:100%;
+  padding:12px;
   background:black;
   color:white;
   border:none;
-  padding:15px;
-  border-radius:14px;
-  cursor:pointer;
-  font-size:18px;
-  font-weight:bold;
-}
-
-/* FOOTER */
-
-footer{
-  background:black;
-  color:white;
-  text-align:center;
-  padding:25px;
-  margin-top:60px;
-}
-
-/* MOBILE */
-
-@media(max-width:850px){
-
-  .hero{
-    grid-template-columns:1fr;
-  }
-
-}
-
-@media(max-width:500px){
-
-  .side-cart{
-    width:100%;
-  }
-
-  .logo{
-    font-size:22px;
-  }
-
+  margin-top:10px;
+  border-radius:10px;
 }
 
 </style>
@@ -383,385 +177,187 @@ footer{
 <body>
 
 <header>
-
-  <div class="top-header">
-
-    <div class="logo">
-      Matrix Fashion
-    </div>
-
-    <div class="cart-btn" onclick="toggleCart()">
-      🛒 Cart (<span id="cartCount">0</span>)
-    </div>
-
-  </div>
-
+<div class="top-header">
+<div class="logo">Matrix Fashion</div>
+<div class="cart-btn" onclick="toggleCart()">
+🛒 Cart (<span id="count">0</span>)
+</div>
+</div>
 </header>
 
 <!-- HERO -->
-
 <section class="hero">
 
-  <img src="review.png" alt="review">
+<div>
+<div class="feature">🚚 Fast Delivery</div>
+<div class="feature">💳 Cash on Delivery</div>
+<div class="feature">📧 Email Order</div>
+</div>
 
-  <div class="features">
+<div class="review-image">
+<img src="review.png">
+</div>
 
-    <div class="feature-box">
-
-      <div class="feature-content">
-
-        <div class="icon-circle">
-          ✅
-        </div>
-
-        <div class="feature-text">
-          <h3>Cash On Delivery</h3>
-          <p>Pay after receiving your product safely.</p>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="feature-box">
-
-      <div class="feature-content">
-
-        <div class="icon-circle">
-          🔥
-        </div>
-
-        <div class="feature-text">
-          <h3>Premium Quality</h3>
-          <p>Comfortable and stylish premium fabrics.</p>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="feature-box">
-
-      <div class="feature-content">
-
-        <div class="icon-circle">
-          🚚
-        </div>
-
-        <div class="feature-text">
-          <h3>Fast Delivery</h3>
-          <p>Quick delivery all over Bangladesh.</p>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="feature-box">
-
-      <div class="feature-content">
-
-        <div class="icon-circle">
-          💯
-        </div>
-
-        <div class="feature-text">
-          <h3>Trusted Brand</h3>
-          <p>Thousands of happy customers trust us.</p>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
+<div>
+<div class="feature">🔥 Premium Quality</div>
+<div class="feature">📦 Stock Available</div>
+<div class="feature">✅ Trusted Store</div>
+</div>
 
 </section>
 
 <!-- CATEGORY -->
+<div class="category">
 
-<section class="category-section">
-
-  <div class="category-title">
-    Choose Category
-  </div>
-
-  <div class="categories">
-
-    <button class="category-btn"
-    onclick="showCategory('tshirt')">
-      T-Shirts
-    </button>
-
-    <button class="category-btn"
-    onclick="showCategory('shirt')">
-      Shirts
-    </button>
-
-    <button class="category-btn"
-    onclick="showCategory('panjabi')">
-      Panjabi
-    </button>
-
-  </div>
-
-</section>
-
-<!-- PRODUCTS -->
-
-<div class="products" id="products"></div>
-
-<!-- CART -->
-
-<div class="side-cart" id="sideCart">
-
-  <div class="cart-header">
-
-    <h2>Your Cart</h2>
-
-    <button class="close-btn"
-    onclick="toggleCart()">
-      ✕
-    </button>
-
-  </div>
-
-  <div id="cartItems"></div>
-
-  <div class="total" id="totalPrice">
-    Total: 0৳
-  </div>
-
-  <form>
-
-    <input type="text"
-    placeholder="Your Name"
-    required>
-
-    <input type="email"
-    placeholder="Your Email"
-    required>
-
-    <input type="text"
-    placeholder="Phone Number"
-    required>
-
-    <textarea
-    placeholder="Delivery Address"
-    required></textarea>
-
-    <div class="payment-box">
-      bKash Number:
-      <strong>01844175037</strong>
-    </div>
-
-    <button class="order-btn">
-      Place Order
-    </button>
-
-  </form>
+<button onclick="show('tshirt')">T-Shirts</button>
+<button onclick="show('shirt')">Shirts</button>
+<button onclick="show('panjabi')">Panjabi</button>
 
 </div>
 
-<footer>
-  © 2026 Matrix Fashion
-</footer>
+<!-- PRODUCTS -->
+<div class="products" id="products"></div>
+
+<!-- CART -->
+<div class="side-cart" id="cartBox">
+
+<h2>Your Cart</h2>
+<div id="cartItems"></div>
+
+<div id="total"></div>
+
+<form action="https://formsubmit.co/matrixofficialhub@gmail.com"
+method="POST" onsubmit="fillOrder()">
+
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_subject" value="New Matrix Order">
+
+<input type="hidden" name="Order ID" id="orderId">
+<input type="hidden" name="Products" id="productList">
+
+<input type="text" name="Name" placeholder="Name" required>
+<input type="email" name="Email" placeholder="Email" required>
+<input type="text" name="Phone" placeholder="Phone" required>
+<textarea name="Address" placeholder="Address" required></textarea>
+
+<div><b>bKash: 01844175037</b></div>
+
+<button class="order-btn">Place Order</button>
+
+</form>
+
+</div>
 
 <script>
 
-const allProducts = {
+let cart=[];
+let current="tshirt";
 
-  tshirt:[
-
-    {
-      name:"Matrix T-Shirt",
-      image:"tshirt1.png",
-      price:499
-    },
-
-    {
-      name:"Ferrari T-Shirt",
-      image:"tshirt2.png",
-      price:499
-    }
-
-  ],
-
-  shirt:[
-
-    {
-      name:"Black Shirt",
-      image:"shirt1.png",
-      price:799
-    }
-
-  ],
-
-  panjabi:[
-
-    {
-      name:"Premium Panjabi",
-      image:"panjabi1.png",
-      price:999
-    }
-
-  ]
-
+/* PRODUCTS */
+const data={
+tshirt:[
+{name:"T-Shirt 1",price:499,stock:5,img:"tshirt1.png"},
+{name:"T-Shirt 2",price:499,stock:5,img:"tshirt2.png"},
+{name:"T-Shirt 3",price:499,stock:5,img:"tshirt3.png"},
+{name:"T-Shirt 4",price:499,stock:5,img:"tshirt4.png"},
+{name:"T-Shirt 5",price:499,stock:5,img:"tshirt5.png"},
+{name:"T-Shirt 6",price:499,stock:5,img:"tshirt6.png"}
+],
+shirt:[
+{name:"Shirt 1",price:799,stock:4,img:"shirt1.png"}
+],
+panjabi:[
+{name:"Panjabi 1",price:999,stock:3,img:"panjabi1.png"}
+]
 };
 
-const productsContainer =
-document.getElementById("products");
+/* SHOW PRODUCTS */
+function show(cat){
 
-let cart = [];
+current=cat;
 
-/* SHOW CATEGORY */
+let box=document.getElementById("products");
+box.innerHTML="";
 
-function showCategory(category){
+data[cat].forEach((p,i)=>{
 
-  productsContainer.innerHTML = "";
+box.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<div class="card-content">
+<h3>${p.name}</h3>
+<div class="price">${p.price}৳</div>
+<div class="stock">Stock: ${p.stock}</div>
 
-  allProducts[category].forEach((product,index)=>{
+<button class="buy"
+onclick="add('${cat}',${i})"
+${p.stock<=0?"disabled":""}>
 
-    const card =
-    document.createElement("div");
+Buy Now
 
-    card.classList.add("card");
+</button>
 
-    card.innerHTML = `
+</div>
+</div>
+`;
 
-      <img src="${product.image}">
-
-      <div class="card-content">
-
-        <h2>${product.name}</h2>
-
-        <div class="price">
-          ${product.price}৳
-        </div>
-
-        <select id="size-${category}-${index}">
-
-          <option>S</option>
-          <option>M</option>
-          <option>L</option>
-          <option>XL</option>
-
-        </select>
-
-        <button class="buy-btn"
-        onclick="addToCart('${category}',${index})">
-
-          Buy Now
-
-        </button>
-
-      </div>
-
-    `;
-
-    productsContainer.appendChild(card);
-
-  });
+});
 
 }
 
-/* ADD TO CART */
+/* ADD CART */
+function add(cat,i){
 
-function addToCart(category,index){
+let p=data[cat][i];
 
-  const product =
-  allProducts[category][index];
+if(p.stock<=0){
+alert("Out of stock");
+return;
+}
 
-  const size =
-  document.getElementById(
-    `size-${category}-${index}`
-  ).value;
+p.stock--;
+cart.push(p);
 
-  cart.push({
-    name:product.name,
-    price:product.price,
-    size:size
-  });
+document.getElementById("count").innerText=cart.length;
 
-  updateCart();
-
-  toggleCart();
+updateCart();
+show(current);
 
 }
 
-/* REMOVE ITEM */
-
-function removeItem(index){
-
-  cart.splice(index,1);
-
-  updateCart();
-
-}
-
-/* UPDATE CART */
-
+/* CART UPDATE */
 function updateCart(){
 
-  const cartItems =
-  document.getElementById("cartItems");
+let html="";
+let total=0;
 
-  cartItems.innerHTML = "";
+cart.forEach(c=>{
+html+=`<p>${c.name} - ${c.price}৳</p>`;
+total+=c.price;
+});
 
-  let total = 0;
-
-  document.getElementById("cartCount")
-  .innerText = cart.length;
-
-  cart.forEach((item,index)=>{
-
-    total += item.price;
-
-    const div =
-    document.createElement("div");
-
-    div.classList.add("cart-item");
-
-    div.innerHTML = `
-
-      <h3>${item.name}</h3>
-
-      <p>Size: ${item.size}</p>
-
-      <p>${item.price}৳</p>
-
-      <button class="remove-btn"
-      onclick="removeItem(${index})">
-
-        Remove
-
-      </button>
-
-    `;
-
-    cartItems.appendChild(div);
-
-  });
-
-  document.getElementById("totalPrice")
-  .innerText = `Total: ${total}৳`;
+document.getElementById("cartItems").innerHTML=html;
+document.getElementById("total").innerHTML="Total: "+total+"৳";
 
 }
 
 /* CART TOGGLE */
-
 function toggleCart(){
+document.getElementById("cartBox").classList.toggle("active");
+}
 
-  document
-  .getElementById("sideCart")
-  .classList
-  .toggle("active");
+/* ORDER SYSTEM */
+function fillOrder(){
+
+document.getElementById("orderId").value="MF-"+Date.now();
+
+document.getElementById("productList").value=
+cart.map(c=>c.name+" "+c.price+"৳").join(", ");
 
 }
 
-/* DEFAULT */
-
-showCategory("tshirt");
+/* INIT */
+show("tshirt");
 
 </script>
 
