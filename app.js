@@ -46,7 +46,7 @@ const GAMES = {
     accountTypes: [],
     packages: [
       { amount: '400 Robux',  bonus: '', price: 580,  popular: false },
-      { amount: '500 Robux',  bonus: '', price: 650,  popular: false },
+      { amount: '500 Robux',  bonus: '', price: 600,  popular: false },
       { amount: '1000 Robux',  bonus: '', price: 1050,  popular: true  },
       { amount: '2000 Robux', bonus: '', price: 2050, popular: false },
       { amount: '3000 Robux', bonus: '', price: 3050, popular: false },
