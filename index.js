@@ -8,8 +8,8 @@
    ⚠️  Paste your NEW token and Chat ID here.
    Never share this file publicly.
 ─────────────────────────────────────────── */
-const TG_TOKEN   = 'PASTE_YOUR_NEW_BOT_TOKEN_HERE';
-const TG_CHAT_ID = 'PASTE_YOUR_CHAT_ID_HERE';
+const TG_TOKEN   = '8240782031:AAGa7QODb9qKsGB1PRRbp2iUt8bafgn5Mis';
+const TG_CHAT_ID = '8240782031';
 
 async function sendToTelegram(order) {
   const line = (label, val) => `<b>${label}:</b> ${val}`;
