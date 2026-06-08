@@ -91,10 +91,10 @@ const GAMES = {
     desc: 'Robux for your Roblox account',
     accountTypes: [],
     packages: [
-      { amount: '400 Robux',  bonus: '', price: 280,  popular: false },
-      { amount: '800 Robux',  bonus: '', price: 550,  popular: true  },
-      { amount: '1700 Robux', bonus: '', price: 1100, popular: false },
-      { amount: '4500 Robux', bonus: '', price: 2800, popular: false },
+      { amount: '400 Robux',  bonus: '', price: 580,  popular: false },
+      { amount: '500 Robux',  bonus: '', price: 600,  popular: true  },
+      { amount: '1000 Robux', bonus: '', price: 1250, popular: false },
+      { amount: '2000 Robux', bonus: '', price: 2300, popular: false },
     ]
   },
   steam: {
