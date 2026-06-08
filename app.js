@@ -8,8 +8,8 @@
    ⚠️  Paste your NEW token and Chat ID here.
    Never share this file publicly.
 ─────────────────────────────────────────── */
-const TG_TOKEN   = '8240782031:AAGa7QODb9qKsGB1PRRbp2iUt8bafgn5Mis';
-const TG_CHAT_ID = '6029795078';
+const TG_TOKEN   = 'PASTE_YOUR_NEW_BOT_TOKEN_HERE';
+const TG_CHAT_ID = 'PASTE_YOUR_CHAT_ID_HERE';
 
 async function sendToTelegram(order) {
   const line = (label, val) => `<b>${label}:</b> ${val}`;
@@ -357,6 +357,69 @@ function showToast(msg, err = false) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
 }
+
+/* ── VOUCHVAULT ─────────────────────────────────
+   ✏️  Replace these with your real vouches from
+   https://vouchvault.cc/Samin
+   Fields: name, text, stars (1-5), game, date
+─────────────────────────────────────────────── */
+const VV_VOUCHES = [
+  {
+    name:  'Rahim Ahmed',
+    text:  'Got my 400+400 CP within 10 minutes! Super fast and reliable service. Highly recommend Matrix TopUp! 🔥',
+    stars: 5,
+    game:  'Call of Duty',
+    date:  '06 Jun 2026',
+  },
+  {
+    name:  'Tanvir Hasan',
+    text:  'Ordered Robux and received instantly. Smooth process, no issues at all. Will order again!',
+    stars: 5,
+    game:  'Roblox',
+    date:  '05 Jun 2026',
+  },
+  {
+    name:  'Sakib Islam',
+    text:  'Very trustworthy seller. Steam wallet topped up in under 5 minutes. Great service!',
+    stars: 5,
+    game:  'Steam',
+    date:  '04 Jun 2026',
+  },
+];
+
+function renderVouches() {
+  const container = document.getElementById('vvCards');
+  if (!container) return;
+
+  if (!VV_VOUCHES.length) {
+    container.innerHTML = `<div class="vouch-error">
+      No vouches yet. <a href="https://vouchvault.cc/Samin" target="_blank">View on VouchVault →</a>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = VV_VOUCHES.slice(0, 3).map(v => {
+    const initials = v.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+    const stars    = '★'.repeat(v.stars) + '☆'.repeat(5 - v.stars);
+    return `
+      <div class="vouch-card vv-card">
+        <div class="vouch-top">
+          <div class="vouch-avatar">${initials}</div>
+          <div class="vouch-meta">
+            <div class="vouch-name">${v.name}</div>
+            <div class="vouch-stars">${stars}</div>
+          </div>
+          <div class="vouch-date">${v.date}</div>
+        </div>
+        <div class="vouch-text">${v.text}</div>
+        ${v.game ? `<span class="vouch-tag">🎮 ${v.game}</span>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', renderVouches);
 
 /* ── RESET ──────────────────────────────────── */
 function resetAll() {
