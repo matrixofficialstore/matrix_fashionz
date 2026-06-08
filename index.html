@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matrix TopUp — Premium Game Credits</title>
+<title>Matrix TopUp</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -29,13 +29,13 @@
   <div class="noticeboard-wrap">
     <div class="notice-header">
       <div class="notice-title">📢 Noticeboard</div>
+      <button class="notice-edit-btn" onclick="toggleNoticeEdit()">✏️ Edit</button>
+    </div>
     <div class="noticeboard" id="noticeDisplay">
-      🎮 স্বাগতম Matrix TopUp-এ! দ্রুত ও নিরাপদ গেম টপআপ সার্ভিস।
-      অর্ডার করার ৩০ মিনিটের মধ্যে ডেলিভারি নিশ্চিত। যেকোনো সমস্যায় আমাদের সাথে যোগাযোগ করুন। ধন্যবাদ! 🚀
+      🎮 স্বাগতম Matrix TopUp-এ! দ্রুত ও নিরাপদ গেম টপআপ সার্ভিস। কোনো সমস্যায় আমাদের সাথে যোগাযোগ করুন। ধন্যবাদ! 🚀
     </div>
     <div id="noticeEditor" style="display:none">
       <textarea class="notice-textarea" id="noticeTextarea"></textarea>
-      
     </div>
   </div>
 
@@ -83,7 +83,7 @@
     <div class="game-card" onclick="openGame('cod')">
       <div class="game-badge">HOT</div>
       <div class="game-banner cod-banner">
-        <div class="game-banner-icon">🎯</div>
+        <img src="callofduty.png" alt="Call of Duty" class="game-banner-img">
         <div class="game-banner-glow"></div>
       </div>
       <div class="game-card-body">
@@ -96,7 +96,7 @@
     <div class="game-card" onclick="openGame('roblox')">
       <div class="game-badge">POPULAR</div>
       <div class="game-banner roblox-banner">
-        <div class="game-banner-icon">🟥</div>
+        <img src="roblox.png" alt="Roblox" class="game-banner-img">
         <div class="game-banner-glow"></div>
       </div>
       <div class="game-card-body">
@@ -108,7 +108,7 @@
 
     <div class="game-card" onclick="openGame('steam')">
       <div class="game-banner steam-banner">
-        <div class="game-banner-icon">🎮</div>
+        <img src="steam.jpg" alt="Steam" class="game-banner-img">
         <div class="game-banner-glow"></div>
       </div>
       <div class="game-card-body">
