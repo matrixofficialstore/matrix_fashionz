@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matrix TopUp</title>
+<title>Matrix TopUp — Premium Game Credits</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -29,14 +29,13 @@
   <div class="noticeboard-wrap">
     <div class="notice-header">
       <div class="notice-title">📢 Noticeboard</div>
-      
-    </div>
     <div class="noticeboard" id="noticeDisplay">
-      🎮 স্বাগতম Matrix TopUp-এ! দ্রুত ও নিরাপদ গেম টপআপ সার্ভিস। যেকোনো সমস্যায় আমাদের সাথে যোগাযোগ করুন। ধন্যবাদ! 🚀
+      🎮 স্বাগতম Matrix TopUp-এ! দ্রুত ও নিরাপদ গেম টপআপ সার্ভিস।
+      অর্ডার করার ৩০ মিনিটের মধ্যে ডেলিভারি নিশ্চিত। যেকোনো সমস্যায় আমাদের সাথে যোগাযোগ করুন। ধন্যবাদ! 🚀
     </div>
     <div id="noticeEditor" style="display:none">
       <textarea class="notice-textarea" id="noticeTextarea"></textarea>
-      <button class="notice-save-btn" onclick="saveNotice()">💾 Save Notice</button>
+      
     </div>
   </div>
 
@@ -45,32 +44,80 @@
     <p>Instant delivery · Secure payment · Best prices in BD</p>
   </div>
 
+  <!-- VOUCH SECTION -->
+  <div class="section-label">What Customers Say</div>
+  <div class="vouch-section">
+
+    <!-- LEFT: VouchVault -->
+    <div class="vouch-col">
+      <div class="vouch-col-header">
+        <div class="vouch-source-badge vv-badge">✅ VouchVault</div>
+        <a href="https://vouchvault.cc/Samin" target="_blank" class="vouch-see-all">See all →</a>
+      </div>
+      <div class="vouch-cards" id="vvCards">
+        <div class="vouch-loading">⏳ Loading vouches...</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Trustpilot (coming soon) -->
+    <div class="vouch-col">
+      <div class="vouch-col-header">
+        <div class="vouch-source-badge tp-badge">⭐ Trustpilot</div>
+        <span class="vouch-coming-soon">Coming soon</span>
+      </div>
+      <div class="vouch-cards">
+        <div class="vouch-card tp-placeholder">
+          <div class="tp-placeholder-icon">⭐⭐⭐⭐⭐</div>
+          <p>Trustpilot reviews will appear here soon.</p>
+          <span>We're setting up our Trustpilot page!</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
   <div class="section-label">Choose Your Game</div>
 
   <div class="game-grid">
+
     <div class="game-card" onclick="openGame('cod')">
       <div class="game-badge">HOT</div>
-      <div class="game-img-placeholder cod-banner">🎯</div>
-      <div class="game-info">
+      <div class="game-banner cod-banner">
+        <div class="game-banner-icon">🎯</div>
+        <div class="game-banner-glow"></div>
+      </div>
+      <div class="game-card-body">
         <div class="game-name">CALL OF DUTY</div>
         <div class="game-currency">⚡ CP Points</div>
+        <div class="game-card-arrow">Shop Now →</div>
       </div>
     </div>
+
     <div class="game-card" onclick="openGame('roblox')">
       <div class="game-badge">POPULAR</div>
-      <div class="game-img-placeholder roblox-banner">🟥</div>
-      <div class="game-info">
+      <div class="game-banner roblox-banner">
+        <div class="game-banner-icon">🟥</div>
+        <div class="game-banner-glow"></div>
+      </div>
+      <div class="game-card-body">
         <div class="game-name">ROBLOX</div>
         <div class="game-currency">💎 Robux</div>
+        <div class="game-card-arrow">Shop Now →</div>
       </div>
     </div>
+
     <div class="game-card" onclick="openGame('steam')">
-      <div class="game-img-placeholder steam-banner">🎮</div>
-      <div class="game-info">
+      <div class="game-banner steam-banner">
+        <div class="game-banner-icon">🎮</div>
+        <div class="game-banner-glow"></div>
+      </div>
+      <div class="game-card-body">
         <div class="game-name">STEAM</div>
         <div class="game-currency">💵 Wallet Dollars</div>
+        <div class="game-card-arrow">Shop Now →</div>
       </div>
     </div>
+
   </div>
 </div>
 
