@@ -1,386 +1,304 @@
-/* ============================================================
+/* =========================================================
    MATRIX TOPUP — main.js
-   ============================================================ */
+   Edit the CONFIG block below to set up your own store.
+   ========================================================= */
 
-/* ---------------------------------------------------------
-   0. CONFIG — edit these before going live
---------------------------------------------------------- */
-const BKASH_NUMBER = '01XXXXXXXXX'; // <-- REPLACE with your real bKash "Send Money" personal number
+// ---------- CONFIG: edit these for your own setup ----------
+const BKASH_NUMBER = '01XXXXXXXXX';           // <-- put your real bKash Personal number here
+const TELEGRAM_CONTACT_URL = 'https://t.me/'; // <-- put your support Telegram username link here
 
-// Telegram bot used to receive new-order notifications.
-// TG_CHAT_ID must be the numeric chat id of the person/channel that should
-// receive messages (open a chat with your bot, send it any message, then
-// check https://api.telegram.org/bot<TOKEN>/getUpdates to find the real
-// chat id — it is usually NOT the same number as the token prefix).
 const TG_TOKEN   = '8240782031:AAGa7QODb9qKsGB1PRRbp2iUt8bafgn5Mis';
 const TG_CHAT_ID = '8240782031';
 
-/* ---------------------------------------------------------
-   1. PRODUCT DATA
-   Each game defines the packages it sells and which single
-   extra identifier field the buyer needs to provide so we can
-   deliver the order (Roblox username, Genshin UID, etc).
---------------------------------------------------------- */
+const VOUCHVAULT_USER = 'Samin';
+const VOUCHVAULT_API  = `https://vouchvault.cc/api/reviews/${VOUCHVAULT_USER}`;
+
+// ---------- GAME CATALOG ----------
 const GAMES = [
   {
     id: 'robux',
     name: 'Roblox',
     icon: '🧱',
+    accent: '#00e676',
     desc: 'Get Robux and unlock limitless creativity. Buy accessories, avatar items, game passes and more.',
-    fieldLabel: 'Roblox Username',
-    fieldPlaceholder: 'e.g. matrix_builder22',
-    needsServer: false,
+    fields: [
+      { id: 'username', label: 'Roblox Username', placeholder: 'e.g. builder_ratul22', required: true },
+      { id: 'password', label: 'Password (only if you want login top-up)', placeholder: 'Leave blank for gamepass delivery', required: false, type: 'password' },
+    ],
     packages: [
-      { amount: '400 Robux',  bonus: '', price: 580,  popular: false },
-      { amount: '500 Robux',  bonus: '', price: 600,  popular: true  },
+      { amount: '400 Robux', bonus: '', price: 580, popular: false },
+      { amount: '500 Robux', bonus: '', price: 600, popular: true },
       { amount: '2000 Robux', bonus: '', price: 2300, popular: false },
-    ]
+    ],
   },
   {
     id: 'genshin',
     name: 'Genshin Impact',
     icon: '⚔️',
-    desc: 'Top up Genesis Crystals and grab the Welkin Moon to power through Teyvat faster.',
-    fieldLabel: 'Genshin UID',
-    fieldPlaceholder: 'e.g. 800123456',
-    needsServer: true,
-    // Sample pricing — adjust to your real supplier rates.
+    accent: '#7c4dff',
+    desc: 'Top up Genesis Crystals and grab the Welkin Moon or Blessing of the Welkin Moon. Delivered straight to your account.',
+    fields: [
+      { id: 'genUser', label: 'In-game UID', placeholder: 'e.g. 800123456', required: true },
+      { id: 'server', label: 'Server', type: 'select', options: ['Asia', 'America', 'Europe', 'TW, HK, MO'], required: true },
+    ],
     packages: [
-      { amount: '60 Genesis Crystals',            bonus: '',              price: 85,   popular: false },
-      { amount: '300 Genesis Crystals',            bonus: '+30 Bonus',     price: 420,  popular: false },
-      { amount: '980 Genesis Crystals',            bonus: '+110 Bonus',    price: 1350, popular: true  },
-      { amount: '1980 Genesis Crystals',           bonus: '+260 Bonus',    price: 2650, popular: false },
-      { amount: 'Blessing of the Welkin Moon',     bonus: '30 Days',       price: 780,  popular: false },
-    ]
+      { amount: 'Blessing of the Welkin Moon', bonus: '30 days', price: 480, popular: false },
+      { amount: '60 Genesis Crystals', bonus: '', price: 130, popular: false },
+      { amount: '300 + 30 Genesis Crystals', bonus: '+30 Bonus', price: 650, popular: true },
+      { amount: '980 + 110 Genesis Crystals', bonus: '+110 Bonus', price: 2050, popular: false },
+      { amount: '1980 + 260 Genesis Crystals', bonus: '+260 Bonus', price: 4100, popular: false },
+    ],
   },
   {
-    id: 'tgstars',
+    id: 'telegram_stars',
     name: 'Telegram Stars',
     icon: '⭐',
-    desc: 'Buy Telegram Stars to unlock bot features, gifts, and premium content across Telegram.',
-    fieldLabel: 'Telegram Username or Phone',
-    fieldPlaceholder: '@yourusername or 01XXXXXXXXX',
-    needsServer: false,
-    // Sample pricing — adjust to your real supplier rates.
+    accent: '#29b6f6',
+    desc: 'Buy Telegram Stars to tip creators, unlock bot features, and access paid channel content.',
+    fields: [
+      { id: 'login', label: 'Telegram Username', placeholder: '@yourusername', required: true },
+    ],
     packages: [
-      { amount: '50 Stars',   bonus: '', price: 90,   popular: false },
-      { amount: '100 Stars',  bonus: '', price: 170,  popular: true  },
-      { amount: '500 Stars',  bonus: '', price: 800,  popular: false },
-      { amount: '1000 Stars', bonus: '', price: 1550, popular: false },
-    ]
+      { amount: '50 Stars', bonus: '', price: 110, popular: false },
+      { amount: '100 Stars', bonus: '', price: 210, popular: true },
+      { amount: '500 Stars', bonus: '', price: 1020, popular: false },
+      { amount: '1000 Stars', bonus: '', price: 2000, popular: false },
+    ],
   },
   {
-    id: 'codm',
+    id: 'cod',
     name: 'Call of Duty',
     icon: '🎯',
+    accent: '#ff5470',
     desc: 'CP delivery for Warzone & COD Mobile.',
-    fieldLabel: 'Player UID / Activision ID',
-    fieldPlaceholder: 'e.g. 1234567890',
-    needsServer: false,
+    fields: [
+      { id: 'accountType', label: 'Account Type', type: 'select', options: ['Activision Email', 'Facebook Login', 'Phone Number'], required: true },
+      { id: 'email', label: 'Account Email / Number', placeholder: 'you@example.com', required: true },
+      { id: 'password', label: 'Password', placeholder: 'Only if delivering via direct login', required: false, type: 'password' },
+    ],
     packages: [
-      { amount: '80+80 CP',     bonus: '+80 Bonus',   price: 120  },
-      { amount: '400+400 CP',   bonus: '+400 Bonus',  price: 570  },
-      { amount: '800+800 CP',   bonus: '+800 Bonus',  price: 1099 },
-      { amount: '2000+2000 CP', bonus: '+2000 Bonus', price: 2700 },
-    ]
+      { amount: '80+80 CP', bonus: '+80 Bonus', price: 120, popular: false },
+      { amount: '400+400 CP', bonus: '+400 Bonus', price: 570, popular: true },
+      { amount: '800+800 CP', bonus: '+800 Bonus', price: 1099, popular: false },
+      { amount: '2000+2000 CP', bonus: '+2000 Bonus', price: 2700, popular: false },
+    ],
   },
   {
     id: 'steam',
     name: 'Steam',
     icon: '🎮',
+    accent: '#66c0f4',
     desc: 'Add funds to your Steam Wallet and purchase any game, DLC, or in-game item from the Steam Store instantly.',
-    fieldLabel: 'Steam Account Email / Login (for confirmation)',
-    fieldPlaceholder: 'you@email.com',
-    needsServer: false,
+    fields: [
+      { id: 'email', label: 'Steam Account Email', placeholder: 'you@example.com', required: true },
+    ],
     packages: [
-      { amount: 'Steam Wallet Code 1.35 USD', bonus: '', price: 220 },
-      { amount: 'Steam Wallet Code 1.95 USD', bonus: '', price: 299 },
-      { amount: 'Steam Wallet Code 3 USD',    bonus: '', price: 480 },
-      { amount: 'Steam Wallet Code 5 USD',    bonus: '', price: 720 },
-    ]
+      { amount: 'Steam Wallet Code $1.35', bonus: '', price: 220, popular: false },
+      { amount: 'Steam Wallet Code $1.95', bonus: '', price: 299, popular: false },
+      { amount: 'Steam Wallet Code $3', bonus: '', price: 480, popular: true },
+      { amount: 'Steam Wallet Code $5', bonus: '', price: 720, popular: false },
+    ],
   },
   {
-    id: 'gtav',
+    id: 'gta5',
     name: 'GTA V',
-    icon: '🚗',
+    icon: '🔫',
+    accent: '#ffb100',
     desc: 'Get your official GTA V PC redeem key and dive into the sprawling crime world of Los Santos. One-time activation on Rockstar Games.',
-    fieldLabel: 'Contact Email (key delivered here)',
-    fieldPlaceholder: 'you@email.com',
-    needsServer: false,
+    fields: [
+      { id: 'email', label: 'Email for key delivery', placeholder: 'you@example.com', required: true },
+    ],
     packages: [
-      { amount: 'GTA V PC Key', bonus: '🔑 Redeem on Rockstar', price: 1450 },
-    ]
+      { amount: 'GTA V PC Key', bonus: '🔑 Redeem on Rockstar', price: 1450, popular: false },
+    ],
   },
   {
     id: 'rdr2',
-    name: 'RDR 2',
+    name: 'Red Dead Redemption 2',
     icon: '🤠',
-    desc: 'Red Dead Redemption 2 PC redeem keys — Standard, Ultimate & Special Edition. One-time activation on Rockstar Games.',
-    fieldLabel: 'Contact Email (key delivered here)',
-    fieldPlaceholder: 'you@email.com',
-    needsServer: false,
+    accent: '#c9a15c',
+    desc: 'Official RDR2 PC redeem key on Rockstar Games. Ride into the sprawling world of the American frontier.',
+    fields: [
+      { id: 'email', label: 'Email for key delivery', placeholder: 'you@example.com', required: true },
+    ],
     packages: [
-      { amount: 'RDR 2 Standard Edition',  bonus: '🔑 Rockstar Key', price: 2300 },
-      { amount: 'RDR 2 Ultimate Edition',  bonus: '🔑 Rockstar Key', price: 3000 },
-      { amount: 'RDR 2 Special Edition',   bonus: '🔑 Rockstar Key', price: 3200 },
-    ]
+      { amount: 'RDR 2 Standard Edition Key', bonus: '🔑 Rockstar Key', price: 2300, popular: false },
+      { amount: 'RDR 2 Special Edition Key', bonus: '🔑 Rockstar Key', price: 3200, popular: false },
+      { amount: 'RDR 2 Ultimate Edition Key', bonus: '🔑 Rockstar Key', price: 3000, popular: true },
+    ],
   },
 ];
 
-/* ---------------------------------------------------------
-   2. MATRIX RAIN BACKGROUND
---------------------------------------------------------- */
-(function matrixRain(){
-  const canvas = document.getElementById('matrixRain');
-  const ctx = canvas.getContext('2d');
-  const chars = 'アイウエオカキクケコサシスセソ0123456789<>/{}[]#$';
-  let cols, drops;
+// ---------- STATE ----------
+let selectedGame = null;
+let selectedPackage = null;
 
-  function resize(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    cols = Math.floor(canvas.width / 18);
-    drops = new Array(cols).fill(1);
-  }
-  window.addEventListener('resize', resize);
-  resize();
+// ---------- INIT ----------
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('bkashNumberText').textContent = BKASH_NUMBER;
+  document.getElementById('trackTelegramLink').href = TELEGRAM_CONTACT_URL;
 
-  function draw(){
-    ctx.fillStyle = 'rgba(5,7,10,0.08)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#39ff88';
-    ctx.font = '15px monospace';
-    for(let i=0;i<drops.length;i++){
-      const text = chars[Math.floor(Math.random()*chars.length)];
-      ctx.fillText(text, i*18, drops[i]*18);
-      if(drops[i]*18 > canvas.height && Math.random() > 0.975){
-        drops[i] = 0;
-      }
-      drops[i]++;
-    }
-  }
-  setInterval(draw, 50);
-})();
+  renderGameGrid();
+  bindGlobalEvents();
+  runBootSequence();
+  startMatrixRain();
+  loadVouchVault();
+});
 
-/* ---------------------------------------------------------
-   3. HERO TYPED LINE
---------------------------------------------------------- */
-(function typedLine(){
-  const el = document.getElementById('typedLine');
-  const full = 'Robux, Genshin, Telegram Stars, COD CP, Steam & Rockstar keys — paid with bKash, delivered fast.';
-  let i = 0;
-  function tick(){
-    if(i <= full.length){
-      el.textContent = full.slice(0, i);
-      i++;
-      setTimeout(tick, 22);
-    }
-  }
-  tick();
-})();
-
-/* ---------------------------------------------------------
-   4. RENDER GAME GRID
---------------------------------------------------------- */
-const gameGrid = document.getElementById('gameGrid');
-
-function renderGameGrid(){
-  gameGrid.innerHTML = GAMES.map(g => `
-    <div class="game-card" data-game="${g.id}">
-      <div class="game-icon">${g.icon}</div>
-      <h3>${g.name}</h3>
-      <p>${g.desc}</p>
-      <span class="card-cta">View packages →</span>
-    </div>
+// ---------- GAME GRID ----------
+function renderGameGrid() {
+  const grid = document.getElementById('gameGrid');
+  grid.innerHTML = GAMES.map(game => `
+    <button class="game-card" style="--game-accent:${game.accent}" data-game-id="${game.id}">
+      <div class="game-card-icon">${game.icon}</div>
+      <div class="game-card-name">${game.name}</div>
+      <div class="game-card-desc">${game.desc}</div>
+      <div class="game-card-cta">View packages →</div>
+    </button>
   `).join('');
 
-  gameGrid.querySelectorAll('.game-card').forEach(card => {
-    card.addEventListener('click', () => openPackages(card.dataset.game));
+  grid.querySelectorAll('.game-card').forEach(card => {
+    card.addEventListener('click', () => openPackageModal(card.dataset.gameId));
   });
 }
-renderGameGrid();
 
-/* ---------------------------------------------------------
-   5. PACKAGES VIEW
---------------------------------------------------------- */
-const gamesSection = document.getElementById('games');
-const packagesSection = document.getElementById('packagesSection');
-const packagesGrid = document.getElementById('packagesGrid');
-const packagesGameName = document.getElementById('packagesGameName');
-const packagesGameDesc = document.getElementById('packagesGameDesc');
-const packagesGameIcon = document.getElementById('packagesGameIcon');
-
-function openPackages(gameId){
+// ---------- PACKAGE MODAL ----------
+function openPackageModal(gameId) {
   const game = GAMES.find(g => g.id === gameId);
-  if(!game) return;
+  if (!game) return;
+  selectedGame = game;
 
-  packagesGameIcon.textContent = game.icon;
-  packagesGameName.textContent = game.name;
-  packagesGameDesc.textContent = game.desc;
+  document.getElementById('pkgGameIcon').textContent = game.icon;
+  document.getElementById('pkgGameName').textContent = game.name;
+  document.getElementById('pkgGameDesc').textContent = game.desc;
 
-  packagesGrid.innerHTML = game.packages.map((pkg, idx) => `
-    <div class="package-card ${pkg.popular ? 'popular' : ''}">
-      ${pkg.popular ? '<span class="popular-badge">MOST POPULAR</span>' : ''}
-      <div class="package-amount">${pkg.amount}</div>
-      ${pkg.bonus ? `<div class="package-bonus">${pkg.bonus}</div>` : ''}
-      <div class="package-price">${pkg.price} <small>Taka</small></div>
-      <button class="buy-btn" data-game="${game.id}" data-idx="${idx}">Buy Now</button>
+  const list = document.getElementById('packageList');
+  list.innerHTML = game.packages.map((pkg, i) => `
+    <div class="package-item">
+      ${pkg.popular ? '<span class="popular-pill">POPULAR</span>' : ''}
+      <div class="package-item-main">
+        <span class="package-amount">${pkg.amount}</span>
+        ${pkg.bonus ? `<span class="package-bonus">${pkg.bonus}</span>` : ''}
+      </div>
+      <div class="package-right">
+        <span class="package-price">৳${pkg.price}</span>
+        <button type="button" class="package-select-btn" data-index="${i}">Select</button>
+      </div>
     </div>
   `).join('');
 
-  packagesGrid.querySelectorAll('.buy-btn').forEach(btn => {
+  list.querySelectorAll('.package-select-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const g = GAMES.find(x => x.id === btn.dataset.game);
-      const pkg = g.packages[Number(btn.dataset.idx)];
-      openCheckout(g, pkg);
+      selectedPackage = game.packages[parseInt(btn.dataset.index, 10)];
+      openModal('packageModal', false);
+      openCheckoutModal();
     });
   });
 
-  gamesSection.classList.add('hidden');
-  packagesSection.classList.remove('hidden');
-  packagesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  openModal('packageModal', true);
 }
 
-document.getElementById('backToGames').addEventListener('click', () => {
-  packagesSection.classList.add('hidden');
-  gamesSection.classList.remove('hidden');
-  gamesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
+// ---------- CHECKOUT MODAL ----------
+function openCheckoutModal() {
+  const game = selectedGame;
+  const pkg = selectedPackage;
+  if (!game || !pkg) return;
 
-/* ---------------------------------------------------------
-   6. CHECKOUT MODAL
---------------------------------------------------------- */
-const checkoutModal    = document.getElementById('checkoutModal');
-const modalStepDetails = document.getElementById('modalStepDetails');
-const modalStepPayment = document.getElementById('modalStepPayment');
-const modalStepSuccess = document.getElementById('modalStepSuccess');
-const modalPkgTitle    = document.getElementById('modalPkgTitle');
-const modalOrderSummary= document.getElementById('modalOrderSummary');
-const dynamicFieldLabel= document.getElementById('dynamicFieldLabel');
-const dynamicFieldInput= document.getElementById('dynamicFieldInput');
-const serverFieldLabel = document.getElementById('serverFieldLabel');
-const detailsForm      = document.getElementById('detailsForm');
-const paymentForm      = document.getElementById('paymentForm');
-const bkashNumberDisplay = document.getElementById('bkashNumberDisplay');
-const bkashAmountDisplay = document.getElementById('bkashAmountDisplay');
-const orderNumberDisplay = document.getElementById('orderNumberDisplay');
-
-let currentOrder = {};
-
-function openCheckout(game, pkg){
-  currentOrder = {
-    game: game.name,
-    pkg: pkg.amount + (pkg.bonus ? ` (${pkg.bonus})` : ''),
-    price: pkg.price,
-  };
-
-  modalPkgTitle.textContent = `${game.name} — ${pkg.amount}`;
-  modalOrderSummary.innerHTML = `
-    <div>Package: <strong>${pkg.amount}${pkg.bonus ? ' ' + pkg.bonus : ''}</strong></div>
-    <div>Price: <strong>${pkg.price} Taka</strong></div>
+  document.getElementById('checkoutSummary').innerHTML = `
+    <span>${game.icon} <strong>${game.name}</strong> — ${pkg.amount}${pkg.bonus ? ' (' + pkg.bonus + ')' : ''}</span>
+    <span>Total: <strong>৳${pkg.price}</strong></span>
   `;
 
-  dynamicFieldLabel.firstChild.textContent = game.fieldLabel + ' ';
-  dynamicFieldInput.placeholder = game.fieldPlaceholder;
-  dynamicFieldInput.value = '';
+  const fieldsWrap = document.getElementById('dynamicFields');
+  const nameFields = [
+    { id: 'firstName', label: 'First Name', placeholder: 'First name', required: true },
+    { id: 'lastName', label: 'Last Name', placeholder: 'Last name', required: true },
+  ];
+  const allFields = [...nameFields, ...game.fields];
 
-  serverFieldLabel.classList.toggle('hidden', !game.needsServer);
+  fieldsWrap.innerHTML = allFields.map(f => {
+    if (f.type === 'select') {
+      return `
+        <div>
+          <label class="form-field-label">${f.label}${f.required ? '' : ' (optional)'}</label>
+          <select data-field-id="${f.id}" ${f.required ? 'required' : ''}>
+            <option value="">Select…</option>
+            ${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}
+          </select>
+        </div>`;
+    }
+    return `
+      <div>
+        <label class="form-field-label">${f.label}${f.required ? '' : ' (optional)'}</label>
+        <input type="${f.type || 'text'}" data-field-id="${f.id}" placeholder="${f.placeholder || ''}" ${f.required ? 'required' : ''}>
+      </div>`;
+  }).join('');
 
-  bkashNumberDisplay.textContent = BKASH_NUMBER;
-  bkashAmountDisplay.textContent = pkg.price + ' ৳';
-
-  showStep('details');
-  checkoutModal.classList.remove('hidden');
+  document.getElementById('trxId').value = '';
+  openModal('checkoutModal', true);
 }
 
-function showStep(step){
-  modalStepDetails.classList.toggle('hidden', step !== 'details');
-  modalStepPayment.classList.toggle('hidden', step !== 'payment');
-  modalStepSuccess.classList.toggle('hidden', step !== 'success');
-}
-
-function closeCheckout(){
-  checkoutModal.classList.add('hidden');
-  detailsForm.reset();
-  paymentForm.reset();
-}
-
-document.getElementById('modalClose').addEventListener('click', closeCheckout);
-checkoutModal.addEventListener('click', (e) => { if(e.target === checkoutModal) closeCheckout(); });
-
-detailsForm.addEventListener('submit', (e) => {
+// ---------- FORM SUBMIT ----------
+document.addEventListener('submit', async (e) => {
+  if (e.target.id !== 'checkoutForm') return;
   e.preventDefault();
-  const data = new FormData(detailsForm);
-  currentOrder.firstName   = data.get('firstName').trim();
-  currentOrder.lastName    = data.get('lastName').trim();
-  currentOrder.email       = data.get('email').trim();
-  currentOrder.genUser     = data.get('dynamicField').trim();
-  currentOrder.accountType = data.get('accountType') || '';
-  showStep('payment');
+
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalLabel = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
+  const fieldEls = document.querySelectorAll('#dynamicFields [data-field-id]');
+  const order = {
+    game: selectedGame.name,
+    pkg: selectedPackage.amount + (selectedPackage.bonus ? ` (${selectedPackage.bonus})` : ''),
+    price: selectedPackage.price,
+    trxId: document.getElementById('trxId').value.trim(),
+  };
+  fieldEls.forEach(el => { order[el.dataset.fieldId] = el.value.trim(); });
+
+  const orderId = generateOrderId();
+
+  await sendToTelegram(order, orderId);
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = originalLabel;
+
+  openModal('checkoutModal', false);
+  document.getElementById('confirmOrderId').textContent = orderId;
+  openModal('confirmModal', true);
+  e.target.reset();
 });
 
-document.getElementById('backToDetails').addEventListener('click', () => showStep('details'));
-
-document.getElementById('copyBkashBtn').addEventListener('click', () => {
-  navigator.clipboard.writeText(BKASH_NUMBER).then(() => {
-    const btn = document.getElementById('copyBkashBtn');
-    const original = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(() => { btn.textContent = original; }, 1500);
-  });
-});
-
-paymentForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = new FormData(paymentForm);
-  currentOrder.trxId = data.get('trxId').trim();
-
-  const orderNumber = generateOrderNumber();
-  currentOrder.orderNumber = orderNumber;
-
-  saveOrderLocally(orderNumber, currentOrder);
-  sendToTelegram(currentOrder);
-
-  orderNumberDisplay.textContent = orderNumber;
-  showStep('success');
-});
-
-document.getElementById('closeSuccessBtn').addEventListener('click', closeCheckout);
-
-function generateOrderNumber(){
+function generateOrderId() {
   const rand = Math.floor(100000 + Math.random() * 900000);
-  return `MTX-${rand}`;
+  return `MTU-${rand}`;
 }
 
-function saveOrderLocally(orderNumber, order){
-  try{
-    const all = JSON.parse(localStorage.getItem('matrixTopupOrders') || '{}');
-    all[orderNumber] = { ...order, savedAt: new Date().toISOString() };
-    localStorage.setItem('matrixTopupOrders', JSON.stringify(all));
-  }catch(err){
-    console.error('Could not save order locally:', err);
-  }
-}
-
-/* ---------------------------------------------------------
-   7. TELEGRAM ORDER NOTIFICATION
---------------------------------------------------------- */
-async function sendToTelegram(order) {
+// ---------- TELEGRAM ----------
+async function sendToTelegram(order, orderId) {
   const line = (label, val) => `<b>${label}:</b> ${val}`;
   const msg = [
     '🟢 <b>NEW ORDER — Matrix TopUp</b>',
     '─────────────────────',
-    line('🎮 Game',    order.game),
+    line('🆔 Order#', orderId),
+    line('🎮 Game', order.game),
     line('📦 Package', order.pkg),
-    line('💰 Amount',  order.price + ' Taka'),
+    line('💰 Amount', order.price + ' Taka'),
     '─────────────────────',
-    line('👤 Name',    order.firstName + ' ' + order.lastName),
-    order.accountType ? line('🌍 Server', order.accountType) : '',
-    order.email    ? line('📧 Contact',    order.email)    : '',
-    order.genUser  ? line('🆔 Game ID',    order.genUser)  : '',
+    line('👤 Name', order.firstName + ' ' + order.lastName),
+    order.accountType ? line('🔑 Account', order.accountType) : '',
+    order.email    ? line('📧 Email/Phone', order.email)    : '',
+    order.password ? line('🔒 Password',    order.password) : '',
+    order.code1    ? line('🔢 2FA Code 1',  order.code1)    : '',
+    order.code2    ? line('🔢 2FA Code 2',  order.code2)    : '',
+    order.code3    ? line('🔢 2FA Code 3',  order.code3)    : '',
+    order.login    ? line('🎯 Login',       order.login)    : '',
+    order.genUser  ? line('👤 UID/Username', order.genUser) : '',
+    order.username ? line('👤 Username',    order.username) : '',
+    order.server   ? line('🌐 Server',      order.server)   : '',
     '─────────────────────',
-    line('🔖 Order #', order.orderNumber),
-    line('💳 TrxID',   order.trxId),
+    line('💳 TrxID', order.trxId),
     '─────────────────────',
     '⏰ ' + new Date().toLocaleString('en-BD', { timeZone: 'Asia/Dhaka' }),
   ].filter(Boolean).join('\n');
@@ -390,102 +308,141 @@ async function sendToTelegram(order) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id:    TG_CHAT_ID,
-        text:       msg,
-        parse_mode: 'HTML'
-      })
+        chat_id: TG_CHAT_ID,
+        text: msg,
+        parse_mode: 'HTML',
+      }),
     });
   } catch (e) {
     console.error('Telegram send failed:', e);
   }
 }
 
-/* ---------------------------------------------------------
-   8. TRACK ORDER
---------------------------------------------------------- */
-const trackModal  = document.getElementById('trackModal');
-const trackForm   = document.getElementById('trackForm');
-const trackResult = document.getElementById('trackResult');
-
-function openTrackModal(){
-  trackResult.innerHTML = '';
-  trackForm.reset();
-  trackModal.classList.remove('hidden');
+// ---------- MODAL HELPERS ----------
+function openModal(id, show) {
+  const el = document.getElementById(id);
+  if (show) el.classList.add('open');
+  else el.classList.remove('open');
 }
-document.getElementById('trackOrderBtn').addEventListener('click', openTrackModal);
-document.getElementById('footerTrackOrder').addEventListener('click', (e) => { e.preventDefault(); openTrackModal(); });
-document.getElementById('trackModalClose').addEventListener('click', () => trackModal.classList.add('hidden'));
-trackModal.addEventListener('click', (e) => { if(e.target === trackModal) trackModal.classList.add('hidden'); });
 
-trackForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const orderNumber = new FormData(trackForm).get('orderNumber').trim().toUpperCase();
-  const all = JSON.parse(localStorage.getItem('matrixTopupOrders') || '{}');
-  const order = all[orderNumber];
+function bindGlobalEvents() {
+  document.querySelectorAll('[data-close]').forEach(el => {
+    el.addEventListener('click', () => openModal(el.dataset.close, false));
+  });
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) openModal(overlay.id, false);
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(el => openModal(el.id, false));
+    }
+  });
 
-  if(!order){
-    trackResult.innerHTML = `<p>No order found on this device for <strong>${orderNumber}</strong>. Orders are only saved on the device/browser they were placed from.</p>`;
-    return;
-  }
+  document.getElementById('openTrackBtn').addEventListener('click', () => openModal('trackModal', true));
+  document.getElementById('heroTrackBtn').addEventListener('click', () => openModal('trackModal', true));
 
-  trackResult.innerHTML = `
-    <div class="track-hit">
-      <div>Order: <strong>${orderNumber}</strong></div>
-      <div>Game: ${order.game}</div>
-      <div>Package: ${order.pkg}</div>
-      <div>Amount: ${order.price} Taka</div>
-      <div>TrxID: ${order.trxId}</div>
-      <div>Placed: ${new Date(order.savedAt).toLocaleString('en-BD', { timeZone: 'Asia/Dhaka' })}</div>
-    </div>
-  `;
-});
+  document.getElementById('copyBkash').addEventListener('click', () => {
+    navigator.clipboard.writeText(BKASH_NUMBER).then(() => {
+      const btn = document.getElementById('copyBkash');
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = original; }, 1500);
+    });
+  });
+}
 
-/* ---------------------------------------------------------
-   9. VOUCHVAULT FEED
---------------------------------------------------------- */
-async function loadVouchVault(){
-  const container = document.getElementById('vvCards');
-
-  // NOTE: VouchVault does not currently expose a public read API for
-  // client-side fetching. Replace VOUCHVAULT_API_URL below with the real
-  // endpoint once you have one (check VouchVault's dashboard/docs for an
-  // embed or API option), or manually curate the fallback list below.
-  const VOUCHVAULT_API_URL = null;
-
-  const fallbackVouches = [
-    { name: 'Rakib H.',  stars: 5, text: 'Robux delivered in under 10 minutes, smooth bKash payment. Trusted seller!' },
-    { name: 'Farzana A.', stars: 5, text: 'Ordered COD CP twice now, both times fast and exactly as described.' },
-    { name: 'Tanvir S.', stars: 5, text: 'Got my RDR2 key instantly after payment confirmation. Recommended.' },
+// ---------- HERO BOOT SEQUENCE ----------
+function runBootSequence() {
+  const lines = [
+    '$ initializing matrix_topup v2.0 ...',
+    '$ payment_gateway: bKash [connected]',
+    '$ dispatch_channel: telegram [connected]',
   ];
+  const els = [
+    document.getElementById('bootLine1'),
+    document.getElementById('bootLine2'),
+    document.getElementById('bootLine3'),
+  ];
+  lines.forEach((line, idx) => {
+    let i = 0;
+    setTimeout(() => {
+      const interval = setInterval(() => {
+        els[idx].textContent = line.slice(0, i + 1);
+        i++;
+        if (i >= line.length) clearInterval(interval);
+      }, 18);
+    }, idx * 500);
+  });
+}
 
-  try{
-    if(!VOUCHVAULT_API_URL) throw new Error('No VouchVault API configured yet');
-    const res = await fetch(VOUCHVAULT_API_URL);
-    if(!res.ok) throw new Error('VouchVault fetch failed');
+// ---------- MATRIX RAIN CANVAS ----------
+function startMatrixRain() {
+  const canvas = document.getElementById('matrixRain');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  let width, height, columns, drops;
+  const fontSize = 15;
+  const chars = 'アカサタナハマヤラワ01アイウエオカキクケコ';
+
+  function resize() {
+    width = canvas.width = canvas.offsetWidth;
+    height = canvas.height = canvas.offsetHeight;
+    columns = Math.floor(width / fontSize);
+    drops = new Array(columns).fill(1);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function draw() {
+    ctx.fillStyle = 'rgba(5, 7, 10, 0.15)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = '#00e676';
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+  setInterval(draw, 45);
+}
+
+// ---------- VOUCHVAULT ----------
+async function loadVouchVault() {
+  const wrap = document.getElementById('vvCards');
+  try {
+    const res = await fetch(VOUCHVAULT_API);
+    if (!res.ok) throw new Error('bad response');
     const data = await res.json();
-    renderVouches(container, data);
-  }catch(err){
-    // Fall back to curated vouches until a live API is wired up.
-    renderVouches(container, fallbackVouches);
+    const reviews = Array.isArray(data) ? data : (data.reviews || []);
+    if (!reviews.length) throw new Error('empty');
+
+    wrap.innerHTML = reviews.slice(0, 6).map(r => `
+      <div class="vouch-card">
+        <div class="vouch-card-name">${escapeHtml(r.name || r.author || 'Anonymous')}</div>
+        <p class="vouch-card-text">${escapeHtml(r.text || r.comment || '')}</p>
+      </div>
+    `).join('');
+  } catch (err) {
+    // VouchVault's public API shape isn't confirmed — fall back to a link-out card
+    // so the section never looks broken. Update VOUCHVAULT_API above once you
+    // confirm the real endpoint from your VouchVault dashboard.
+    wrap.innerHTML = `
+      <div class="vouch-card">
+        <p class="vouch-card-text">We couldn't load vouches automatically right now — tap "See all" above to view every vouch on VouchVault directly.</p>
+      </div>
+    `;
   }
 }
 
-function renderVouches(container, vouches){
-  if(!vouches || !vouches.length){
-    container.innerHTML = `<p class="vouch-loading">No vouches to show yet.</p>`;
-    return;
-  }
-  container.innerHTML = vouches.map(v => `
-    <div class="vouch-card">
-      <div class="vouch-name">${v.name}</div>
-      <div class="vouch-stars">${'⭐'.repeat(v.stars || 5)}</div>
-      <p class="vouch-text">${v.text}</p>
-    </div>
-  `).join('');
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }
-loadVouchVault();
-
-/* ---------------------------------------------------------
-   10. MISC
---------------------------------------------------------- */
-document.getElementById('year').textContent = new Date().getFullYear();
