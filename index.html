@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrix TopUp — Instant Game & Digital Top-ups (BD)</title>
+<meta name="description" content="Matrix TopUp — instant Robux, Genshin Impact, Telegram Stars, COD CP, Steam Wallet, GTA V & RDR2 keys. Pay with bKash, delivered fast.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="matrixRain"></canvas>
+
+<div class="scanlines"></div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="nav-wrap">
+    <a href="#top" class="logo">
+      <span class="logo-bracket">&lt;</span>MATRIX<span class="logo-accent">TOPUP</span><span class="logo-bracket">/&gt;</span>
+    </a>
+    <nav class="main-nav">
+      <a href="#games">Games</a>
+      <a href="#trust">Vouches</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="btn-ghost" id="trackOrderBtn">Track Order</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">// BANGLADESH'S TOP-UP TERMINAL — 100% AUTOMATED-STYLE DELIVERY</p>
+      <h1 class="hero-title">
+        Enter <span class="glitch" data-text="the Matrix">the Matrix</span><br>
+        of instant top-ups.
+      </h1>
+      <p class="hero-sub" id="typedLine"></p>
+      <div class="hero-cta-row">
+        <a href="#games" class="btn-primary">Browse Top-ups <span aria-hidden="true">↓</span></a>
+        <a href="#trust" class="btn-outline">See Real Vouches</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">7</span><span class="stat-label">Products live</span></div>
+        <div class="stat"><span class="stat-num">bKash</span><span class="stat-label">Instant payment</span></div>
+        <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Order intake</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST / VOUCHES ===== -->
+  <section id="trust" class="trust-section">
+    <div class="section-label">What Customers Say</div>
+    <div class="vouch-grid">
+      <!-- LEFT: VouchVault -->
+      <div class="vouch-col">
+        <div class="vouch-col-header">
+          <div class="vouch-source-badge vv-badge">✅ VouchVault</div>
+          <a href="https://vouchvault.cc/Samin" target="_blank" rel="noopener" class="vouch-see-all">See all →</a>
+        </div>
+        <div class="vouch-cards" id="vvCards">
+          <div class="vouch-loading">⏳ Loading vouches...</div>
+        </div>
+      </div>
+      <!-- RIGHT: Trustpilot (coming soon) -->
+      <div class="vouch-col">
+        <div class="vouch-col-header">
+          <div class="vouch-source-badge tp-badge">⭐ Trustpilot</div>
+          <span class="vouch-coming-soon">Coming soon</span>
+        </div>
+        <div class="vouch-cards">
+          <div class="vouch-card tp-placeholder">
+            <div class="tp-placeholder-icon">⭐⭐⭐⭐⭐</div>
+            <p>Trustpilot reviews will appear here soon.</p>
+            <span>We're setting up our Trustpilot page!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GAME GRID ===== -->
+  <section id="games" class="games-section">
+    <div class="section-label">Choose Your Game</div>
+    <div class="game-grid" id="gameGrid"></div>
+  </section>
+
+  <!-- ===== PACKAGES ===== -->
+  <section id="packagesSection" class="packages-section hidden">
+    <button class="back-btn" id="backToGames">← Back to all games</button>
+    <div class="packages-head">
+      <div class="packages-icon" id="packagesGameIcon"></div>
+      <div>
+        <h2 id="packagesGameName"></h2>
+        <p id="packagesGameDesc"></p>
+      </div>
+    </div>
+    <div class="packages-grid" id="packagesGrid"></div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer id="contact" class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="logo-bracket">&lt;</span>MATRIX<span class="logo-accent">TOPUP</span><span class="logo-bracket">/&gt;</span>
+      </div>
+      <p>Instant game &amp; digital top-ups for Bangladesh. Robux, Genshin Impact, Telegram Stars, COD, Steam &amp; Rockstar keys — paid via bKash, delivered fast.</p>
+      <div class="payment-badges">
+        <span class="pay-badge">bKash Personal</span>
+        <span class="pay-badge">Manual Verify</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#games">All Products</a>
+      <a href="#trust">Customer Vouches</a>
+      <a href="#" id="footerTrackOrder">Track My Order</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="https://t.me/" target="_blank" rel="noopener">Telegram Support</a>
+      <a href="https://wa.me/8801000000000" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://vouchvault.cc/Samin" target="_blank" rel="noopener">Vouch Page</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> Matrix TopUp. All game names &amp; trademarks belong to their respective owners.</p>
+  </div>
+</footer>
+
+<!-- ===== CHECKOUT MODAL ===== -->
+<div id="checkoutModal" class="modal-overlay hidden">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+
+    <!-- STEP 1: order details -->
+    <div id="modalStepDetails" class="modal-step">
+      <p class="modal-eyebrow">STEP 1 / 3 — ORDER DETAILS</p>
+      <h3 id="modalPkgTitle">Package</h3>
+      <div class="modal-order-summary" id="modalOrderSummary"></div>
+
+      <form id="detailsForm" class="checkout-form">
+        <div class="form-row">
+          <label>First Name
+            <input type="text" name="firstName" required placeholder="e.g. Samin">
+          </label>
+          <label>Last Name
+            <input type="text" name="lastName" required placeholder="e.g. Rahman">
+          </label>
+        </div>
+
+        <label>Contact Number / Email (for delivery updates)
+          <input type="text" name="email" required placeholder="01XXXXXXXXX or you@email.com">
+        </label>
+
+        <label id="dynamicFieldLabel">Game ID
+          <input type="text" name="dynamicField" id="dynamicFieldInput" required placeholder="">
+        </label>
+
+        <label id="serverFieldLabel" class="hidden">Server Region
+          <select name="accountType" id="serverFieldSelect">
+            <option value="Asia">Asia</option>
+            <option value="America">America</option>
+            <option value="Europe">Europe</option>
+            <option value="TW,HK,MO">TW, HK, MO</option>
+          </select>
+        </label>
+
+        <button type="submit" class="btn-primary full-width">Continue to Payment →</button>
+      </form>
+    </div>
+
+    <!-- STEP 2: payment -->
+    <div id="modalStepPayment" class="modal-step hidden">
+      <p class="modal-eyebrow">STEP 2 / 3 — PAY WITH BKASH</p>
+      <h3>Send Payment</h3>
+
+      <div class="bkash-box">
+        <div class="bkash-row">
+          <span class="bkash-label">bKash Number</span>
+          <span class="bkash-value" id="bkashNumberDisplay">01XXXXXXXXX</span>
+          <button type="button" class="copy-btn" id="copyBkashBtn">Copy</button>
+        </div>
+        <div class="bkash-row">
+          <span class="bkash-label">Amount to Send</span>
+          <span class="bkash-value price" id="bkashAmountDisplay">0 ৳</span>
+        </div>
+        <div class="bkash-row">
+          <span class="bkash-label">Send Type</span>
+          <span class="bkash-value">Send Money (Personal)</span>
+        </div>
+      </div>
+
+      <ol class="bkash-steps">
+        <li>Open your bKash app and choose <b>Send Money</b>.</li>
+        <li>Enter the number above and the exact amount shown.</li>
+        <li>Complete the payment and copy the Transaction ID (TrxID).</li>
+        <li>Paste the TrxID below and confirm your order.</li>
+      </ol>
+
+      <form id="paymentForm" class="checkout-form">
+        <label>bKash Transaction ID (TrxID)
+          <input type="text" name="trxId" required placeholder="e.g. 9G7H2K4L1M">
+        </label>
+        <button type="submit" class="btn-primary full-width">Confirm Order ✔</button>
+        <button type="button" class="btn-text" id="backToDetails">← Back to details</button>
+      </form>
+    </div>
+
+    <!-- STEP 3: success -->
+    <div id="modalStepSuccess" class="modal-step hidden">
+      <div class="success-icon">✔</div>
+      <p class="modal-eyebrow">STEP 3 / 3 — ORDER RECEIVED</p>
+      <h3>Order Placed Successfully</h3>
+      <p class="success-text">Your order has been sent to our team. Delivery usually takes a few minutes, sometimes up to 30 minutes during high traffic.</p>
+      <div class="order-number-box">
+        <span>Your Order Number</span>
+        <strong id="orderNumberDisplay">MTX-000000</strong>
+      </div>
+      <button type="button" class="btn-primary full-width" id="closeSuccessBtn">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TRACK ORDER MODAL ===== -->
+<div id="trackModal" class="modal-overlay hidden">
+  <div class="modal">
+    <button class="modal-close" id="trackModalClose" aria-label="Close">✕</button>
+    <p class="modal-eyebrow">ORDER LOOKUP</p>
+    <h3>Track Your Order</h3>
+    <p class="success-text">Enter your Matrix TopUp order number to see its saved details on this device.</p>
+    <form id="trackForm" class="checkout-form">
+      <label>Order Number
+        <input type="text" name="orderNumber" required placeholder="MTX-000000">
+      </label>
+      <button type="submit" class="btn-primary full-width">Look Up Order</button>
+    </form>
+    <div id="trackResult"></div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
