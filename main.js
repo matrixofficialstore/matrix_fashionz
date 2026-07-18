@@ -75,28 +75,33 @@ const GAMES = {
     name: 'Call of Duty',
     icon: '🎯',
     iconBg: 'linear-gradient(135deg,#1a1a2e,#0f3460)',
-    desc: 'Instant CP delivery for Warzone & COD Mobile. Top up your account securely within 30 minutes.',
+    desc: 'CP delivery for Warzone & COD Mobile.',
     accountTypes: ['facebook', 'activision'],
     packages: [
-      { amount: '80+80 CP',     bonus: '+80 Bonus',   price: 120,  popular: false },
-      { amount: '400+400 CP',   bonus: '+400 Bonus',  price: 570,  popular: true  },
-      { amount: '800+800 CP',   bonus: '+800 Bonus',  price: 1099, popular: false },
-      { amount: '2000+2000 CP', bonus: '+2000 Bonus', price: 2700, popular: false },
+      { amount: '80+80 CP',     price: 120,  popular: false },
+      { amount: '400+400 CP',   price: 570,  popular: true  },
+      { amount: '800+800 CP',   price: 1099, popular: false },
+      { amount: '2000+2000 CP', price: 2700, popular: false },
     ]
   },
+
   roblox: {
     name: 'Roblox',
     icon: '🟥',
     iconBg: 'linear-gradient(135deg,#aa0000,#ee4444)',
-    desc: 'Get Robux instantly and unlock limitless creativity. Buy accessories, avatar items, game passes and more.',
+    desc: 'Get Robux and unlock limitless creativity. Buy accessories, avatar items, game passes and more.',
     accountTypes: [],
     packages: [
-      { amount: '400 Robux',  bonus: '', price: 580,  popular: false },
-      { amount: '500 Robux',  bonus: '', price: 600,  popular: true  },
-      { amount: '1000 Robux', bonus: '', price: 1250, popular: false },
-      { amount: '2000 Robux', bonus: '', price: 2300, popular: false },
+      { amount: '500 Robux',   price: 550,   popular: true  },
+      { amount: '1000 Robux',  price: 1150,  popular: false },
+      { amount: '2000 Robux',  price: 2150,  popular: false },
+      { amount: '3000 Robux',  price: 3150,  popular: false },
+      { amount: '4000 Robux',  price: 4150,  popular: false },
+      { amount: '5000 Robux',  price: 5150,  popular: false },
+      { amount: '10000 Robux', price: 10050, popular: false },
     ]
   },
+
   steam: {
     name: 'Steam',
     icon: '🎮',
@@ -104,32 +109,52 @@ const GAMES = {
     desc: 'Add funds to your Steam Wallet and purchase any game, DLC, or in-game item from the Steam Store instantly.',
     accountTypes: [],
     packages: [
-      { amount: '$1.20 Wallet', bonus: '', price: 185,  popular: false },
-      { amount: '$5 Wallet',    bonus: '', price: 750,  popular: true  },
-      { amount: '$20 Wallet',   bonus: '', price: 2795, popular: false },
-      { amount: '$30 Wallet 🔥 Offer!', bonus: '', price: 3950, popular: false },
+      { amount: 'Steam Wallet Code 1.35 USD', price: 220, popular: false },
+      { amount: 'Steam Wallet Code 1.95 USD', price: 299, popular: false },
+      { amount: 'Steam Wallet Code 3 USD',    price: 480, popular: true  },
+      { amount: 'Steam Wallet Code 5 USD',    price: 720, popular: false },
     ]
   },
+
   gtav: {
     name: 'GTA V',
     icon: '🚗',
     iconBg: 'linear-gradient(135deg,#1a1a1a,#2d5a1b,#1a1a1a)',
-    desc: 'Get your official GTA V PC redeem key and dive into the sprawling crime world of Los Santos. One-time activation on Rockstar Games Launcher — valid forever.',
+    desc: 'Get your official GTA V PC redeem key and dive into the sprawling crime world of Los Santos. One-time activation on Rockstar Games Launcher.',
     accountTypes: ['none'],
     packages: [
-      { amount: 'GTA V PC Key', bonus: '🔑 Redeem on Rockstar', price: 1450, popular: true },
+      {
+        amount: 'GTA V PC Key',
+        price: 1450,
+        popular: true
+      },
     ]
   },
-  fifa26: {
-    name: 'FIFA 26',
-    icon: '⚽',
-    iconBg: 'linear-gradient(135deg,#003d82,#0066cc,#00a651)',
-    desc: 'FIFA 26 will be delivered directly to your EA account. Experience next-gen football with updated rosters, enhanced gameplay, and all-new Ultimate Team features. Just provide your EA account details and we handle the rest.',
-    accountTypes: [],
+
+  rdr2: {
+    name: 'Red Dead Redemption 2',
+    icon: '🤠',
+    iconBg: 'linear-gradient(135deg,#4b1d0d,#8b2c16,#1f1f1f)',
+    desc: 'Official PC Rockstar Games Keys for Red Dead Redemption 2.',
+    accountTypes: ['none'],
     packages: [
-      { amount: 'FIFA 26 Standard', bonus: '🎮 EA Account Delivery', price: 299, popular: true },
+      {
+        amount: 'RDR 2 Standard Edition Game Key',
+        price: 2300,
+        popular: true
+      },
+      {
+        amount: 'RDR 2 Ultimate Edition',
+        price: 3000,
+        popular: false
+      },
+      {
+        amount: 'RDR 2 Special Edition',
+        price: 3200,
+        popular: false
+      },
     ]
-  },
+  }
 };
 
 /* ── STATE ──────────────────────────────────── */
